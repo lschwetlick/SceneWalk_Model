@@ -5,8 +5,8 @@ import re
 from random import sample
 
 data_path_dict = {
-    "spst_training": '../../../../DATA/SpatStat/split_sets/training/',
-    "spst_test": '../../../../DATA/SpatStat/split_sets/test/',
+    "spst_training": '../../../DATA/SpatStat/split_sets/training/',
+    "spst_test": '../../../DATA/SpatStat/split_sets/test/',
 
 }
 
