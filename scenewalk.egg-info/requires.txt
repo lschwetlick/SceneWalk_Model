@@ -1,0 +1,8 @@
+numpy==1.16.1
+pandas
+seaborn
+scipy
+pymc3
+pytest
+multiprocess
+gitpython
