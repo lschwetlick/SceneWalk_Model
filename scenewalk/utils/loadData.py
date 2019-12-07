@@ -7,6 +7,7 @@ from random import sample
 data_path_dict = {
     "spst_training": '../../../DATA/SpatStat/split_sets/training/',
     "spst_test": '../../../DATA/SpatStat/split_sets/test/',
+    "corpus_test": '../../../DATA/corpusData/split_sets/test/',
 
 }
 
@@ -67,4 +68,23 @@ def shorten_set(data_dict, nvp, vps = None):
                 chosen_vps = vps
             print("shortening from "+str(len(dat))+" to "+str(nvp))
         data_dict[i] = [dat[vp] for vp in chosen_vps]
-    return(data_dict)
+    return (data_dict)
+
+def chop_scanpaths(lower, upper, datadict):
+    for i in datadict:
+        if i == "range" or i == "densities":
+            continue
+        datadict[i] = chop_list(lower, upper, datadict[i])
+        return datadict
+
+def chop_list(lower, upper, li):
+    allim = []
+    for i in li:
+        im = []
+        for ix, j in enumerate(i):
+            if len(j)>upper:
+                j = j[:upper]
+            if len(j)>lower:
+                im.append(j)
+        allim.append(im)
+    return allim

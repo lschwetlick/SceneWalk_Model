@@ -64,7 +64,7 @@ def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, alpha, f
                 allchains = np.hstack((chain1, chain2, chain3))
 
                 # Highst Posterior Density
-                hpd_all = hpd(allchains, alpha = alpha)
+                hpd_all = hpd(allchains, alpha)
                 mpde = (hpd_all[1]+hpd_all[0])/2
                 if CI:
                     param_dict1[param_name] = [mpde, hpd_all[1] - mpde]
@@ -105,7 +105,7 @@ def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, 
                 allvps.extend(chain3)
             allvps = np.array(allvps)
             #print(len(allvps))
-            hpd_all = hpd(allvps, alpha = alpha)
+            hpd_all = hpd(allvps, alpha)
             mpde = (hpd_all[1]+hpd_all[0])/2
             #print(hpd_all)
             #break
@@ -142,12 +142,12 @@ def save2pd_subj_point_estimates(chains_list, all_vp_list, priors, alpha, fname,
             chain3 = chains[2, samp_ix:, param_ix]
             allchains = []
             allchains = np.hstack((chain1, chain2, chain3))
-            hpd_all = hpd(allchains, alpha = alpha)
+            hpd_all = hpd(allchains, alpha)
             mpde = (hpd_all[1]+hpd_all[0])/2
 
             dict1 = {"vp": vp, "param_name":param_name, "mpde":mpde, "interv":mpde-hpd_all[0], "left": hpd_all[0], "right": hpd_all[1]}
             rows_list.append(dict1)
-        
+
         param_ix += 1
         tmp_df['vp'] = vp
     # vp_id +=1
@@ -172,4 +172,3 @@ def show_all_colors():
         pat_list.append(pat)
     plt.legend(handles=pat_list)
     return fig, ax
-

@@ -85,7 +85,7 @@ def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None, start_loc="c
             x, y = sw_model.simulate_scanpath(use_durations, densities_dat[tr_im[0]-1], (start_loc_x, start_loc_y), get_LL=False)
             im_list_x.append(np.asarray(x))
             im_list_y.append(np.asarray(y))
-            im_list_dur.append(np.asarray(sampled_durations))
+            im_list_dur.append(np.asarray(use_durations))
             im_list_im.append(np.asarray(tr_im))
         data_list_x.append(im_list_x)
         data_list_y.append(im_list_y)
