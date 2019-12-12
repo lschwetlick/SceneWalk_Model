@@ -8,6 +8,7 @@ data_path_dict = {
     "spst_training": '../../../DATA/SpatStat/split_sets/training/',
     "spst_test": '../../../DATA/SpatStat/split_sets/test/',
     "corpus_test": '../../../DATA/corpusData/split_sets/test/',
+    "corpus_training": '../../../DATA/corpusData/split_sets/training/',
 
 }
 
