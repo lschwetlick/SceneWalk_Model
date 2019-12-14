@@ -43,7 +43,7 @@ def save2dict_by_subj(chains_list, all_vp_list, def_args, fname, perc_last_sampl
 
 
 
-def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, alpha, fname, CI=False, perc_last_samples=75):
+def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, credible_interval, fname, CI=False, perc_last_samples=75):
     from collections import OrderedDict
     import numpy as np
     from pymc3.stats import hpd
@@ -64,7 +64,7 @@ def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, alpha, f
                 allchains = np.hstack((chain1, chain2, chain3))
 
                 # Highst Posterior Density
-                hpd_all = hpd(allchains, alpha)
+                hpd_all = hpd(allchains, credible_interval)
                 mpde = (hpd_all[1]+hpd_all[0])/2
                 if CI:
                     param_dict1[param_name] = [mpde, hpd_all[1] - mpde]
@@ -78,7 +78,7 @@ def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, alpha, f
     np.save(fname, vp_params)
     return (vp_params)
 
-def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, sw, alpha, fname, perc_last_samples=75):
+def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, sw, credible_interval, fname, perc_last_samples=75):
     from collections import OrderedDict
     import numpy as np
     from pymc3.stats import hpd
@@ -105,7 +105,7 @@ def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, 
                 allvps.extend(chain3)
             allvps = np.array(allvps)
             #print(len(allvps))
-            hpd_all = hpd(allvps, alpha)
+            hpd_all = hpd(allvps, credible_interval)
             mpde = (hpd_all[1]+hpd_all[0])/2
             #print(hpd_all)
             #break
@@ -121,7 +121,7 @@ def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, 
     hpde_df.to_csv(fname)
     return(hpde_df)
 
-def save2pd_subj_point_estimates(chains_list, all_vp_list, priors, alpha, fname, perc_last_samples=75):
+def save2pd_subj_point_estimates(chains_list, all_vp_list, priors, credible_interval, fname, perc_last_samples=75):
     from collections import OrderedDict
     import numpy as np
     from pymc3.stats import hpd
@@ -142,13 +142,13 @@ def save2pd_subj_point_estimates(chains_list, all_vp_list, priors, alpha, fname,
             chain3 = chains[2, samp_ix:, param_ix]
             allchains = []
             allchains = np.hstack((chain1, chain2, chain3))
-            hpd_all = hpd(allchains, alpha)
+            hpd_all = hpd(allchains, credible_interval)
             mpde = (hpd_all[1]+hpd_all[0])/2
 
             dict1 = {"vp": vp, "param_name":param_name, "mpde":mpde, "interv":mpde-hpd_all[0], "left": hpd_all[0], "right": hpd_all[1]}
             rows_list.append(dict1)
 
-        param_ix += 1
+            param_ix += 1
         tmp_df['vp'] = vp
     # vp_id +=1
     hpde_df = pd.DataFrame(rows_list)
