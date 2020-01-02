@@ -90,7 +90,7 @@ def generate_custom_likelihood_function(sw_model, params, default_params, x_dat,
             return -np.inf
     return custom_loglik
 
-def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials, nchains, niter, vp_nr=None):
+def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials, nchains, niter, vp_nr=None, destin_dir=None):
     """
     Run and Save dream chains
     Inputs:
@@ -112,8 +112,10 @@ def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat, dur_dat
 
     lik_func = generate_custom_likelihood_function(sw_model, priors, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials)
 
-
-    cwd = os.getcwd()
+    if destin_dir is None:
+        cwd = os.getcwd()
+    else:
+        cwd = destin_dir
     os.mkdir(cwd + "/estim_%s" % estim_id)
     folderPath = cwd + "/estim_%s" % estim_id
 
