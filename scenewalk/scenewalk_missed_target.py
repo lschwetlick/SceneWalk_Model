@@ -1,3 +1,6 @@
+"""
+SceneWalk variant that has no remapping but instead always makes saccades that are too short. Corrective saccades may explain the Fish.
+"""
 from scenewalk.scenewalk_model_object import scenewalk as sw_obj
 import numpy as np
 
@@ -28,6 +31,7 @@ class missed_target_sw(sw_obj):
         rad = ((((self._xx - fix_x)** 2) / (sigmaAttention_x ** 2)) + (((self._yy - fix_y)** 2) / (sigmaAttention_y ** 2))).T
         gaussAttention = (1 / (2 * np.pi * sigmaAttention_x * sigmaAttention_y)) * np.exp(-(rad / (2 * (1 ** 2))))
         return gaussAttention
+
     def evolve_maps_presac_missed(self, durations, fixs_x, fixs_y, map_att_prev, map_inhib_prev, fix_density_map, nth, sim=False):
         #print("ypir")
         skip_pre = False
