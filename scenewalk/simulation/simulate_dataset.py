@@ -180,14 +180,14 @@ def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict, sampl
         data_list_im.append(im_list_im)
 
     nvp = len(available_vps)
-    sim_id = _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im, sw_model, nvp)
+    sim_id = _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im, sw_model, nvp, sampled=True)
     return "sim_%s" % sim_id
 
 
 ### HELPERS
 
-def _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im, sw_model, nvp):
-    sim_id = (time.strftime("%Y%m%d-%H%M%S"))
+def _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im, sw_model, nvp, sampled=False):
+    sim_id = (time.strftime("%Y%m%d-%H%M%S"))+"samp"
     cwd = os.getcwd()
     os.mkdir(cwd + "/sim_%s" % sim_id)
     folderPath = cwd + "/sim_%s" % sim_id
@@ -199,7 +199,8 @@ def _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im, sw_model, 
     meta_dict = {
         "model_params": sw_model.get_params(),
         "len": nvp,
-        "gitsha": utils.get_git_sha()
+        "gitsha": utils.get_git_sha(),
+        "sampled": sampled
     }
     np.save(folderPath + "/%s_sim_meta.npy" % sim_id, [meta_dict])
     return sim_id
