@@ -3,12 +3,23 @@ import glob
 import warnings
 import re
 from random import sample
+import sys
+import os
+
+
+def setup_paths():
+    calling_path = os.path.abspath(os.getcwd())
+    func_path = __file__
+    commn = os.path.commonpath([calling_path, func_path])
+    return commn
+
+abspath = setup_paths()
 
 data_path_dict = {
-    "spst_training": '../../../DATA/SpatStat/split_sets/training/',
-    "spst_test": '../../../DATA/SpatStat/split_sets/test/',
-    "corpus_test": '../../../DATA/corpusData/split_sets/test/',
-    "corpus_training": '../../../DATA/corpusData/split_sets/training/',
+    "spst_training": abspath+'/DATA/SpatStat/split_sets/training/',
+    "spst_test": abspath+'/DATA/SpatStat/split_sets/test/',
+    "corpus_test": abspath+'/DATA/corpusData/split_sets/test/',
+    "corpus_training": abspath+'/DATA/corpusData/split_sets/training/',
 
 }
 
