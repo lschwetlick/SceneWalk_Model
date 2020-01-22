@@ -93,6 +93,7 @@ class scenewalk:
         self.omega_prevloc = None
         # Data
         self.data_range = data_range  #  {'x':(0, 127), 'y':(0, 127)}
+        assert isinstance(self.data_range, dict)
         # add kwargs as object attributes
         if not kwargs_dict is None:
             self.__dict__.update(kwargs_dict)
