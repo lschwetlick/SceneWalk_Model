@@ -78,6 +78,44 @@ def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, credible
     np.save(fname, vp_params)
     return (vp_params)
 
+def save2dict_overall_point_estimates(chains_list, all_vp_list, def_args, priors, sw, credible_interval, fname, perc_last_samples=75):
+    from collections import OrderedDict
+    import numpy as np
+    from pymc3.stats import hpd
+    import pandas as pd
+
+    param_ix = 0
+    dict1 = {}
+    for param_name in def_args.keys():
+        if param_name in list(priors.keys()):
+            print(param_name)
+            allvps = []
+            for vp in all_vp_list:
+                #print(vp)
+                chains = chains_list[vp]
+                if chains is None:
+                    continue
+                chain_len = chains.shape[1]
+                samp_ix =  int(chain_len - (chain_len * perc_last_samples/100))
+                chain1 = chains[0, samp_ix:, param_ix]
+                chain2 = chains[1, samp_ix:, param_ix]
+                chain3 = chains[2, samp_ix:, param_ix]
+                allvps.extend(chain1)
+                allvps.extend(chain2)
+                allvps.extend(chain3)
+            allvps = np.array(allvps)
+            #print(len(allvps))
+            hpd_all = hpd(allvps, credible_interval)
+            mpde = (hpd_all[1]+hpd_all[0])/2
+            #print(hpd_all)
+            #break
+            dict1[param_name] =  mpde
+            param_ix+=1
+        else:
+            dict1[param_name] = def_args[param_name]
+    np.save(fname, dict1)
+    return(dict1)
+
 def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, sw, credible_interval, fname, perc_last_samples=75):
     from collections import OrderedDict
     import numpy as np
