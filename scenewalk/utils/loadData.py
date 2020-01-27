@@ -48,7 +48,8 @@ def load_data(set_name):
         mat = re.search(r'_([a-zA-Z]*).npy', p)
         name = mat.group(1)
         loaded_dict[name] = np.load(p)
-
+    if not loaded_dict:
+        warnings.warn("Can't find the files where you are looking. Is the path set up correctly?")
     return (loaded_dict)
 
 def dataDict2vars(data_dict):
