@@ -74,6 +74,10 @@ class scenewalk:
         self.coupled_facil = False
         self.estimate_times = False
         self.saclen_shift = False
+        self.omp = "off"  # "add", "mult"
+        self.chii = 0.3
+        self.ompfactor = 1
+
         # Parameters
         self.omegaAttention = None
         self.omegaInhib = None
@@ -91,6 +95,7 @@ class scenewalk:
         self.tau_post = 100 / 1000
         self.foR_size = 2  # diameter in degrees, Not radius
         self.omega_prevloc = None
+
         # Data
         self.data_range = data_range  #  {'x':(0, 127), 'y':(0, 127)}
         assert isinstance(self.data_range, dict)
@@ -545,7 +550,7 @@ class scenewalk:
         sigmaShift_y = self.convert_deg_to_px(self.sigmaShift, 'y')
 
         u, mag = self.get_unit_vector([fix_x_prev, fix_y_prev], [fix_x, fix_y])  # done in degrees
-        
+
         if self.saclen_shift:
             shift_by = mag*self.shift_size
         else:
@@ -812,6 +817,34 @@ class scenewalk:
                 duration_pre_ph = 0
                 duration_main_ph = durations[1]
         return duration_post_ph, duration_main_ph, duration_pre_ph
+
+    def make_om_potential(self, fix_x, fix_y):
+        """
+        makes an occulomotor potential map where the cardinal directions have higher activation than the oblique.
+        """
+        x_px = self.convert_deg_to_px(fix_x, 'x', fix=True)
+        y_px = self.convert_deg_to_px(fix_y, 'y', fix=True)
+        #chii = 0.08
+        q1 = ((self._xx-x_px))**2
+        q2 = ((self._yy-y_px))**2
+        q = ((q1 * q2)**self.chii).T
+        q = q / np.max(q)
+        q = np.abs(q-1)
+        #q = q / np.sum(q)
+        return q
+    def make_om_potential_neg(self, fix_x, fix_y, chii=0.3):
+        """
+        makes an occulomotor potential map where the cardinal directions have lower activation than the oblique.
+        """
+        x_px = self.convert_deg_to_px(fix_x, 'x', fix=True)
+        y_px = self.convert_deg_to_px(fix_y, 'y', fix=True)
+        #chii = 0.3
+        q1 = ((self._xx-x_px))**2
+        q2 = ((self._yy-y_px))**2
+        q = ((q1 * q2)**self.chii).T
+        q = q / np.max(q)
+        return q
+
     # ------------------------------------------------------------------------------------------------------------------
     # MECHANISMS
     # ------------------------------------------------------------------------------------------------------------------
@@ -847,6 +880,19 @@ class scenewalk:
         map_inhib = self.make_inhib_gauss(fixs_x, fixs_y)
         map_inhib = self.differential_time_basic(durations[1], map_inhib, map_inhib_prev, self.omegaInhib)
         u = self.combine(map_att, map_inhib)
+
+        if self.omp == "add":
+            #u = u * (1 * self.make_om_potential(fixs_x[1], fixs_y[1]))
+            #ompfactor = 2
+            omp_map = self.make_om_potential(fixs_x[1], fixs_y[1])
+            omp_map = omp_map/sum(omp_map)
+            # additive OMP
+            u = u + (self.ompfactor * omp_map)
+        if self.omp == "mult":
+            #ompfactor = 2
+            # multiplicative OMP
+            u = u * (self.ompfactor * self.make_om_potential(fixs_x[1], fixs_y[1]))
+
         ustar = self.make_positive(u)
         uFinal = self.add_noise(ustar)
         # get likelihood for next fixations
