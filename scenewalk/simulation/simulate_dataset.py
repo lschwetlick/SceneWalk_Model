@@ -187,7 +187,9 @@ def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict, sampl
 ### HELPERS
 
 def _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im, sw_model, nvp, sampled=False):
-    sim_id = (time.strftime("%Y%m%d-%H%M%S"))+"samp"
+    sim_id = (time.strftime("%Y%m%d-%H%M%S"))
+    if sampled:
+        sim_id=sim_id+"samp"
     cwd = os.getcwd()
     os.mkdir(cwd + "/sim_%s" % sim_id)
     folderPath = cwd + "/sim_%s" % sim_id
