@@ -68,9 +68,11 @@ def shorten_set(data_dict, nvp, vps = None):
     """
     Gets x subjects from the selected set
     """
+    short_dict = {}
     chosen_vps = []
     for i in data_dict:
         if i == "range" or i == "densities":
+            short_dict[i] = data_dict[i]
             continue
         dat = data_dict[i]
         assert nvp <= len(dat)
@@ -80,15 +82,17 @@ def shorten_set(data_dict, nvp, vps = None):
             else:
                 chosen_vps = vps
             print("shortening from "+str(len(dat))+" to "+str(nvp))
-        data_dict[i] = [dat[vp] for vp in chosen_vps]
-    return (data_dict)
+        short_dict[i] = [dat[vp] for vp in chosen_vps]
+    return (short_dict)
 
 def chop_scanpaths(lower, upper, datadict):
+    chop_dict = {}
     for i in datadict:
         if i == "range" or i == "densities":
+            chop_dict[i] = datadict[i]
             continue
-        datadict[i] = chop_list(lower, upper, datadict[i])
-        return datadict
+        chop_dict[i] = chop_list(lower, upper, datadict[i])
+    return chop_dict
 
 def chop_list(lower, upper, li):
     allim = []
