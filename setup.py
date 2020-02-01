@@ -8,6 +8,6 @@ setup(
     author='Lisa Schwetlick',
     author_email='lisa.schwetlick@uni-potsdam.de',
     packages=find_packages(),  #same as name
-    install_requires=['numpy==1.16.1', 'pandas', 'seaborn', 'scipy', 'pymc3', 'pytest', 'multiprocess', 'gitpython'], #external packages as dependencies
+    install_requires=['numpy', 'pandas', 'seaborn', 'scipy', 'pymc3', 'pytest', 'multiprocess', 'gitpython'], #external packages as dependencies
 )
 # needs python 3 , 'multiprocessing'
