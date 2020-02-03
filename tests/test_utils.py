@@ -1,13 +1,13 @@
 from collections import OrderedDict
 import numpy as np
 from scenewalk.utils import utils
+from scenewalk.utils import loadData
 
 def test_save2dict_by_subj():
     # setup a pretend data set
-    dur = np.load("tests/test_simdata/sim_dur.npy")
-    x = np.load("tests/test_simdata/sim_x.npy")
-    y = np.load("tests/test_simdata/sim_y.npy")
-    im = np.load("tests/test_simdata/sim_im.npy")
+    dataDict = loadData.load_sim_data('tests/test_simdata/')
+    x, y, dur, im, densities, _ = loadData.dataDict2vars(dataDict)
+
     def_args = OrderedDict({
         'omegaAttention': None,
         'omfrac': 10,
@@ -28,7 +28,7 @@ def test_save2dict_by_subj():
     chains_list = [np.random.rand(3, 500, 7) for v in all_vp_list]
     utils.save2dict_by_subj(chains_list, all_vp_list, def_args, "tests/test_estimation/sample_dict.npy")
 
-    vp_params = np.load("tests/test_estimation/sample_dict.npy").item()
+    vp_params = np.load("tests/test_estimation/sample_dict.npy", allow_pickle=True).item()
     assert isinstance(vp_params, dict)
     assert list(vp_params.keys()) == all_vp_list
     testsub = np.random.randint(0, len(all_vp_list))
@@ -40,10 +40,9 @@ def test_save2dict_by_subj():
 
 def test_save2npy_point_estimate_by_subj():
     # setup a pretend data set
-    dur = np.load("tests/test_simdata/sim_dur.npy")
-    x = np.load("tests/test_simdata/sim_x.npy")
-    y = np.load("tests/test_simdata/sim_y.npy")
-    im = np.load("tests/test_simdata/sim_im.npy")
+    dataDict = loadData.load_sim_data('tests/test_simdata/')
+    x, y, dur, im, _, _ = loadData.dataDict2vars(dataDict)
+
     def_args = OrderedDict({
         'omegaAttention': None,
         'omfrac': 10,
@@ -63,7 +62,7 @@ def test_save2npy_point_estimate_by_subj():
     all_vp_list = list(range(len(im)))
     chains_list = [np.random.rand(3, 500, 7) for v in all_vp_list]
     utils.save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, 0.8, "tests/test_estimation/point_est_subj.npy", CI=False)
-    vp_params = np.load("tests/test_estimation/point_est_subj.npy").item()
+    vp_params = np.load("tests/test_estimation/point_est_subj.npy", allow_pickle=True).item()
 
     assert isinstance(vp_params, dict)
     assert list(vp_params.keys()) == all_vp_list

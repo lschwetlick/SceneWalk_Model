@@ -123,7 +123,7 @@ class Dream():
 
         #Load crossover values from file if given, else set to 1/nCR for all and adapt if requested
         if crossover_file:
-            self.CR_probabilities = np.load(crossover_file)
+            self.CR_probabilities = np.load(crossover_file, allow_pickle=True)
             self.nCR = len(self.CR_probabilities)
             if self.adapt_crossover:
                 print('Warning: Crossover values loaded and adapt_crossover = True.  Crossover values will be further adapted.')
@@ -133,7 +133,7 @@ class Dream():
         #Load gamma values from file if given, otherwise set to 1/ngamma for all
         self.adapt_gamma = adapt_gamma
         if gamma_file:
-            self.gamma_probabilities = np.load(gamma_file)
+            self.gamma_probabilities = np.load(gamma_file, allow_pickle=True)
             if adapt_gamma:
                 print('Warning: Gamma values loaded and adapt gamma = True.  Gamma values will be further adapted.')
         else:

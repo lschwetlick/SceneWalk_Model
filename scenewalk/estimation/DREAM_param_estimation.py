@@ -81,7 +81,7 @@ def generate_custom_likelihood_function(sw_model, params, default_params, x_dat,
             try:
                 neg_like = evaluate_sw_parallel.get_neg_tot_like_parallel(sw_model, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials=num_processes_trials)
             except:
-                print("Model Failed with Parameters: ",sw_model.get_params())
+                print("Model Failed with Parameters: ", sw_model.get_params())
                 raise
             return - neg_like # well shit, turns out that neg neg is pos
         else:
@@ -176,16 +176,16 @@ def main():
     print("so far so good")
     with open(args.model, 'rb') as inp:
         sw_model = pickle.load(inp)
-    priors_vals = np.load(args.priors).item()
-    default_params = np.load(args.defaults).item()
-    x_dat = np.load(args.data_path + "_x.npy")
-    y_dat = np.load(args.data_path + "_y.npy")
-    dur_dat = np.load(args.data_path + "_dur.npy")
-    im_dat = np.load(args.data_path + "_im.npy")
+    priors_vals = np.load(args.priors, allow_pickle=True).item()
+    default_params = np.load(args.defaults, allow_pickle=True).item()
+    x_dat = np.load(args.data_path + "_x.npy", allow_pickle=True)
+    y_dat = np.load(args.data_path + "_y.npy", allow_pickle=True)
+    dur_dat = np.load(args.data_path + "_dur.npy", allow_pickle=True)
+    im_dat = np.load(args.data_path + "_im.npy", allow_pickle=True)
     if args.densities is None:
-        densities_dat = np.load(args.data_path + "_densities.npy")
+        densities_dat = np.load(args.data_path + "_densities.npy", allow_pickle=True)
     else:
-        densities_dat = np.load(args.densities)
+        densities_dat = np.load(args.densities, allow_pickle=True)
     print("loaded everything!")
     print(sw_model.whoami())
 
@@ -196,9 +196,10 @@ def main():
     nprocesses = int(args.nprocesses)
     nchains = int(args.nchains)
     niter = int(args.niter)
+    num_processes_trials = 3
     #print(type(int(args.nchains)))
 
-    dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, nprocesses, nchains, niter)
+    dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, nprocesses, num_processes_trials, nchains, niter)
 
 if __name__ == "__main__":
     print("main")

@@ -251,7 +251,7 @@ def _setup_mp_dream_pool(nchains, niterations, step_instance, start_pt=None):
     if nchains < min_njobs:
         raise Exception('Dream should be run with at least (2*DEpairs)+1 number of chains.  For current algorithmic settings, set njobs>=%s.' %str(min_njobs))
     if step_instance.history_file != False:
-        old_history = np.load(step_instance.history_file)
+        old_history = np.load(step_instance.history_file, allow_pickle=True)
         len_old_history = len(old_history.flatten())
         nold_history_records = len_old_history/step_instance.total_var_dimension
         step_instance.nseedchains = nold_history_records

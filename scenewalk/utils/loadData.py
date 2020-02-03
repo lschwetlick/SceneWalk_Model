@@ -1,10 +1,10 @@
-import numpy as np
+import os
+import sys
 import glob
 import warnings
 import re
+import numpy as np
 from random import sample
-import sys
-import os
 
 
 def setup_paths():
@@ -31,11 +31,23 @@ def get_set_names():
     for n in data_path_dict:
         print(n)
 
+def setup_data_dict():
+    data_dict = {
+        "x": None,
+        "y": None,
+        "dur": None,
+        "im": None,
+        "densities": None,
+        "range": None,
+        "meta": None
+    }
+    return data_dict
+
 def load_data(set_name):
     """
     Returns selected data set as a dictionary
     """
-    loaded_dict = {}
+    loaded_dict = setup_data_dict()
 
     try:
         folder = data_path_dict[set_name]
@@ -47,22 +59,42 @@ def load_data(set_name):
     for p in load_paths:
         mat = re.search(r'_([a-zA-Z]*).npy', p)
         name = mat.group(1)
-        loaded_dict[name] = np.load(p)
-    if not loaded_dict:
+        loaded_dict[name] = np.load(p, allow_pickle=True)
+    if all([x is None for x in loaded_dict.values()]):
         warnings.warn("Can't find the files where you are looking. Is the path set up correctly?")
     return (loaded_dict)
+
+def load_sim_data(folder_path):
+    """
+    Takes the absolute path of a folder of simulated data and loads the contents into a dictionary
+    """
+    loaded_dict = setup_data_dict()
+    load_paths = glob.glob(folder_path + "*.npy")
+    print(load_paths)
+    for p in load_paths:
+        mat = re.search(r'([a-zA-Z]*).npy', p)
+        print("mat", mat)
+        name = mat.group(1)
+        loaded_dict[name] = np.load(p, allow_pickle=True)
+    if all([x is None for x in loaded_dict.values()]):
+        warnings.warn("Can't find the files where you are looking. Is the path set up correctly?")
+    return (loaded_dict)
+
 
 def dataDict2vars(data_dict):
     """
     takes data dictionary and returns vectors
     """
-    return (data_dict["x"],
-            data_dict["y"],
-            data_dict["dur"],
-            data_dict["im"],
-            data_dict["densities"],
-            data_dict["range"])
-
+    try:
+        return (data_dict["x"],
+                data_dict["y"],
+                data_dict["dur"],
+                data_dict["im"],
+                data_dict["densities"],
+                data_dict["range"])
+    except Exception as error:
+        print('Probably your dictionary is not complete. Caught this error: ' + repr(error))
+        raise error
 
 def shorten_set(data_dict, nvp, vps = None):
     """

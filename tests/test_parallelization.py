@@ -7,6 +7,7 @@ import pytest
 import numpy as np
 from scenewalk.evaluation import  evaluate_sw_parallel
 from scenewalk.scenewalk_model_object import scenewalk as sw_model
+from scenewalk.utils import loadData
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -40,12 +41,16 @@ def test_para_vs_seq_trials(inhib_method, att_map_init_type, shifts, exponents, 
     Checks parallized result is the same as non parallelized evaluation
     """
     # Load Data
-    x_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_x.npy'))
-    y_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_y.npy'))
-    dur_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_dur.npy'))
-    im_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_im.npy'))
-    densities_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/densities.npy'))
-    dat_range = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_range.npy'))
+    dataDict = loadData.load_sim_data(os.path.join(THIS_DIR, 'test_simdata/'))
+    x_dat, y_dat, dur_dat, im_dat, densities_dat, dat_range = loadData.dataDict2vars(dataDict)
+
+
+    # x_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_x.npy'))
+    # y_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_y.npy'))
+    # dur_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_dur.npy'))
+    # im_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_im.npy'))
+    # densities_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/densities.npy'))
+    # dat_range = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_range.npy'))
 
     #sw_params = list(meta[0].values())
     sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': dat_range[0], 'y': dat_range[1]})
@@ -74,12 +79,14 @@ def test_para_vs_seq_both(inhib_method, att_map_init_type, shifts, exponents, lo
     Checks parallized result is the same as non parallelized evaluation
     """
     # Load Data
-    x_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_x.npy'))
-    y_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_y.npy'))
-    dur_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_dur.npy'))
-    im_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_im.npy'))
-    densities_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/densities.npy'))
-    dat_range = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_range.npy'))
+    dataDict = loadData.load_sim_data(os.path.join(THIS_DIR, 'test_simdata/'))
+    x_dat, y_dat, dur_dat, im_dat, densities_dat, dat_range = loadData.dataDict2vars(dataDict)
+    # x_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_x.npy'))
+    # y_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_y.npy'))
+    # dur_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_dur.npy'))
+    # im_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_im.npy'))
+    # densities_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/densities.npy'))
+    # dat_range = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_range.npy'))
 
     #sw_params = list(meta[0].values())
     sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': dat_range[0], 'y': dat_range[1]})

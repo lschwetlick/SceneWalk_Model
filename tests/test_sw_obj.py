@@ -7,6 +7,7 @@ from collections import OrderedDict
 import pytest
 import numpy as np
 from scenewalk.scenewalk_model_object import scenewalk as sw_model
+from scenewalk.utils import loadData
 
 sys.setrecursionlimit(10000)
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -73,6 +74,7 @@ def test_simulate_durations():
     types = [isinstance(x, float) for x in durs]
     assert sum(types) == n_points
 
+#TODO!! Issue Raised on github: https://github.com/scipy/scipy/issues/11464 
 @pytest.mark.basictest
 @pytest.mark.xfail # strange case of i think a previous numpy version, where kde doesnt maintain datatype
 def test_empirical_fixation_density():
@@ -425,10 +427,10 @@ def test_get_scanpath_likelihood(inhib_method, att_map_init_type, shifts, expone
     """Tests that returned scanpath likelihhods are not nan and have the right type"""
     sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
     sw.update_params(sw_params)
-    fix_dens = np.load('tests/emp_dens.npy')
-    x_sim = np.load("tests/test_simdata/sim_x.npy")
-    y_sim = np.load("tests/test_simdata/sim_y.npy")
-    dur_sim = np.load("tests/test_simdata/sim_dur.npy")
+
+    dataDict = loadData.load_sim_data('tests/test_simdata/')
+    x_sim, y_sim, dur_sim, _, densities, _ = loadData.dataDict2vars(dataDict)
+    fix_dens = densities[0]
 
     avg_log_ll = sw.get_scanpath_likelihood(x_sim[0][0], y_sim[0][0], dur_sim[0][0], fix_dens)
 
@@ -445,8 +447,11 @@ def test_simulate_scanpath(inhib_method, att_map_init_type, shifts, exponents, l
     """Tests that simulated scanpaths the right type, range and length"""
     sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
     sw.update_params(sw_params)
-    fix_dens = np.load('tests/emp_dens.npy')
-    dur_sim = np.load("tests/test_simdata/sim_dur.npy")
+
+    dataDict = loadData.load_sim_data('tests/test_simdata/')
+    _, _, dur_sim, _, densities, _ = loadData.dataDict2vars(dataDict)
+    fix_dens = densities[0]
+
     startpos = (np.sum((23, 100))/2, np.sum((0, 90))/2)
     x_path, y_path, avg_log_ll = sw.simulate_scanpath(dur_sim[0][0], fix_dens, startpos, get_LL=True)
     assert len(x_path) == len(y_path) == len(dur_sim[0][0])
