@@ -120,7 +120,7 @@ def shorten_set(data_dict, nvp, vps = None):
 def chop_scanpaths(lower, upper, datadict):
     chop_dict = {}
     for i in datadict:
-        if i == "range" or i == "densities":
+        if i == "range" or i == "densities" or i == "meta":
             chop_dict[i] = datadict[i]
             continue
         chop_dict[i] = chop_list(lower, upper, datadict[i])
