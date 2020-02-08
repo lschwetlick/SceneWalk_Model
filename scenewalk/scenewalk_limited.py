@@ -7,14 +7,16 @@ class limited_sw(sw):
     """
     SceneWalk variant that has access to limited history at each fixation
     """
-    def __init__(self, data_range, n_history):
-        super().__init__("subtractive", "zero", "off", 1, "off", data_range, {"coupled_oms": True})
-        self.n_history = n_history
+    def __init__(self, *args):
+        self.n_history = None
+        super().__init__(*args)
+        if self.n_history is None:
+            raise Exception("This SceneWalk Version needs a value for n_history")
 
     def whoami(self):
         return "Limited History SW: " + super().whoami()
 
-    def get_scanpath_likelihood(self, x_path, y_path, dur_path, fix_dens):
+    def get_scanpath_likelihood(self, x_path, y_path, dur_path, fix_dens, debug=False):
         """
         calculate likelihood of one scanpath under scenewalk model with params in scene_walk_params.
         Inputs:
@@ -35,18 +37,29 @@ class limited_sw(sw):
         y_path2 = y_path.copy()
         dur_path2 = dur_path.copy()
 
+        if debug:
+            debug_list = []
+
         for fixs_x, fixs_y, durs in list(zip(x_iter, y_iter, dur_iter))[0:-1]:
             # This is the regular loop that occurs normally
             if i_fix <= self.n_history:
-                print("we want the LL of ifix ", str(i_fix+1))
-                print("\t old + eval triplet:", str(fixs_x))
+                if debug:
+                    print("regular loop, before history is relevant")
+                    print("we want the LL of ifix ", str(i_fix+1))
+                    print("\t old + eval triplet:", str(fixs_x))
+                    debug_list.append(["normal", fixs_x])
+
                 # evolve map given fixation
                 mapAtt, mapInhib, _, _, LL = self.evolve_maps(durs, fixs_x, fixs_y, mapAtt, mapInhib, fix_dens, i_fix)
                 log_ll.append(LL)
             # in this loop we restart the evolution from the point of n history to erase any trace of previous fixations
             # we bootstrap the start of the model by cutting the path and reevaluating
             else:
-                print("we want the LL of ifix"+str(i_fix+1))
+                if debug:
+                    print("re-evolve all within window")
+                    print("we want the LL of ifix" + str(i_fix + 1))
+                    debug_list.append(["chopped", None])
+                    debug_list2 = []
                 # move the front of the path by one each time
                 x_path2 = x_path2[1:]
                 y_path2 = y_path2[1:]
@@ -61,10 +74,15 @@ class limited_sw(sw):
                 x_iter2, y_iter2, dur_iter2 = self.window(x_path3), self.window(y_path3), self.window(dur_path3)#
                 i_fix2 = 1
                 for fixs_x2, fixs_y2, durs2 in list(zip(x_iter2, y_iter2, dur_iter2))[0:-1]:
-                    print("\teval triplet:", fixs_x2)
+                    if debug:
+                        print("re-evolving")
+                        print("\teval triplet:", fixs_x2)
+                        debug_list2.append(fixs_x2)
                     # calculate the maps but ignore LL until the last round
                     mapAtt2, mapInhib2, _, _, LL2 = self.evolve_maps(durs2, fixs_x2, fixs_y2, mapAtt2, mapInhib2, fix_dens, i_fix2)
                     i_fix2 += 1
+                if debug:
+                    debug_list[len(debug_list)-1][1]=debug_list2
                 # append only the last LL
                 log_ll.append(LL2)
                 # clean up, just in case
@@ -76,4 +94,6 @@ class limited_sw(sw):
         if np.isnan(log_ll).any():
             raise Exception("LLs are Nan :( "+self.whoami()+" params "+ str(self.get_params()))
         sum_log_ll = np.sum(log_ll)
+        if debug:
+            return sum_log_ll, debug_list
         return sum_log_ll
