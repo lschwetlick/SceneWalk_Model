@@ -70,10 +70,10 @@ def load_sim_data(folder_path):
     """
     loaded_dict = setup_data_dict()
     load_paths = glob.glob(folder_path + "*.npy")
-    print(load_paths)
+    #print(load_paths)
     for p in load_paths:
         mat = re.search(r'([a-zA-Z]*).npy', p)
-        print("mat", mat)
+        #print("mat", mat)
         name = mat.group(1)
         loaded_dict[name] = np.load(p, allow_pickle=True)
     if all([x is None for x in loaded_dict.values()]):
@@ -103,7 +103,7 @@ def shorten_set(data_dict, nvp, vps = None):
     short_dict = {}
     chosen_vps = []
     for i in data_dict:
-        if i == "range" or i == "densities":
+        if i == "range" or i == "densities" or i == "meta":
             short_dict[i] = data_dict[i]
             continue
         dat = data_dict[i]
