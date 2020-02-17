@@ -180,6 +180,8 @@ class scenewalk:
             id_str += ", with logged z"
         if self.saclen_shift:
             id_str += ", with eta=saclen"
+        if self.omp != "off":
+            id_str += ", with omp"
         return id_str
 
     def get_params(self):
@@ -209,6 +211,9 @@ class scenewalk:
         if self.estimate_times:
             p_list["tau_pre"] = self.tau_pre
             p_list["tau_post"] = self.tau_post
+        if self.omp != "off":
+            p_list["chi"] = self.chii
+            p_list["ompfactor"] = self.ompfactor
         return p_list
 
     def get_param_list_order(self):
@@ -238,6 +243,9 @@ class scenewalk:
         if self.estimate_times:
             param_names.extend(["tau_pre"])
             param_names.extend(["tau_post"])
+        if self.omp != "off":
+            param_names.extend(["chi"])
+            param_names.extend(["ompfactor"])
         return param_names
 
     def update_params(self, scene_walk_parameters):
@@ -287,6 +295,9 @@ class scenewalk:
             if self.estimate_times:
                 self.tau_pre = scene_walk_parameters["tau_pre"]
                 self.tau_post = scene_walk_parameters["tau_post"]
+            if self.omp != "off":
+                self.chii = scene_walk_parameters["chi"]
+                self.ompfactor = scene_walk_parameters["ompfactor"]
         elif isinstance(scene_walk_parameters, list):
             scene_walk_params = scene_walk_parameters.copy()
             self.omegaAttention = scene_walk_params.pop(0)
@@ -331,6 +342,9 @@ class scenewalk:
             if self.estimate_times:
                 self.tau_pre = scene_walk_params.pop(0)
                 self.tau_post = scene_walk_params.pop(0)
+            if self.omp != "off":
+                self.chii = scene_walk_params.pop(0)
+                self.ompfactor = scene_walk_params.pop(0)
             if len(scene_walk_params) != 0:
                 warnings.warn("You passed more parameters than your model can use. Why would you do that?")
                 return scene_walk_params
@@ -882,10 +896,11 @@ class scenewalk:
         u = self.combine(map_att, map_inhib)
 
         if self.omp == "add":
+            #print("adding omp")
             #u = u * (1 * self.make_om_potential(fixs_x[1], fixs_y[1]))
             #ompfactor = 2
             omp_map = self.make_om_potential(fixs_x[1], fixs_y[1])
-            omp_map = omp_map/sum(omp_map)
+            omp_map = omp_map/np.sum(omp_map)
             # additive OMP
             u = u + (self.ompfactor * omp_map)
         if self.omp == "mult":

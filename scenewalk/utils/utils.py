@@ -152,9 +152,12 @@ def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, 
         else:
             dict1 = {"param_name":param_name, "mpde":def_args[param_name], "interv":np.nan, "left": np.nan, "right": np.nan}
         rows_list.append(dict1)
-    rows_list.append({"param_name":"tau_pre", "mpde":sw.tau_pre, "interv":np.nan, "left": np.nan, "right": np.nan})
-    rows_list.append({"param_name":"tau_post", "mpde":sw.tau_post, "interv":np.nan, "left": np.nan, "right": np.nan})
-    rows_list.append({"param_name":"foR_size", "mpde":sw.foR_size, "interv":np.nan, "left": np.nan, "right": np.nan})
+    rows_list.append({"param_name": "tau_pre", "mpde": sw.tau_pre, "interv": np.nan, "left": np.nan, "right": np.nan})
+    rows_list.append({"param_name": "tau_post", "mpde": sw.tau_post, "interv": np.nan, "left": np.nan, "right": np.nan})
+    rows_list.append({"param_name": "foR_size", "mpde": sw.foR_size, "interv": np.nan, "left": np.nan, "right": np.nan})
+    rows_list.append({"param_name": "chi", "mpde": sw.chii, "interv": np.nan, "left": np.nan, "right": np.nan})
+    rows_list.append({"param_name": "psi", "mpde": sw.ompfactor, "interv": np.nan, "left": np.nan, "right": np.nan})
+    
     hpde_df = pd.DataFrame(rows_list)
     hpde_df.to_csv(fname)
     return(hpde_df)
