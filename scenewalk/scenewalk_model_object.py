@@ -71,12 +71,12 @@ class scenewalk:
         self.coupled_sigmas = False
         self.logged_cf = False
         self.logged_z = False
+        self.logged_ompf = False
         self.coupled_facil = False
         self.estimate_times = False
         self.saclen_shift = False
         self.omp = "off"  # "add", "mult"
-        self.chii = 0.3
-        self.ompfactor = 1
+
 
         # Parameters
         self.omegaAttention = None
@@ -95,6 +95,8 @@ class scenewalk:
         self.tau_post = 100 / 1000
         self.foR_size = 2  # diameter in degrees, Not radius
         self.omega_prevloc = None
+        self.chii = 0.3
+        self.ompfactor = 1
 
         # Data
         self.data_range = data_range  #  {'x':(0, 127), 'y':(0, 127)}
@@ -111,6 +113,9 @@ class scenewalk:
         """
         basics_not_none = not(None in [self.omegaAttention, self.omegaInhib, self.sigmaAttention, self.sigmaInhib, self.gamma, self.lamb, self.inhibStrength, self.zeta])
         assert basics_not_none
+        zeta_range = (0, 1) if not self.logged_z else(10 ** -20, 10 **0)
+        ompf_range = (0, 10) if not self.logged_ompf else (10**-20, 10 ** 1)
+
         all_valid = (0 < self.omegaAttention < 10000) and \
                     (0 < self.omegaInhib < 10000) and \
                     (0 < self.sigmaAttention < 10000) and \
@@ -118,7 +123,7 @@ class scenewalk:
                     (0 < self.gamma < 15) and \
                     (0 < self.lamb < 15) and \
                     (0 < self.inhibStrength < 10000) and \
-                    (0 <= self.zeta <= 1) and \
+                    (zeta_range[0] <= self.zeta <= zeta_range[1]) and \
                     (self.cb_sd is None or (0 < self.cb_sd[0] < 10000)) and \
                     (self.cb_sd is None or (0 < self.cb_sd[1] < 10000)) and \
                     (self.first_fix_OmegaAttention is None or (0 < self.first_fix_OmegaAttention < 10000)) and \
@@ -128,7 +133,9 @@ class scenewalk:
                     (self.shift_size is None or (0 < self.shift_size < 10000)) and \
                     (self.omega_prevloc is None or (0 < self.omega_prevloc < 10000)) and \
                     (0 < self.tau_pre < 100) and \
-                    (0 < self.tau_post < 100)
+                    (0 < self.tau_post < 100) and \
+                    (ompf_range[0] < self.ompfactor < ompf_range[1]) and \
+                    (0.0001 < self.chii < 2)
         return all_valid and basics_not_none
 
     def check_params_for_config(self):
@@ -182,6 +189,8 @@ class scenewalk:
             id_str += ", with eta=saclen"
         if self.omp != "off":
             id_str += ", with omp"
+        if self.logged_ompf:
+            id_str += "logged"
         return id_str
 
     def get_params(self):
@@ -203,7 +212,7 @@ class scenewalk:
             p_list["shift_size"] = self.shift_size
         # Center bias
         if self.att_map_init_type == "cb":
-            p_list["omega first"] = self.first_fix_OmegaAttention
+            p_list["first_fix_OmegaAttention"] = self.first_fix_OmegaAttention
             p_list["cb_sd_x"] = self.cb_sd[0]
             p_list["cb_sd_y"] = self.cb_sd[1]
         if self.locdep_decay_switch == "on":
@@ -297,7 +306,10 @@ class scenewalk:
                 self.tau_post = scene_walk_parameters["tau_post"]
             if self.omp != "off":
                 self.chii = scene_walk_parameters["chi"]
-                self.ompfactor = scene_walk_parameters["ompfactor"]
+                if self.logged_ompf:
+                    self.ompfactor = 10 ** scene_walk_parameters["ompfactor"]
+                else:
+                    self.ompfactor = scene_walk_parameters["ompfactor"]
         elif isinstance(scene_walk_parameters, list):
             scene_walk_params = scene_walk_parameters.copy()
             self.omegaAttention = scene_walk_params.pop(0)
@@ -326,7 +338,7 @@ class scenewalk:
                 self.zeta = 10 ** (scene_walk_params.pop(0))
             else:
                 self.zeta = scene_walk_params.pop(0)
-            # lars
+            # Extension
             if self.shifts == "post" or self.shifts == "both":
                 self.sigmaShift = scene_walk_params.pop(0)
                 self.shift_size = scene_walk_params.pop(0)
@@ -344,7 +356,10 @@ class scenewalk:
                 self.tau_post = scene_walk_params.pop(0)
             if self.omp != "off":
                 self.chii = scene_walk_params.pop(0)
-                self.ompfactor = scene_walk_params.pop(0)
+                if self.logged_ompf:
+                    self.ompfactor = 10 ** scene_walk_params.pop(0)
+                else:
+                    self.ompfactor = scene_walk_params.pop(0)
             if len(scene_walk_params) != 0:
                 warnings.warn("You passed more parameters than your model can use. Why would you do that?")
                 return scene_walk_params

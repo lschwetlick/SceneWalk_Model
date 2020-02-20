@@ -46,6 +46,19 @@ def trunc_unif(lb, ub):
     scale = ub-lb
     return pd_param(uniform, loc=loc, scale=scale)
 
+def param_list_from_estim_and_default(priors, default_params, parvals):
+    sw_params = []
+    fitted_params_names = priors.keys()
+    i = 0
+    # enable fitting of only a few params
+    for key in default_params.keys():
+        if key in fitted_params_names:
+            sw_params.append(parvals[i])
+            i += 1
+        else:
+            sw_params.append(default_params[key])
+    return sw_params
+
 def generate_custom_likelihood_function(sw_model, params, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials):
     """
     generates a custom log likelihood function with the given setup
@@ -64,16 +77,7 @@ def generate_custom_likelihood_function(sw_model, params, default_params, x_dat,
         """
         evaluate scenewalk
         """
-        sw_params = []
-        fitted_params_names = params.keys()
-        i = 0
-        # enable fitting of only a few params
-        for key in default_params.keys():
-            if key in fitted_params_names:
-                sw_params.append(parvals[i])
-                i += 1
-            else:
-                sw_params.append(default_params[key])
+        sw_params = param_list_from_estim_and_default(params, default_params, parvals)
         leftovers = sw_model.update_params(sw_params)
         assert leftovers is None, "giving too many parameters"
         sw_model.check_params_for_config()
