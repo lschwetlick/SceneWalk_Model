@@ -213,3 +213,10 @@ def show_all_colors():
         pat_list.append(pat)
     plt.legend(handles=pat_list)
     return fig, ax
+
+def check_param_dict_order(p_dict, sw_model):
+    param_names = sw_model.get_param_list_order()
+    res_list = []
+    for i, n in enumerate(p_dict):
+        res_list.append(n == param_names[i])
+    return res_list

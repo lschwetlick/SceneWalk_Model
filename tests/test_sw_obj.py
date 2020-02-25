@@ -36,6 +36,37 @@ sw_params = OrderedDict({
 })
 
 @pytest.mark.basictest
+def test_update_params():
+    """that params are correctly fed into the model"""
+    sw_params1 = OrderedDict({
+        "omegaAttention" : 1,
+        "omegaInhib": 0.1,
+        "sigmaAttention" : 5,
+        "sigmaInhib" : 4,
+        "gamma" : 1,
+        "lamb" : 1,
+        "inhibStrength" : 0.01,
+        "zeta" : 0.01,
+        "sigmaShift" : 5,
+        "shift_size" : 2,
+        "first_fix_OmegaAttention" : 3,
+        "cb_sd_x" : 5,
+        "cb_sd_y" : 4,
+        "omega_prevloc": 1,
+        "tau_pre": 50,
+        "tau_post": 50,
+        "chi": 0.5,
+        "ompfactor": 0.5,
+    })
+    sw = sw_model("subtractive", "cb", "both", 2, "on", {'x': (23, 100), 'y': (0, 90)}, {"estimate_times":True, "omp":True})
+    sw.update_params(sw_params1)
+    res1 = sw.get_params()
+    sw.clear_params()
+    sw.update_params(list(sw_params1.values()))
+    res2 = sw.get_params()
+    assert res1 == res2
+
+@pytest.mark.basictest
 def test_convert_deg_to_px():
     """checks conversion and conversion edge case where fix is outside range"""
     sw = sw_model("subtractive", "cb", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})

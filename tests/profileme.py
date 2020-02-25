@@ -34,10 +34,12 @@ def bla():
         "first_fix_OmegaAttention" : 3,
         "cb_sd_x" : 5,
         "cb_sd_y" : 4,
-        "omega_prevloc" : 1
+        "omega_prevloc": 1,
+        "chi": 0.5,
+        "ompfactor":0.1
     })
 
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)}, {"omp":"add"})
     sw.update_params(sw_params)
 
     dataDict = loadData.load_sim_data('test_simdata/')

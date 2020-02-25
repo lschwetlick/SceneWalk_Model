@@ -194,6 +194,12 @@ class scenewalk:
             id_str += "logged"
         return id_str
 
+    def clear_params(self):
+        self.omegaAttention, self.omegaInhib, self.sigmaAttention, self.sigmaInhib, \
+        self.gamma, self.lamb, self.inhibStrength, self.zeta, self.sigmaShift, \
+        self.shift_size, self.first_fix_OmegaAttention, self.cb_sd, self.tau_pre, \
+        self.tau_post, self.foR_size, self.omega_prevloc, self.chii, self.ompfactor = [None]*18
+
     def get_params(self):
         """Returns the current parameters as a dictionary"""
         p_list = OrderedDict({
@@ -864,6 +870,7 @@ class scenewalk:
         q = np.abs(q-1)
         #q = q / np.sum(q)
         return q
+
     def make_om_potential_neg(self, fix_x, fix_y, chii=0.3):
         """
         makes an occulomotor potential map where the cardinal directions have lower activation than the oblique.
