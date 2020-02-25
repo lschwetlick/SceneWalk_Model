@@ -41,6 +41,7 @@ class scenewalk:
         # Internal Vars
         self._xx, self._yy = np.float128(np.mgrid[0:self.MAP_SIZE, 0:self.MAP_SIZE])
         self.inputs_in_deg = True
+        self.warn_me = False
 
         # Settings: picks the appropriate functions for the chosen configuration
         self.att_map_init_type = att_map_init_type  # random, cb, zero, one
@@ -421,7 +422,8 @@ class scenewalk:
         vec_magnitude = np.sqrt((d_x ** 2) + (d_y ** 2))
         if vec_magnitude == 0:
             #print(point1, point2)
-            warnings.warn("no movement between two fixations")
+            if self.warn_me:
+                warnings.warn("no movement between two fixations")
             u_x = 0
             u_y = 0
         else:
@@ -596,8 +598,9 @@ class scenewalk:
         if np.isclose(np.sum(gaussAttention_shift), 0):
             # gaussAttention_shift = self.initialize_map_unif()
             gaussAttention_shift = np.float128(np.ones(np.shape(self._xx)))
-            warning_msg = str(["shift gauss 0. tried to put a gaussian at", shift_loc_x_px, shift_loc_y_px, "with ", sigmaShift_x, sigmaShift_y])
-            warnings.warn(warning_msg)
+            if self.warn_me:
+                warning_msg = str(["shift gauss 0. tried to put a gaussian at", shift_loc_x_px, shift_loc_y_px, "with ", sigmaShift_x, sigmaShift_y])
+                warnings.warn(warning_msg)
 
         if get_loc:
             return gaussAttention_shift, shift_loc_x_px, shift_loc_y_px
