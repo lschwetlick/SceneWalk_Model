@@ -43,7 +43,7 @@ def save2dict_by_subj(chains_list, all_vp_list, def_args, fname, perc_last_sampl
 
 
 
-def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, credible_interval, fname, CI=False, perc_last_samples=75):
+def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, credible_interval, fname, CI=False, perc_last_samples=75, logzeta=False):
     from collections import OrderedDict
     import numpy as np
     from pymc3.stats import hpd
@@ -62,8 +62,10 @@ def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, credible
                 chain2 = chains[1, samp_ix:, param_ix]
                 chain3 = chains[2, samp_ix:, param_ix]
                 allchains = np.hstack((chain1, chain2, chain3))
-
                 # Highst Posterior Density
+                if logzeta:
+                    if param_name == "zeta":
+                        allchains = np.log10(allchains)
                 hpd_all = hpd(allchains, credible_interval)
                 mpde = (hpd_all[1]+hpd_all[0])/2
                 if CI:
@@ -75,6 +77,9 @@ def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, credible
                 param_dict1[param_name] = def_args[param_name]
 
         vp_params[vp] = param_dict1
+    if logzeta:
+        np.save("logz" + fname, vp_params)
+        return (vp_params)
     np.save(fname, vp_params)
     return (vp_params)
 
@@ -116,7 +121,7 @@ def save2dict_overall_point_estimates(chains_list, all_vp_list, def_args, priors
     np.save(fname, dict1)
     return(dict1)
 
-def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, sw, credible_interval, fname, perc_last_samples=75):
+def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, sw, credible_interval, fname, perc_last_samples=75, logzeta=False):
     from collections import OrderedDict
     import numpy as np
     from pymc3.stats import hpd
@@ -143,6 +148,11 @@ def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, 
                 allvps.extend(chain3)
             allvps = np.array(allvps)
             #print(len(allvps))
+            if logzeta:
+                if param_name == "zeta":
+                    allvps = np.log10(allvps)
+                    type(allvps)
+
             hpd_all = hpd(allvps, credible_interval)
             mpde = (hpd_all[1]+hpd_all[0])/2
             #print(hpd_all)
@@ -159,6 +169,10 @@ def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, 
     rows_list.append({"param_name": "psi", "mpde": sw.ompfactor, "interv": np.nan, "left": np.nan, "right": np.nan})
     
     hpde_df = pd.DataFrame(rows_list)
+
+    if logzeta:
+        hpde_df.to_csv("logz" + fname)
+        return (hpde_df)
     hpde_df.to_csv(fname)
     return(hpde_df)
 
