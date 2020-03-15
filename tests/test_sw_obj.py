@@ -621,6 +621,7 @@ def test_evolve_maps_durs(inhib_method, att_map_init_type, shifts, exponents, lo
 @pytest.mark.parametrize("locdep_decay_switch", ("on", "off"))
 def test_evolve_maps_float64(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch):
     """
+    Tests calculation in float 64
     tests evolve maps function in all different configurations. Checks
     - uFinal is correct shape, type, non-negative, nonzero, non-nan, density
     - attmap is correct shape, type, non-negative, nonzero, non-nan
@@ -691,6 +692,90 @@ def test_evolve_maps_float64(inhib_method, att_map_init_type, shifts, exponents,
 
     assert inh2.shape == (128, 128)
     assert isinstance(inh2.flatten()[0], np.float64)
+    assert not np.isnan(inh2).any()
+    assert not (inh2 < 0).any()
+    assert not (inh2 == 0).all()
+
+
+@pytest.mark.basictest
+@pytest.mark.parametrize('inhib_method', ("subtractive", "divisive"))
+@pytest.mark.parametrize('att_map_init_type', ("zero", "cb"))
+@pytest.mark.parametrize('shifts', ("off", "pre", "post", "both"))
+@pytest.mark.parametrize('exponents', (1, 2))
+@pytest.mark.parametrize("locdep_decay_switch", ("on", "off"))
+@pytest.mark.parametrize("sz", (33, 64))
+def test_evolve_maps_other_mapsize(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, sz):
+    """
+    tests evolve maps function in all different configurations. Checks
+    - uFinal is correct shape, type, non-negative, nonzero, non-nan, density
+    - attmap is correct shape, type, non-negative, nonzero, non-nan
+    - inhmap is correct shape, type, non-negative, nonzero, non-nan
+    - next_pos is in legal range and right type
+    - LL is not nan
+    """
+    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw.set_mapsize(sz)
+    sw.update_params(sw_params)
+
+    init_map_att = sw.att_map_init()
+    init_map_inhib = sw.initialize_map_unif()
+    fix_dens = np.load('tests/emp_dens'+str(sz)+'.npy')
+
+    durations1 = (0.2, 0.3, 0.4)
+    x_deg1 = (67, 50, 24)
+    y_deg1 = (37, 50, 29)
+    att1, inh1, uFinal1, next1, LL1 = sw.evolve_maps(durations1, x_deg1, y_deg1, init_map_att, init_map_inhib, fix_dens, 1, sim=False)
+    assert next1[0] == x_deg1[2]
+    assert next1[1] == y_deg1[2]
+
+    assert isinstance(LL1, np.float128)
+    assert not np.isnan(LL1)
+
+    assert uFinal1.shape == (sz, sz)
+    assert isinstance(uFinal1.flatten()[0], np.float128)
+    assert not np.isnan(uFinal1).any()
+    assert not (uFinal1 == 0).all()
+    assert not (uFinal1 < 0).any()
+    assert np.isclose(np.sum(uFinal1), 1)
+
+    assert att1.shape == (sz, sz)
+    assert isinstance(att1.flatten()[0], np.float128)
+    assert not np.isnan(att1).any()
+    assert not (att1 < 0).any()
+    assert not (att1 == 0).all()
+
+    assert inh1.shape == (sz, sz)
+    assert isinstance(inh1.flatten()[0], np.float128)
+    assert not np.isnan(inh1).any()
+    assert not (inh1 < 0).any()
+    assert not (inh1 == 0).all()
+
+
+    durations2 = (0.3, 0.4, 0.1)
+    x_deg2 = (50, 24, 56)
+    y_deg2 = (50, 29, 66)
+    att2, inh2, uFinal2, next2, LL2 = sw.evolve_maps(durations2, x_deg2, y_deg2, att1, inh1, fix_dens, 2, sim=False)
+    assert next2[0] == x_deg2[2]
+    assert next2[1] == y_deg2[2]
+
+    assert isinstance(LL2, np.float128)
+    assert not np.isnan(LL2)
+
+    assert uFinal2.shape == (sz, sz)
+    assert isinstance(uFinal2.flatten()[0], np.float128)
+    assert not np.isnan(uFinal2).any()
+    assert not (uFinal2 == 0).all()
+    assert not (uFinal2 < 0).any()
+    assert np.isclose(np.sum(uFinal2), 1)
+
+    assert att2.shape == (sz, sz)
+    assert isinstance(att2.flatten()[0], np.float128)
+    assert not np.isnan(att2).any()
+    assert not (att2 < 0).any()
+    assert not (att2 == 0).all()
+
+    assert inh2.shape == (sz, sz)
+    assert isinstance(inh2.flatten()[0], np.float128)
     assert not np.isnan(inh2).any()
     assert not (inh2 < 0).any()
     assert not (inh2 == 0).all()

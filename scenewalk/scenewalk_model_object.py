@@ -106,6 +106,13 @@ class scenewalk:
         if not kwargs_dict is None:
             self.__dict__.update(kwargs_dict)
 
+    def set_mapsize(self, mapsize):
+        """
+        Set up the operating size for calculation
+        """
+        self.MAP_SIZE = mapsize
+        self._xx, self._yy = self.PRECISION(np.mgrid[0:self.MAP_SIZE, 0:self.MAP_SIZE])
+
     def set_precision(self, data_type):
         """
         Set up the operating datatype for the whole model. np.float128 is best if you want to make sure the model doesnt
@@ -383,7 +390,7 @@ class scenewalk:
             raise Exception("Data Type Error: you need to provide the parameters as either a dict or a list")
 
 
-    def convert_deg_to_px(self, dat, dim, fix=False, cutoff=True, grid_sz=128):
+    def convert_deg_to_px(self, dat, dim, fix=False, cutoff=True, grid_sz=None):
         """
         Converts degree values to pixels on the grid.
         Inputs:
@@ -393,6 +400,8 @@ class scenewalk:
         Returns:
             - pixel value
         """
+        if grid_sz is None:
+            grid_sz = self.MAP_SIZE
         if not self.inputs_in_deg:
             return dat
         if dat is None:
@@ -408,7 +417,7 @@ class scenewalk:
             dat_px = 0.1 if dat_px < 0.1 else dat_px
         return dat_px
 
-    def convert_px_to_deg(self, dat, dim):
+    def convert_px_to_deg(self, dat, dim, grid_sz=None):
         """
         Converts pixel values to degrees on the grid.
         Inputs:
@@ -417,9 +426,11 @@ class scenewalk:
         Returns:
             - degree value
         """
+        if grid_sz is None:
+            grid_sz = self.MAP_SIZE
         if not self.inputs_in_deg:
             return dat
-        dat_deg = (dat / 128) * (max(self.data_range[dim]) - min(self.data_range[dim])) + min(self.data_range[dim])
+        dat_deg = (dat / grid_sz) * (max(self.data_range[dim]) - min(self.data_range[dim])) + min(self.data_range[dim])
         return dat_deg
 
     def get_unit_vector(self, point1, point2):
