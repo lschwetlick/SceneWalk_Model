@@ -22,9 +22,6 @@ class scenewalk:
         - locdep_decay_switch ['on' or 'off']: Is there slower decay on he previous fixation location?
         - data_range [{'x' : [0,127], 'y' : [0,127]}]: dictionary of the data range.
     """
-    # Base Settings
-    MAP_SIZE = 128
-    EPS = np.finfo(np.float128).eps
 
     def __init__(self, inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, data_range, kwargs_dict=None):
         """
@@ -38,8 +35,11 @@ class scenewalk:
             - locdep_decay_switch ['on' or 'off']: Is there slower decay on he previous fixation location?
             - data_range [{'x' : [0,127], 'y' : [0,127]}]: dictionary of the data range.
         """
+        # Base Settings
+        self.MAP_SIZE = 128
+        self.set_precision(np.float128)
+
         # Internal Vars
-        self._xx, self._yy = np.float128(np.mgrid[0:self.MAP_SIZE, 0:self.MAP_SIZE])
         self.inputs_in_deg = True
         self.warn_me = False
 
@@ -105,6 +105,15 @@ class scenewalk:
         # add kwargs as object attributes
         if not kwargs_dict is None:
             self.__dict__.update(kwargs_dict)
+
+    def set_precision(self, data_type):
+        """
+        Set up the operating datatype for the whole model. np.float128 is best if you want to make sure the model doesnt
+        run into numerical problems during estimation. Lower precision is faster though.
+        """
+        self.PRECISION = data_type
+        self.EPS = np.finfo(self.PRECISION).eps
+        self._xx, self._yy = self.PRECISION(np.mgrid[0:self.MAP_SIZE, 0:self.MAP_SIZE])
     # ------------------------------------------------------------------------------------------------------------------
     # HELPERS
     # ------------------------------------------------------------------------------------------------------------------
@@ -471,7 +480,7 @@ class scenewalk:
         # smooth
         k = kde.gaussian_kde([x_locs_px, y_locs_px], bw_method="scott")
         # resolution of image grid is 128x128
-        xi, yi = np.float128(np.mgrid[0:128, 0:128])
+        xi, yi = self.PRECISION(np.mgrid[0:self.MAP_SIZE, 0:self.MAP_SIZE])
         # apply smoothed data to grid
         zi = k(np.vstack([yi.flatten(), xi.flatten()]))
         # normalize
@@ -530,7 +539,7 @@ class scenewalk:
         Returns:
             - map [128x128]
         """
-        map_init = self.EPS * np.float128(np.ones(np.shape(self._xx)))
+        map_init = self.EPS * self.PRECISION(np.ones(np.shape(self._xx)))
         return map_init
 
     def initialize_center_bias(self):
@@ -603,7 +612,7 @@ class scenewalk:
 
         if np.isclose(np.sum(gaussAttention_shift), 0):
             # gaussAttention_shift = self.initialize_map_unif()
-            gaussAttention_shift = np.float128(np.ones(np.shape(self._xx)))
+            gaussAttention_shift = self.PRECISION(np.ones(np.shape(self._xx)))
             if self.warn_me:
                 warning_msg = str(["shift gauss 0. tried to put a gaussian at", shift_loc_x_px, shift_loc_y_px, "with ", sigmaShift_x, sigmaShift_y])
                 warnings.warn(warning_msg)
@@ -704,7 +713,7 @@ class scenewalk:
         inhibStrengthNorm = self.inhibStrength/(self.MAP_SIZE**2)
         # cast to float before adding to other float.
         # If we dont do this, recusion errors ensue (possibly implicit casting problem?)
-        inhibStrength_power = np.float128((inhibStrengthNorm ** self.gamma))
+        inhibStrength_power = self.PRECISION((inhibStrengthNorm ** self.gamma))
         weighted_mapInhib = inhibStrength_power + mapInhibPower
         u = np.divide(mapAttPower, weighted_mapInhib)  # divisive inhibition
         return u
