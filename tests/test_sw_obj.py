@@ -779,3 +779,35 @@ def test_evolve_maps_other_mapsize(inhib_method, att_map_init_type, shifts, expo
     assert not np.isnan(inh2).any()
     assert not (inh2 < 0).any()
     assert not (inh2 == 0).all()
+
+
+@pytest.mark.basictest
+@pytest.mark.parametrize('inhib_method', ("subtractive", "divisive"))
+@pytest.mark.parametrize('att_map_init_type', ("zero", "cb"))
+@pytest.mark.parametrize('shifts', ("off", "pre", "post", "both"))
+@pytest.mark.parametrize('exponents', (1, 2))
+@pytest.mark.parametrize("locdep_decay_switch", ("on", "off"))
+def test_evolve_maps_other_mapsize_error(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch):
+    """
+    tests evolve maps function in all different configurations. Checks
+    - uFinal is correct shape, type, non-negative, nonzero, non-nan, density
+    - attmap is correct shape, type, non-negative, nonzero, non-nan
+    - inhmap is correct shape, type, non-negative, nonzero, non-nan
+    - next_pos is in legal range and right type
+    - LL is not nan
+    """
+    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    #sw.set_mapsize(sz)
+    sw.update_params(sw_params)
+
+    init_map_att = sw.att_map_init()
+    init_map_inhib = sw.initialize_map_unif()
+    fix_dens = np.load('tests/emp_dens33.npy')
+
+    durations1 = (0.2, 0.3, 0.4)
+    x_deg1 = (67, 50, 24)
+    y_deg1 = (37, 50, 29)
+
+    with pytest.raises(Exception) as execinfo:
+        sw.evolve_maps(durations1, x_deg1, y_deg1, init_map_att, init_map_inhib, fix_dens, 1, sim=False)
+        assert 'The input fixation density map needs to be the same' in str(execinfo.value)
