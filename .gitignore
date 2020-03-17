@@ -1,0 +1,45 @@
+# ignore Apple hidden files
+.DS_Store
+
+# ignore rstudio files
+.Rhistory
+
+# ignore vs files
+launch.json
+.vscode
+
+# ignore python tmp files
+__pycache__
+.pytest_cache
+
+# ignore temp and old files
+/###
+
+# ignore server deploy folder
+SERVER
+test_batches
+
+# ignore coverage reports
+.coverage
+/htmlcov
+
+# ignore python install info
+/scenewalk.egg-info
+.Python
+develop-eggs/
+eggs/
+.eggs/
+wheels/
+*.egg-info/
+*.egg
+build/
+
+.python-version
+
+
+
+bootstrap_env*/
+
+
+*.err
+*.out

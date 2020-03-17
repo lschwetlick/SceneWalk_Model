@@ -7,7 +7,6 @@ setup(
     description='SceneWalk model of dynamic scan path generation',
     author='Lisa Schwetlick',
     author_email='lisa.schwetlick@uni-potsdam.de',
-    packages=find_packages(),  #same as name
+    packages=find_packages(),
     install_requires=['numpy', 'pandas', 'seaborn', 'scipy', 'pymc3', 'pytest', 'multiprocess', 'gitpython'], #external packages as dependencies
 )
-# needs python 3 , 'multiprocessing'
