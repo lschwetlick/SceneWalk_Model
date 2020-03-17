@@ -14,8 +14,8 @@ import numpy as np
 from scipy.stats import truncnorm as truncated_normal
 from scipy.stats import uniform
 #sys.path.append("..")
-from scenewalk.pydream.core import run_dream as pd_run
-from scenewalk.pydream.parameters import SampledParam as pd_param
+from pydream.core import run_dream as pd_run
+from pydream.parameters import SampledParam as pd_param
 from scenewalk.evaluation import evaluate_sw_parallel as evaluate_sw_parallel
 from scenewalk.utils import utils
 #from scenewalk.scenewalk_model_object import scenewalk
@@ -59,7 +59,7 @@ def param_list_from_estim_and_default(priors, default_params, parvals):
             sw_params.append(default_params[key])
     return sw_params
 
-def generate_custom_likelihood_function(sw_model, params, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials):
+class generate_custom_likelihood_function:
     """
     generates a custom log likelihood function with the given setup
     ... wrapper, because pydream log likelihood function only works with one argument (the parvals)
@@ -73,26 +73,38 @@ def generate_custom_likelihood_function(sw_model, params, default_params, x_dat,
     Returns:
         - log likelihood fuction for the data
     """
-    def custom_loglik(parvals):
+    def __init__(self, sw_model, params, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials):
+        self.sw_model = sw_model
+        self.params = params
+        self.default_params = default_params
+        self.x_dat=x_dat
+        self.y_dat=y_dat
+        self.dur_dat=dur_dat
+        self.im_dat=im_dat
+        self.densities_dat=densities_dat
+        self.num_processes_subjs=num_processes_subjs
+        self.num_processes_trials=num_processes_trials
+
+
+    def custom_loglik(self, parvals):
         """
         evaluate scenewalk
         """
-        sw_params = param_list_from_estim_and_default(params, default_params, parvals)
-        leftovers = sw_model.update_params(sw_params)
+        sw_params = param_list_from_estim_and_default(self.params, self.default_params, parvals)
+        leftovers = self.sw_model.update_params(sw_params)
         assert leftovers is None, "giving too many parameters"
-        sw_model.check_params_for_config()
-        if sw_model.check_params_in_bounds():
+        self.sw_model.check_params_for_config()
+        if self.sw_model.check_params_in_bounds():
             try:
-                neg_like = evaluate_sw_parallel.get_neg_tot_like_parallel(sw_model, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials=num_processes_trials)
+                neg_like = evaluate_sw_parallel.get_neg_tot_like_parallel(self.sw_model, self.x_dat, self.y_dat, self.dur_dat, self.im_dat, self.densities_dat, self.num_processes_subjs, num_processes_trials=self.num_processes_trials)
             except:
-                print("Model Failed with Parameters: ", sw_model.get_params())
+                print("Model Failed with Parameters: ", self.sw_model.get_params())
                 raise
             return - neg_like # well shit, turns out that neg neg is pos
         else:
             msg = str(["Params ran out of Bounds", parvals])
             warnings.warn(msg)
             return -np.inf
-    return custom_loglik
 
 def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials, nchains, niter, vp_nr=None, destin_dir=None):
     """
@@ -114,7 +126,7 @@ def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat, dur_dat
     else:
         estim_id = (time.strftime("%Y%m%d-%H%M%S"))
 
-    lik_func = generate_custom_likelihood_function(sw_model, priors, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials)
+    lik_func_class = generate_custom_likelihood_function(sw_model, priors, default_params, x_dat, y_dat, dur_dat, im_dat, densities_dat, num_processes_subjs, num_processes_trials)
 
     if destin_dir is None:
         cwd = os.getcwd()
@@ -123,7 +135,7 @@ def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat, dur_dat
     os.mkdir(cwd + "/estim_%s" % estim_id)
     folderPath = cwd + "/estim_%s" % estim_id
 
-    sampled_params, log_ps = pd_run(list(priors.values()), lik_func, nchains=nchains, niterations=niter, restart=False, verbose=False, model_name=folderPath+"fit_"+estim_id)
+    sampled_params, log_ps = pd_run(list(priors.values()), lik_func_class.custom_loglik, nchains=nchains, niterations=niter, restart=False, verbose=False, model_name=folderPath+"fit_"+estim_id)
     # save chains
     np.save(folderPath + '/%s_estim_chains' % estim_id, sampled_params)
     np.save(folderPath + '/%s_estim_log_ps' % estim_id, log_ps)
