@@ -8,5 +8,13 @@ setup(
     author='Lisa Schwetlick',
     author_email='lisa.schwetlick@uni-potsdam.de',
     packages=find_packages(),
-    install_requires=['numpy', 'pandas', 'seaborn', 'scipy', 'pymc3', 'pytest', 'multiprocess', 'gitpython'], #external packages as dependencies
+    install_requires=['numpy',
+                    'pandas',
+                    'seaborn',
+                    'scipy',
+                    'pymc3',
+                    'pytest',
+                    'multiprocess',
+                    'gitpython',
+                    'PyDREAM @ git+ssh://git@github.com/lschwetlick/PyDREAM.git@lisa#egg=PyDREAM-0'],  #external packages as dependencies
 )
