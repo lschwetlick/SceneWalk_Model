@@ -643,9 +643,9 @@ class scenewalk:
         """
         assert np.sum(gaussAttention) != 0
         assert np.sum(fix_density_map) != 0
-        if fix_density_map.size != (self.MAP_SIZE, self.MAP_SIZE):
+        if (fix_density_map.size != (self.MAP_SIZE, self.MAP_SIZE)) & (np.sqrt(fix_density_map.size) != self.MAP_SIZE):
             raise Exception("The input fixation density map needs to be the same"
-                            "size as the internal model maps set by MAP_SIZE.")
+                            " size as the internal model maps set by MAP_SIZE.")
         # equation 8
         salFixation = np.multiply(fix_density_map, gaussAttention)
         if np.sum(salFixation) == 0:
