@@ -12,7 +12,7 @@ setup(
                     'pandas',
                     'seaborn',
                     'scipy',
-                    'pymc3',
+                    #'pymc3', out of comission for python 3.8
                     'pytest',
                     'multiprocess',
                     'gitpython',
