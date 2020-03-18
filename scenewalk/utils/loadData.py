@@ -5,6 +5,8 @@ import warnings
 import re
 import numpy as np
 from random import sample
+import yaml
+from pathlib import Path
 
 
 def setup_paths():
@@ -13,16 +15,9 @@ def setup_paths():
     commn = os.path.commonpath([calling_path, func_path])
     return commn
 
-abspath = setup_paths()
-
-data_path_dict = {
-    "spst_training": abspath+'/DATA/SpatStat/split_sets/training/',
-    "spst_test": abspath+'/DATA/SpatStat/split_sets/test/',
-    "corpus_test": abspath+'/DATA/corpusData/split_sets/test/',
-    "corpus_training": abspath+'/DATA/corpusData/split_sets/training/',
-
-}
-
+config = yaml.safe_load(open(Path(__file__).parent / "../../config.yml"))
+abspath = config["abs_datapath"]
+data_path_dict = config["datasets"]
 
 def get_set_names():
     """
