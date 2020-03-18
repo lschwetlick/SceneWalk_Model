@@ -11,29 +11,48 @@ import numpy as np
 
 class scenewalk:
     """
-    Model class. Makes a scenewalk model according to the configurations given at instantiation
+    Model class. Makes a scenewalk model according to the configurations given at instantiation (see __init__).
+    Some of the most important features for the workflow are:
+    - `whoami()` displays a string describing the configuration.
+    - `get_param_list_order()` displays the exposed parameters that result from the chosen configuration.
+    - `update_params()` lets you set parameter values.
+    - `get_scanpath_likelihood` returns a scan path likelihood given the model.
+    - `simulate_scanpath` returns a scan path simulated by the model.
 
-    Inputs:
-        - inhib_method ['subtractive' or 'divisive']: how are attention and inhibition map combined?
-        - att_map_init_type ['zero' or 'cb']: how is the attention map initialized?
-        - postsaccadic_shift_switch ['on' or 'off']: is there a postaccadic attention shift?
-        - presaccadic_shift_switch ['on' or 'off']: is there a presaccadic attention shift?
-        - exponents [1 or 2]: are Lambda and Gamma independent?
-        - locdep_decay_switch ['on' or 'off']: Is there slower decay on he previous fixation location?
-        - data_range [{'x' : [0,127], 'y' : [0,127]}]: dictionary of the data range.
+    Some important general notes are:
+    - time data is always given in seconds (not ms)
+    - position data is always given in degrees (not pixels)
+    - the model is tested mainly on an internal representation of 128x128 pixels.
+      Using `set_mapsize()` this can be changed.
+    - the model uses an internal representation of np.float128. This is because for estimation,
+      parameters can have "extreme" values that make the model numerically instable due to floating point problems.
+      It also makes the computation slower, of course. Using `set_precision()` this can be changed.
     """
 
-    def __init__(self, inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, data_range, kwargs_dict=None):
+    def __init__(self, inhib_method, att_map_init_type, shifts, locdep_decay_switch, omp, data_range, kwargs_dict=None):
         """
-        Set up configutation of a scenewalk model variant. The given settings are used to pick the appropriate subfunctions of the model and bind them to their general name.
+        Set up configutation of a scenewalk model variant. The given settings are used to pick the appropriate
+        subfunctions of the model and bind them to their general name.
 
         Inputs:
             - inhib_method ['subtractive' or 'divisive']: how are attention and inhibition map combined?
             - att_map_init_type ['zero' or 'cb']: how is the attention map initialized?
-            - shifts ['off' or 'pre' or 'post' or 'both']: specify pre- and post saccadic shifts to use
-            - exponents [1 or 2]: are Lambda and Gamma independent?
+            - postsaccadic_shift_switch ['on' or 'off']: is there a postaccadic attention shift?
+            - presaccadic_shift_switch ['on' or 'off']: is there a presaccadic attention shift?
             - locdep_decay_switch ['on' or 'off']: Is there slower decay on he previous fixation location?
+            - omp ["off", add", "mult"]: Adds occulomotor potential
             - data_range [{'x' : [0,127], 'y' : [0,127]}]: dictionary of the data range.
+            - kwargs_dict: any other model attributes you may want to set. They pertain mainly to how the parameters of
+              the model are exposed in set_params. For Example
+                - exponents [1 or 2]: are Lambda and Gamma independent?
+                - coupled_oms [True, False]: True changes the parametrization of omega to have om_i = om_a / om_frac
+                - coupled_sigmas [True, False]: True changes the parametrization of sigma to be sig_i = sig_a
+                - logged_cf [True, False]: True makes the cf = 10**input_cf
+                - logged_z [True, False]: True makes the zeta = 10**input_zeta
+                - logged_ompf [True, False]: True makes the ompf = 10**input_ompf
+                - coupled_facil [True, False]: True makes omega_prevloc = om_a / omega_prevloc_frac
+                - estimate_times [True, False]: True exposes the tau variables
+                - saclen_shift [True, False]: True makes the postsaccadic schift depend of the saccade length
         """
         # Base Settings
         self.MAP_SIZE = 128
@@ -66,8 +85,9 @@ class scenewalk:
                                 "on" : self.differential_time_att_locdep}
         self.differential_time_att = self.att_decay_funcs[self.locdep_decay_switch]
 
-        self.exponents = exponents#1, 2
+        self.omp = omp  # "add", "mult"
 
+        self.exponents = 2 #1, 2
         self.coupled_oms = False
         self.coupled_sigmas = False
         self.logged_cf = False
@@ -76,8 +96,6 @@ class scenewalk:
         self.coupled_facil = False
         self.estimate_times = False
         self.saclen_shift = False
-        self.omp = "off"  # "add", "mult"
-
 
         # Parameters
         self.omegaAttention = None
@@ -122,7 +140,7 @@ class scenewalk:
         self.EPS = np.finfo(self.PRECISION).eps
         self._xx, self._yy = self.PRECISION(np.mgrid[0:self.MAP_SIZE, 0:self.MAP_SIZE])
     # ------------------------------------------------------------------------------------------------------------------
-    # HELPERS
+    # HELPER FUNCTIONS
     # ------------------------------------------------------------------------------------------------------------------
     def check_params_in_bounds(self):
         """
@@ -156,7 +174,10 @@ class scenewalk:
         return all_valid and basics_not_none
 
     def check_params_for_config(self):
-        """ Checks whether all necessary parameters are present for the current configuration. Prints "Looks Good" when all needed parameters are defined."""
+        """
+        Checks whether all necessary parameters are present for the current configuration.
+        Prints "Looks Good" when all needed parameters are defined.
+        """
         # basic params
         assert self.omegaAttention is not None
         assert self.omegaInhib is not None
@@ -211,6 +232,7 @@ class scenewalk:
         return id_str
 
     def clear_params(self):
+        """Clears all parameters"""
         self.omegaAttention, self.omegaInhib, self.sigmaAttention, self.sigmaInhib, \
         self.gamma, self.lamb, self.inhibStrength, self.zeta, self.sigmaShift, \
         self.shift_size, self.first_fix_OmegaAttention, self.cb_sd, self.tau_pre, \
@@ -395,8 +417,10 @@ class scenewalk:
         Converts degree values to pixels on the grid.
         Inputs:
             - dat : number to convert in degrees
-            - dim ['x' or 'y']: dimension along whcih to convert
+            - dim ['x' or 'y']: dimension along which to convert
             - fix [True or False]: if true, returned pixel value is between 0 and 127 (in the grid)
+            - cutoff [True or False]: if True points outside the grid are set to the border
+            - grid_sz [int] : enables setting the grid size to another size than the internal model size
         Returns:
             - pixel value
         """
@@ -423,6 +447,7 @@ class scenewalk:
         Inputs:
             - dat : number to convert in pixels
             - dim ['x' or 'y']: dimension along whcih to convert
+            - grid_sz [int] : enables setting the grid size to another size than the internal model size
         Returns:
             - degree value
         """
@@ -503,7 +528,7 @@ class scenewalk:
         """
         Picks the next fixation location according to the maximum activation value (deterministic).
         Inputs:
-            - likelihood_map [128x128]: density from which to pick
+            - likelihood_map: array (usually 128x128) from which to pick
             - get_lik [True or False]: return the points likelihood value or not
         Returns:
             - (x in degrees, y in degrees, (likelihood))
