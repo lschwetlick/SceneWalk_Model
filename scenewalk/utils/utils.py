@@ -46,7 +46,7 @@ def save2dict_by_subj(chains_list, all_vp_list, def_args, fname, perc_last_sampl
 def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, credible_interval, fname, CI=False, perc_last_samples=75, logzeta=False):
     from collections import OrderedDict
     import numpy as np
-    from pymc3.stats import hpd
+    from arviz.stats import hpd
 
     vp_params = OrderedDict({})
     for chains, vp in list(zip(chains_list, all_vp_list)):
@@ -86,7 +86,7 @@ def save2npy_point_estimate_by_subj(chains_list, all_vp_list, def_args, credible
 def save2dict_overall_point_estimates(chains_list, all_vp_list, def_args, priors, sw, credible_interval, fname, perc_last_samples=75):
     from collections import OrderedDict
     import numpy as np
-    from pymc3.stats import hpd
+    from arviz.stats import hpd
     import pandas as pd
 
     param_ix = 0
@@ -124,7 +124,7 @@ def save2dict_overall_point_estimates(chains_list, all_vp_list, def_args, priors
 def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, sw, credible_interval, fname, perc_last_samples=75, logzeta=False):
     from collections import OrderedDict
     import numpy as np
-    from pymc3.stats import hpd
+    from arviz.stats import hpd
     import pandas as pd
 
     param_ix = 0
@@ -179,7 +179,7 @@ def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, 
 def save2pd_subj_point_estimates(chains_list, all_vp_list, priors, credible_interval, fname, perc_last_samples=75):
     from collections import OrderedDict
     import numpy as np
-    from pymc3.stats import hpd
+    from arviz.stats import hpd
     import pandas as pd
     rows_list = []
     #vp_id = 0
