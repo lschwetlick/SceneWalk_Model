@@ -21,9 +21,8 @@ pip3 install -e .
 pip3 install ipykernel
 python3 -m ipykernel install --name sw_env
 ```
-4. add the location of your Data to the config file
+4. add the location of your Data to the config file. Simply go to the `config.yml` file and change the paths and/or dataset names!
 5. use it like any other package!
-
 
 ## 0. Repo Structure and Modules
 ### Repo

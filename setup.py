@@ -12,10 +12,12 @@ setup(
                     'pandas',
                     'seaborn',
                     'scipy',
+                    'opencv_python',
                     #'arviz',
                     'pytest',
                     'multiprocess',
                     'gitpython',
                     'pyyaml',
-                    'PyDREAM @ git+ssh://git@github.com/lschwetlick/PyDREAM.git@lisa#egg=PyDREAM-0'],  #external packages as dependencies
+                    'pydream']
+                    #'PyDREAM @ git+ssh://git@github.com/lschwetlick/PyDREAM.git@lisa#egg=PyDREAM-0'],  #external packages as dependencies
 )
