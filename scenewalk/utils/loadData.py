@@ -79,6 +79,7 @@ def load_sim_data(folder_path):
 def dataDict2vars(data_dict):
     """
     takes data dictionary and returns vectors
+    x, y, dur, im, densities, range
     """
     try:
         return (data_dict["x"],
@@ -111,6 +112,52 @@ def shorten_set(data_dict, nvp, vps = None):
             print("shortening from "+str(len(dat))+" to "+str(nvp))
         short_dict[i] = [dat[vp] for vp in chosen_vps]
     return (short_dict)
+
+def get_ix_from_set(data_dict, subj_order=None, trials_order=None):
+    """
+    Takes a list of indeces for trials and for subjects and shortend/reorders the dataset.
+    If an integer is given in place of a list, it will expand into a list of all
+    subjects up to that one.
+    """
+    short_dict = {}
+    for i in data_dict:
+        # print(i)
+        if i == "range" or i == "densities" or i == "meta":
+            short_dict[i] = data_dict[i]
+            continue
+        dat = data_dict[i]
+        short = []
+        if subj_order is None:
+            subj_order = list(range(len(dat)))
+        elif isinstance(subj_order, int):
+            subj_order = list(range(subj_order))
+
+        for sub in subj_order:
+            # print("sub", sub)
+            sub_dat = dat[sub].copy()
+            # print(len(sub_dat))
+            # print(sub_dat)
+
+            if trials_order is None:
+                trials_order = list(range(len(sub_dat)))
+            elif isinstance(trials_order, int):
+                trials_order = list(range(trials_order))
+
+            trial_short = [sub_dat[t] for t in trials_order]
+            short.append(trial_short)
+        short_dict[i] = short
+    return (short_dict)
+
+def change_resolution(densities, new_size):
+    """Changes the resolution of a list of densities"""
+    from cv2 import resize, INTER_CUBIC
+    result = []
+    for d in densities:
+        new_d = resize(d, dsize=(new_size, new_size),
+                           interpolation=INTER_CUBIC)
+        new_d = new_d / new_d.sum()
+        result.append(new_d)
+    return result
 
 def chop_scanpaths(lower, upper, datadict):
     chop_dict = {}
