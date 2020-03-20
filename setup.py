@@ -7,6 +7,7 @@ setup(
     description='SceneWalk model of dynamic scan path generation',
     author='Lisa Schwetlick',
     author_email='lisa.schwetlick@uni-potsdam.de',
+    include_package_data=True,
     packages=find_packages(),
     install_requires=['numpy',
                     'pandas',
