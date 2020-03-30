@@ -3,10 +3,10 @@ import sys
 import glob
 import warnings
 import re
-import numpy as np
-from random import sample
-import yaml
 from pathlib import Path
+from random import sample
+import numpy as np
+import yaml
 
 
 def setup_paths():
@@ -64,7 +64,7 @@ def load_sim_data(folder_path):
     Takes the absolute path of a folder of simulated data and loads the contents into a dictionary
     """
     loaded_dict = setup_data_dict()
-    load_paths = glob.glob(folder_path + "*.npy")
+    load_paths = glob.glob(os.path.join(folder_path, "*.npy"))
     #print(load_paths)
     for p in load_paths:
         mat = re.search(r'([a-zA-Z]*).npy', p)

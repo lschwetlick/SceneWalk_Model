@@ -2,6 +2,9 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 def priors_plot(priors):
+    """
+    Makes a simple plot of the priors in the dictionary
+    """
     nrow = 2
     ncol = np.int(np.ceil(len(priors.values())/2))
     fig, ax = plt.subplots(nrow, ncol, figsize=(20, 10))
@@ -22,3 +25,14 @@ def priors_plot(priors):
         ax[idx].axvline(x=lb, c="r", linestyle=":")
         idx += 1
     return (fig, ax)
+
+def plot_path_on_map(dens, x_path, y_path, sw):
+    """
+    plots a scanpath on top of the underlying image density
+    """
+    fig, ax = plt.subplots(1, 1)
+    ax.imshow(np.float64(dens), origin="lower")
+    x_px = [sw.convert_deg_to_px(x, 'x') for x in x_path]
+    y_px = [sw.convert_deg_to_px(y, 'y') for y in y_path]
+    ax.plot(x_px, y_px)
+    plt.show()

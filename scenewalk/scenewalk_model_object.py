@@ -1,6 +1,8 @@
 """
 Scenewalk Model Implementation
+
 Lisa Schwetlick 2019
+
 University of Potsdam
 """
 import warnings
