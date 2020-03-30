@@ -12,11 +12,12 @@
 #
 import os
 import sys
+import sphinx_pdj_theme
 #print(os.path.join(os.path.abspath('.'), '..', 'scenewalk'))
 #sys.path.insert(0, os.path.join(os.path.abspath('.'), '..', 'scenewalk'))
 sys.path.insert(0, "/Users/lisa/Documents/SFB1294_B05/SceneWalk/SceneWalk_model")
 sys.path.insert(0, os.path.abspath('../demo'))
-
+sys.path.insert(0, os.path.abspath('../../../PyDREAM'))
 # -- Project information -----------------------------------------------------
 
 project = 'SceneWalk'
@@ -48,14 +49,13 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'insegel'
+html_theme = 'sphinx_pdj_theme'
+htm_theme_path = [sphinx_pdj_theme.get_html_theme_path()]
 pygments_style = 'sphinx'
 
 html_theme_options = {
-    # TOC options
-    'navigation_depth': 2,  # only show 2 levels on left sidebar
-    'collapse_navigation': False,  # don't allow sidebar to collapse
     }
+html_sidebars = {}
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".

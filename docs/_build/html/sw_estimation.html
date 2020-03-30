@@ -1,0 +1,528 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="" lang="" version="-//W3C//DTD XHTML 1.1//EN" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <title>Estimation &mdash; SceneWalk  documentation</title>
+  
+
+  
+
+  
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="_static/css/pdj.css" type="text/css" />
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="SceneWalk  documentation" href="index.html"/>
+        <link rel="next" title="Simulation" href="sw_simulation.html"/>
+        <link rel="prev" title="Evaluation" href="sw_evaluation.html"/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="cache-control" content="public" />
+    <meta name="robots" content="follow, all" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Add jQuery library -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  </head>
+
+  <body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> SceneWalk </a>
+        <div role="search">
+	  <form id ="rtd-search-form" class="wy-form"
+		action="search.html" method="get">
+	    <input type="text" name="q" placeholder="Search docs" />
+	    <input type="hidden" name="check_keywords" value="yes" />
+	    <input type="hidden" name="area" value="default" />
+	  </form>
+	</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	
+          
+          
+              <p class="caption"><span class="caption-text">Using the SceneWalk Package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_requirements.html">Data Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_requirements.html#scan-path-information">Scan Path Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_requirements.html#furthermore-we-need">Furthermore we need</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="demo/how_to_sw.html">Using the SceneWalk Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="demo/how_to_sw.html#Scenewalk-Model">Scenewalk Model</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Core Model Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="demo/detailed_look_at_sw.html">Detailed Look at the SceneWalk Code in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="demo/detailed_look_at_sw.html#Empirical-Fixation-density-Map">Empirical Fixation density Map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="demo/detailed_look_at_sw.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="demo/detailed_look_at_sw.html#Unpack-scenewalk-code">Unpack scenewalk code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sw_core.html">The SceneWalk Model Object</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Evaluation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_evaluation.html#module-scenewalk.evaluation.evaluate_sw_parallel">Full Estimation Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Estimation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#example-estimation-script">Example Estimation Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-scenewalk.estimation.DREAM_param_estimation">Full Estimation Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html#example-simulation">Example Simulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="demo/how_to_simulate.html">Simulate Data from the SceneWalk Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html#module-scenewalk.simulation.simulate_dataset">Full Simulation Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Plotting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_plotting.html">Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_plotting.html#example-dynamic-visualization">Example: Dynamic Visualization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="demo/dynamic_plot.html">Try the dynamic plotting module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sw_plotting.html#module-scenewalk.plotting.sw_plot">Full Plotting Doc</a></li>
+</ul>
+
+          
+        
+
+      </div>
+      &nbsp;
+    </nav>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      <nav class="wy-nav-top" id="barra-mobile" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">Porão do Juca</a>
+      </nav>
+
+      <div class="wy-nav-content">
+	<div class="fundo-claro">
+	</div>
+	<div class="fundo-escuro">
+	</div>
+
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+	    
+	    <!-- <ul class="wy-breadcrumbs"> -->
+	    <!--   <li><a href="#">Docs</a> &raquo;</li> -->
+
+	    <!--   <li>Features</li> -->
+	    <!--   <li class="wy-breadcrumbs-aside"> -->
+
+	    <!-- 	<a href="_sources/index.txt" rel="nofollow"> View page source</a> -->
+
+	    <!--   </li> -->
+	    <!-- </ul> -->
+	    <!-- <hr/> -->
+	  </div>
+
+          <div role="main" class="">
+
+	    <div id="content" class="hfeed entry-container hentry">
+  <div class="section" id="estimation">
+<span id="sw-estimation"></span><h1>Estimation<a class="headerlink" href="#estimation" title="Permalink to this headline">¶</a></h1>
+<p>This module provides paralellization running multiple PyDream instances next to each other. Typically we use this for running one estimation for each subject to estimate separate parameters.
+The main interface function of interest is dream_estim_and_save.</p>
+<dl class="function">
+<dt id="scenewalk.estimation.DREAM_param_estimation.dream_estim_and_save">
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">dream_estim_and_save</code><span class="sig-paren">(</span><em class="sig-param">sw_model</em>, <em class="sig-param">priors</em>, <em class="sig-param">default_params</em>, <em class="sig-param">x_dat</em>, <em class="sig-param">y_dat</em>, <em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">num_processes_subjs</em>, <em class="sig-param">num_processes_trials</em>, <em class="sig-param">nchains</em>, <em class="sig-param">niter</em>, <em class="sig-param">vp_nr=None</em>, <em class="sig-param">destin_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_param_estimation.dream_estim_and_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run and Save dream chains Saves PyDream result into</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sw_model</strong><span class="classifier">scenewalk model object</span></dt><dd><p>scenewalk model object</p>
+</dd>
+<dt><strong>priors</strong><span class="classifier">dict</span></dt><dd><p>dictionary of priors of the to be estimated parameters</p>
+</dd>
+<dt><strong>default_params</strong><span class="classifier">dict</span></dt><dd><p>dictionary where the keys are all the parameters the model needs and to
+be estimated ones are None</p>
+</dd>
+<dt><strong>x_dat, y_dat, dur_dat, im_dat</strong><span class="classifier">arrays</span></dt><dd><p>data of shape subject[trial[path[]]]</p>
+</dd>
+<dt><strong>densities_dat</strong><span class="classifier">array</span></dt><dd><p>empirical densities</p>
+</dd>
+<dt><strong>num_processes_subjs</strong><span class="classifier">int</span></dt><dd><p>number of cores to parallelize the model evaluation over on subj basis
+number of subjects in one “dream”</p>
+</dd>
+<dt><strong>num_processes_trials</strong><span class="classifier">int</span></dt><dd><p>number of cores to parallelize the model evaluation over on trial basis</p>
+</dd>
+<dt><strong>nchains</strong><span class="classifier">int</span></dt><dd><p>number of PyDream chains to run</p>
+</dd>
+<dt><strong>niter</strong><span class="classifier">int</span></dt><dd><p>number of PyDream iterations</p>
+</dd>
+<dt><strong>vp_nr</strong><span class="classifier">int</span></dt><dd><p>id number of vp, for filename when running multiple estims</p>
+</dd>
+<dt><strong>destin_dir</strong><span class="classifier">str</span></dt><dd><p>directory where to save the chains</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="example-estimation-script">
+<h1>Example Estimation Script<a class="headerlink" href="#example-estimation-script" title="Permalink to this headline">¶</a></h1>
+<p>An example estimation project can be found under demo/estimation_pydream.
+The dream_estim.ipynb shows how to populate the arguments, priors and defaults.
+The run_dream.py file shows how to call the estimation module.</p>
+</div>
+<div class="section" id="module-scenewalk.estimation.DREAM_param_estimation">
+<span id="full-estimation-doc"></span><h1>Full Estimation Doc<a class="headerlink" href="#module-scenewalk.estimation.DREAM_param_estimation" title="Permalink to this headline">¶</a></h1>
+<p>Dream Interface for Scenewalk Model</p>
+<p>Lisa Schwetlick 2019</p>
+<p>University of Potsdam</p>
+<dl class="function">
+<dt>
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">dream_estim_and_save</code><span class="sig-paren">(</span><em class="sig-param">sw_model</em>, <em class="sig-param">priors</em>, <em class="sig-param">default_params</em>, <em class="sig-param">x_dat</em>, <em class="sig-param">y_dat</em>, <em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">num_processes_subjs</em>, <em class="sig-param">num_processes_trials</em>, <em class="sig-param">nchains</em>, <em class="sig-param">niter</em>, <em class="sig-param">vp_nr=None</em>, <em class="sig-param">destin_dir=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Run and Save dream chains Saves PyDream result into</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sw_model</strong><span class="classifier">scenewalk model object</span></dt><dd><p>scenewalk model object</p>
+</dd>
+<dt><strong>priors</strong><span class="classifier">dict</span></dt><dd><p>dictionary of priors of the to be estimated parameters</p>
+</dd>
+<dt><strong>default_params</strong><span class="classifier">dict</span></dt><dd><p>dictionary where the keys are all the parameters the model needs and to
+be estimated ones are None</p>
+</dd>
+<dt><strong>x_dat, y_dat, dur_dat, im_dat</strong><span class="classifier">arrays</span></dt><dd><p>data of shape subject[trial[path[]]]</p>
+</dd>
+<dt><strong>densities_dat</strong><span class="classifier">array</span></dt><dd><p>empirical densities</p>
+</dd>
+<dt><strong>num_processes_subjs</strong><span class="classifier">int</span></dt><dd><p>number of cores to parallelize the model evaluation over on subj basis
+number of subjects in one “dream”</p>
+</dd>
+<dt><strong>num_processes_trials</strong><span class="classifier">int</span></dt><dd><p>number of cores to parallelize the model evaluation over on trial basis</p>
+</dd>
+<dt><strong>nchains</strong><span class="classifier">int</span></dt><dd><p>number of PyDream chains to run</p>
+</dd>
+<dt><strong>niter</strong><span class="classifier">int</span></dt><dd><p>number of PyDream iterations</p>
+</dd>
+<dt><strong>vp_nr</strong><span class="classifier">int</span></dt><dd><p>id number of vp, for filename when running multiple estims</p>
+</dd>
+<dt><strong>destin_dir</strong><span class="classifier">str</span></dt><dd><p>directory where to save the chains</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="scenewalk.estimation.DREAM_param_estimation.generate_custom_likelihood_function">
+<em class="property">class </em><code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">generate_custom_likelihood_function</code><span class="sig-paren">(</span><em class="sig-param">sw_model</em>, <em class="sig-param">params</em>, <em class="sig-param">default_params</em>, <em class="sig-param">x_dat</em>, <em class="sig-param">y_dat</em>, <em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">num_processes_subjs</em>, <em class="sig-param">num_processes_trials</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_param_estimation.generate_custom_likelihood_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates a custom log likelihood function with the given setup
+… wrapper, because pydream log likelihood function only works with one
+argument (the parvals)
+This needs to be a class because a fucntion that returns a function can’t
+be pickled, and pickling is necessary for the paralellization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sw_model</strong><span class="classifier">scenewalk model object</span></dt><dd><p>scenewalk model object</p>
+</dd>
+<dt><strong>params</strong><span class="classifier">dict</span></dt><dd><p>dictionary of to be estimated parameters</p>
+</dd>
+<dt><strong>default_params</strong><span class="classifier">dict</span></dt><dd><p>dictionary where the keys are all the parameters the model needs and to
+be estimated ones are None</p>
+</dd>
+<dt><strong>x_dat, y_dat, dur_dat, im_dat</strong><span class="classifier">arrays</span></dt><dd><p>data of shape subject[trial[path[]]]</p>
+</dd>
+<dt><strong>densities_dat</strong><span class="classifier">array</span></dt><dd><p>empirical densities</p>
+</dd>
+<dt><strong>num_processes</strong><span class="classifier">int</span></dt><dd><p>number of cores to parallelize the model evaluation over</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.estimation.DREAM_param_estimation.generate_custom_likelihood_function.custom_loglik" title="scenewalk.estimation.DREAM_param_estimation.generate_custom_likelihood_function.custom_loglik"><code class="xref py py-obj docutils literal notranslate"><span class="pre">custom_loglik</span></code></a>(self, parvals)</p></td>
+<td><p>evaluate scenewalk</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="scenewalk.estimation.DREAM_param_estimation.generate_custom_likelihood_function.custom_loglik">
+<code class="sig-name descname">custom_loglik</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parvals</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_param_estimation.generate_custom_likelihood_function.custom_loglik" title="Permalink to this definition">¶</a></dt>
+<dd><p>evaluate scenewalk</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>parvals</strong><span class="classifier">list</span></dt><dd><p>parameter values for the model</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>Likelihood value</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.estimation.DREAM_param_estimation.main">
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_param_estimation.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dream commandline interface</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.estimation.DREAM_param_estimation.param_list_from_estim_and_default">
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">param_list_from_estim_and_default</code><span class="sig-paren">(</span><em class="sig-param">priors</em>, <em class="sig-param">default_params</em>, <em class="sig-param">parvals</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_param_estimation.param_list_from_estim_and_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns a list of just the etsimated params into a list of all params
+including the defaults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>priors</strong><span class="classifier">dict</span></dt><dd><p>dictionary of priors</p>
+</dd>
+<dt><strong>default_params</strong><span class="classifier">dict</span></dt><dd><p>dictionary where the keys are all the parameters the model needs and to
+be estimated ones are None</p>
+</dd>
+<dt><strong>parvals</strong><span class="classifier">list</span></dt><dd><p>list of estimated params</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list</dt><dd><p>list of all the params the model needs, including defaults and estimated</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.estimation.DREAM_param_estimation.trpd">
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">trpd</code><span class="sig-paren">(</span><em class="sig-param">my_mean</em>, <em class="sig-param">my_std</em>, <em class="sig-param">lb</em>, <em class="sig-param">ub</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_param_estimation.trpd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Truncated normal prior distribution bounded between lb and ub with a sd of
+(ub-lb)/2 and a mean at the centre of the range</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>my_mean</strong><span class="classifier">float</span></dt><dd><blockquote>
+<div><p>mean value of the truncated gaussian</p>
+</div></blockquote>
+<dl class="simple">
+<dt>my_std<span class="classifier">float</span></dt><dd><p>standard deviation of the truncated gaussian</p>
+</dd>
+<dt>lb<span class="classifier">float</span></dt><dd><p>lower bound of the truncated gaussian</p>
+</dd>
+<dt>ub<span class="classifier">float</span></dt><dd><p>upper bound of the truncated gaussian</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pydream prior</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.estimation.DREAM_param_estimation.trunc_unif">
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">trunc_unif</code><span class="sig-paren">(</span><em class="sig-param">lb</em>, <em class="sig-param">ub</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_param_estimation.trunc_unif" title="Permalink to this definition">¶</a></dt>
+<dd><p>make uniform prior</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>lb</strong><span class="classifier">float</span></dt><dd><p>lower bound of the uniform prior</p>
+</dd>
+<dt><strong>ub</strong><span class="classifier">float</span></dt><dd><p>upper bound of the uniform prior</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><ul class="simple">
+<li><dl class="simple">
+<dt>pydream prior</dt><dd></dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-scenewalk.estimation.DREAM_vp_parallel"></span><p>Parallel Dream Interface for Scenewalk Model</p>
+<p>Lisa Schwetlick 2019</p>
+<p>University of Potsdam</p>
+<dl class="function">
+<dt id="scenewalk.estimation.DREAM_vp_parallel.do_multiprocess">
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_vp_parallel.</code><code class="sig-name descname">do_multiprocess</code><span class="sig-paren">(</span><em class="sig-param">function_args</em>, <em class="sig-param">num_processes</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_vp_parallel.do_multiprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens pool of workers for parallelization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>function_args</strong><span class="classifier">list</span></dt><dd><p>list of args to pass to Estimation</p>
+</dd>
+<dt><strong>num_processes</strong><span class="classifier">int</span></dt><dd><p>how many pararell processes we want to run.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>True if sucess</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.estimation.DREAM_vp_parallel.dream_and_save_parallel">
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_vp_parallel.</code><code class="sig-name descname">dream_and_save_parallel</code><span class="sig-paren">(</span><em class="sig-param">sw_model</em>, <em class="sig-param">priors</em>, <em class="sig-param">default_params</em>, <em class="sig-param">x_dat</em>, <em class="sig-param">y_dat</em>, <em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">nchains</em>, <em class="sig-param">niter</em>, <em class="sig-param">vp_list</em>, <em class="sig-param">num_processes_dreams</em>, <em class="sig-param">num_processes_subjs</em>, <em class="sig-param">num_processes_trials</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_vp_parallel.dream_and_save_parallel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run multiple pydream jobs for individual subjects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sw_model</strong><span class="classifier">scenewalk model object</span></dt><dd><p>scenewalk model object</p>
+</dd>
+<dt><strong>priors</strong><span class="classifier">dict</span></dt><dd><p>dictionary of priors of the to be estimated parameters</p>
+</dd>
+<dt><strong>default_params</strong><span class="classifier">dict</span></dt><dd><p>dictionary where the keys are all the parameters the model needs and to
+be estimated ones are None</p>
+</dd>
+<dt><strong>x_dat, y_dat, dur_dat, im_dat</strong><span class="classifier">arrays</span></dt><dd><p>data of shape subject[trial[path[]]]</p>
+</dd>
+<dt><strong>densities_dat</strong><span class="classifier">array</span></dt><dd><p>empirical densities</p>
+</dd>
+<dt><strong>nchains</strong><span class="classifier">int</span></dt><dd><p>number of PyDream chains to run</p>
+</dd>
+<dt><strong>niter</strong><span class="classifier">int</span></dt><dd><p>number of PyDream iterations</p>
+</dd>
+<dt><strong>vp_list</strong><span class="classifier">list</span></dt><dd><p>list of id numbers of subjects</p>
+</dd>
+<dt><strong>num_processes_dreams</strong><span class="classifier">int</span></dt><dd><p>number of dreams to run</p>
+</dd>
+<dt><strong>num_processes_subjs</strong><span class="classifier">int</span></dt><dd><p>(only use when not estimating subjs individually)
+number of processes per subject</p>
+</dd>
+<dt><strong>num_processes_trials</strong><span class="classifier">int</span></dt><dd><p>number of parallel threads per subject</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.estimation.DREAM_vp_parallel.multi_process_like">
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_vp_parallel.</code><code class="sig-name descname">multi_process_like</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_vp_parallel.multi_process_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>unpack args into multi-process function</p>
+</dd></dl>
+
+</div>
+
+
+	    </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sw_simulation.html" class="btn btn-neutral float-right" title="Simulation">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sw_evaluation.html" class="btn btn-neutral" title="Evaluation"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Lisa Schwetlick.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/jucacrispim/sphinx_pdj_theme">theme</a> provided by <a href="http://poraodojuca.net">Porão do Juca</a>.
+
+</footer>
+	</div>
+	</div>
+	  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js">
+
+    </script>
+    <script type="text/javascript" src="_static/underscore.js">
+
+    </script>
+    <script type="text/javascript" src="_static/doctools.js">
+
+    </script>
+    <script type="text/javascript" src="_static/language_data.js">
+
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js">
+
+    </script>
+
+  
+
+   <script type="text/javascript"
+           src="_static/js/theme.js"></script>
+
+   <script type="text/javascript"
+           src="_static/js/pdj.js"></script>
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+  </body>
+</html>
