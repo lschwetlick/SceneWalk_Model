@@ -15,7 +15,6 @@ np.seterr(invalid='raise')
 
 def main():
     datadict = loadData.load_data("corpus_training")
-    #datadict_short = loadData.shorten_set(datadict, 20, list(range(20)))
     datadict = loadData.chop_scanpaths(1, 10, datadict)
     x_dat, y_dat, dur_dat, im_dat, densities_dat, dat_range = loadData.dataDict2vars(datadict)
     dat_range_x = dat_range[0]
@@ -32,12 +31,7 @@ def main():
     sw_args = np.load('sw_args.npy', allow_pickle=True)
     sw_model = scenewalk_obj(*sw_args)
 
-
-    #vp_list = [0, 3, 6, 10, 11, 18]
-    #vp_list = list(range(35))
-
     vp = int(sys.argv[1])-1
-    #vp = vp_list[vp_idx]
 
     # Ressource Allocation
     num_processes_subperdream = 1
