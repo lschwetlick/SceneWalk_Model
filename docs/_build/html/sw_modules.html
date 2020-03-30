@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2D2D2D" />
+  
+  <title>SceneWalk :: Getting Started</title>
+  
+
+  <link rel="icon" type="image/png" sizes="32x32" href="_static/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="_static/img/favicon-16x16.png">
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+
+  <link rel="stylesheet" href="_static/css/insegel.css"/>
+
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'',
+        VERSION:'',
+        LANGUAGE:'None',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+    };
+  </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+
+  <script src="https://email.tl.fortawesome.com/c/eJxNjUEOgyAQAF8jR7Kw6wIHDh7sP1Cw2mgxgmn6-3JsMqc5zEQfE8dkxOY1KKMUOI3ACFKRJpSW2AAp7ontYIaxI6i7XPJVwyeVfCQ550Os3jLrGSNOLgbdAy6s0PBk2TFNjEbsfq31LB0OnX407pJa5v2faRadwSW63mn5KuLyR9j2tgx3zecanl-55R_-jjPs"></script>
+
+</head>
+
+<body>
+  <div id="insegel-container">
+    <header>
+      <div id="logo-container">
+          
+          <a href="index.html"><img src="_static/img/logo.svg"></a>
+          
+
+      </div>
+      <div id="project-container">
+        <h1>SceneWalk Documentation</h1>
+      </div>
+    </header>
+
+    <div id="content-container">
+
+      <div id="main-content-container">
+        <div id="main-content-header">
+          <h1>Getting Started</h1>
+        </div>
+        <div id="main-content">
+          
+  <div class="section" id="getting-started">
+<span id="sw-utils"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>1. activate your virtual environment and/or make one
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">cd</span> <span class="pre">~/Documents/virtual_envs</span>
+<span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">venv</span> <span class="pre">sw_env</span>
+<span class="pre">source</span> <span class="pre">sw_env/bin/activate</span>
+<span class="pre">`</span></code>
+2. install scenewalk package
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">cd</span> <span class="pre">~/Scenewalk</span>
+<span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span>
+<span class="pre">`</span></code>
+3. install the venv as a kernel for notebooks
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">ipykernel</span>
+<span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">ipykernel</span> <span class="pre">install</span> <span class="pre">--name</span> <span class="pre">sw_env</span>
+<span class="pre">`</span></code>
+4. add the location of your Data to the config file. Simply go to the <cite>config.yml</cite> file and change the paths and/or dataset names!
+5. use it like any other package!</p>
+</div>
+
+
+        </div>
+      </div>
+
+      <div id="side-menu-container">
+
+        <div id="search" role="search">
+        <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+            <input type="text" name="q" placeholder="Search..." />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+</div>
+
+        <div id="side-menu" role="navigation">
+
+          
+  
+    
+  
+  
+    <p class="caption"><span class="caption-text">Using the SceneWalk Package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_requirements.html">Data Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_requirements.html#scan-path-information">Scan Path Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_requirements.html#furthermore-we-need">Furthermore we need</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="demo/how_to_sw.html">Using the SceneWalk Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="demo/how_to_sw.html#Scenewalk-Model">Scenewalk Model</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">core model code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="demo/detailed_look_at_sw.html">Detailed Look at the SceneWalk Code in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="demo/detailed_look_at_sw.html#Empirical-Fixation-density-Map">Empirical Fixation density Map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="demo/detailed_look_at_sw.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="demo/detailed_look_at_sw.html#Unpack-scenewalk-code">Unpack scenewalk code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sw_core.html">Model Code Documentation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules to do things with SceneWalk</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a></li>
+</ul>
+
+  
+
+
+        </div>
+
+        
+
+      </div>
+
+    </div>
+
+<footer>
+    <div id="footer-info">
+        <ul id="build-details">
+            
+                <li class="footer-element">
+                    
+                        <a href="_sources/sw_modules.rst.txt" rel="nofollow"> source</a>
+                    
+                </li>
+            
+
+            
+
+            
+        </ul>
+        <div id="credit">
+            created with <a href="http://sphinx-doc.org/">Sphinx</a> and <a href="https://github.com/Autophagy/insegel">Insegel</a>
+
+        </div>
+    </div>
+
+    <a id="menu-toggle" class="fa fa-bars" aria-hidden="true"></a>
+
+    <script type="text/javascript">
+      $("#menu-toggle").click(function() {
+        $("#menu-toggle").toggleClass("toggled");
+        $("#side-menu-container").slideToggle(300);
+      });
+    </script>
+
+</footer> 
+
+</div>
+
+</body>
+</html>

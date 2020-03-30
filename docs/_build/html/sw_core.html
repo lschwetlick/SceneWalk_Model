@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2D2D2D" />
+  
+  <title>SceneWalk :: Model Code Documentation</title>
+  
+
+  <link rel="icon" type="image/png" sizes="32x32" href="_static/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="_static/img/favicon-16x16.png">
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+
+  <link rel="stylesheet" href="_static/css/insegel.css"/>
+
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'',
+        VERSION:'',
+        LANGUAGE:'None',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+    };
+  </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+
+  <script src="https://email.tl.fortawesome.com/c/eJxNjUEOgyAQAF8jR7Kw6wIHDh7sP1Cw2mgxgmn6-3JsMqc5zEQfE8dkxOY1KKMUOI3ACFKRJpSW2AAp7ontYIaxI6i7XPJVwyeVfCQ550Os3jLrGSNOLgbdAy6s0PBk2TFNjEbsfq31LB0OnX407pJa5v2faRadwSW63mn5KuLyR9j2tgx3zecanl-55R_-jjPs"></script>
+
+</head>
+
+<body>
+  <div id="insegel-container">
+    <header>
+      <div id="logo-container">
+          
+          <a href="index.html"><img src="_static/img/logo.svg"></a>
+          
+
+      </div>
+      <div id="project-container">
+        <h1>SceneWalk Documentation</h1>
+      </div>
+    </header>
+
+    <div id="content-container">
+
+      <div id="main-content-container">
+        <div id="main-content-header">
+          <h1>Model Code Documentation</h1>
+        </div>
+        <div id="main-content">
+          
+  <div class="section" id="module-scenewalk.scenewalk_model_object">
+<span id="model-code-documentation"></span><span id="sw-core"></span><h1>Model Code Documentation<a class="headerlink" href="#module-scenewalk.scenewalk_model_object" title="Permalink to this headline">¶</a></h1>
+<p>Scenewalk Model Implementation
+Lisa Schwetlick 2019
+University of Potsdam</p>
+<dl class="class">
+<dt id="scenewalk.scenewalk_model_object.scenewalk">
+<em class="property">class </em><code class="sig-prename descclassname">scenewalk.scenewalk_model_object.</code><code class="sig-name descname">scenewalk</code><span class="sig-paren">(</span><em class="sig-param">inhib_method</em>, <em class="sig-param">att_map_init_type</em>, <em class="sig-param">shifts</em>, <em class="sig-param">locdep_decay_switch</em>, <em class="sig-param">omp</em>, <em class="sig-param">data_range</em>, <em class="sig-param">kwargs_dict=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Model class. Makes a scenewalk model according to the configurations given
+at instantiation (see below). Some of the most important features for the
+workflow are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>whoami()</cite> displays a string describing the configuration.</p></li>
+<li><p><cite>get_param_list_order()</cite> displays the exposed parameters that result         from the chosen configuration.</p></li>
+<li><p><cite>update_params()</cite> lets you set parameter values.</p></li>
+<li><p><cite>get_scanpath_likelihood</cite> returns a scan path likelihood given the         model.</p></li>
+<li><p><cite>simulate_scanpath</cite> returns a scan path simulated by the model.</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>inhib_method</strong><span class="classifier">{‘subtractive’, ‘divisive’}</span></dt><dd><p>How are attention and inhibition map combined?</p>
+</dd>
+<dt><strong>att_map_init_type</strong><span class="classifier">{‘zero’, ‘cb’}</span></dt><dd><p>How is the attention map initialized?</p>
+</dd>
+<dt><strong>postsaccadic_shift_switch</strong><span class="classifier">{‘on’, ‘off’}</span></dt><dd><p>is there a postaccadic attention shift?</p>
+</dd>
+<dt><strong>presaccadic_shift_switch</strong><span class="classifier">{‘on’, ‘off’}</span></dt><dd><p>is there a presaccadic attention shift?</p>
+</dd>
+<dt><strong>locdep_decay_switch</strong><span class="classifier">{‘on’, ‘off’}</span></dt><dd><p>Is there slower decay on he previous fixation location?</p>
+</dd>
+<dt><strong>omp</strong><span class="classifier">{“off”, add”, “mult”]}</span></dt><dd><p>Adds occulomotor potential</p>
+</dd>
+<dt><strong>data_range</strong><span class="classifier">dict</span></dt><dd><p>dictionary ({‘x’ : [0,127], ‘y’ : [0,127]}) of the data range.</p>
+</dd>
+<dt><strong>kwargs_dict</strong><span class="classifier">dict</span></dt><dd><p>any other model attributes you may want to set. They pertain mainly to
+how the parameters of the model are exposed in set_params. For Example</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>exponents [1 or 2]: are Lambda and Gamma independent?</p></li>
+<li><p>coupled_oms [True, False]: True changes the parametrization of                 omega to have om_i = om_a / om_frac</p></li>
+<li><p>coupled_sigmas [True, False]: True changes the parametrization of                sigma to be sig_i = sig_a</p></li>
+<li><p>logged_cf [True, False]: True makes the cf = 10**input_cf</p></li>
+<li><p>logged_z [True, False]: True makes the zeta = 10**input_zeta</p></li>
+<li><p>logged_ompf [True, False]: True makes the ompf = 10**input_ompf</p></li>
+<li><p>coupled_facil [True, False]: True makes                 omega_prevloc = om_a / omega_prevloc_frac</p></li>
+<li><p>estimate_times [True, False]: True exposes the tau variables</p></li>
+<li><p>saclen_shift [True, False]: True makes the postsaccadic shift                 depend of the saccade length</p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>time data is always given in seconds (not ms)</p></li>
+<li><p>position data is always given in degrees (not pixels)</p></li>
+<li><p>the model is tested mainly on an internal representation of 128x128        pixels. Using <cite>set_mapsize()</cite> this can be changed.</p></li>
+<li><p>the model uses an internal representation of np.float128. This is        because for estimation, parameters can have “extreme” values that make        the model numerically instable due to floating point problems. It also        makes the computation slower, of course. Using <cite>set_precision()</cite> this        can be changed.</p></li>
+</ul>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.add_noise" title="scenewalk.scenewalk_model_object.scenewalk.add_noise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_noise</span></code></a>(self, ustar)</p></td>
+<td><p>adds zeta noise</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.check_params_for_config" title="scenewalk.scenewalk_model_object.scenewalk.check_params_for_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_params_for_config</span></code></a>(self)</p></td>
+<td><p>Checks whether all necessary parameters are present for the current configuration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.check_params_in_bounds" title="scenewalk.scenewalk_model_object.scenewalk.check_params_in_bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_params_in_bounds</span></code></a>(self)</p></td>
+<td><p>Checks if all specified parameters fall in the defined range of the model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.clear_params" title="scenewalk.scenewalk_model_object.scenewalk.clear_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_params</span></code></a>(self)</p></td>
+<td><p>Clears all parameters</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.combine_att_fixdens" title="scenewalk.scenewalk_model_object.scenewalk.combine_att_fixdens"><code class="xref py py-obj docutils literal notranslate"><span class="pre">combine_att_fixdens</span></code></a>(self, gaussAttention, …)</p></td>
+<td><p>add empirical density information to gaussian attention mask</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.combine_divisive" title="scenewalk.scenewalk_model_object.scenewalk.combine_divisive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">combine_divisive</span></code></a>(self, mapAtt, mapInhib)</p></td>
+<td><p>Combine attention and inhibition in a divisive way</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.combine_subtractive" title="scenewalk.scenewalk_model_object.scenewalk.combine_subtractive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">combine_subtractive</span></code></a>(self, mapAtt, mapInhib)</p></td>
+<td><p>Combine attention and inhibition in a subtractive way</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.convert_deg_to_px" title="scenewalk.scenewalk_model_object.scenewalk.convert_deg_to_px"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_deg_to_px</span></code></a>(self, dat, dim[, fix, …])</p></td>
+<td><p>Converts degree values to pixels on the grid.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.convert_px_to_deg" title="scenewalk.scenewalk_model_object.scenewalk.convert_px_to_deg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_px_to_deg</span></code></a>(self, dat, dim[, grid_sz])</p></td>
+<td><p>Converts pixel values to degrees on the grid.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.differential_time_att_locdep" title="scenewalk.scenewalk_model_object.scenewalk.differential_time_att_locdep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">differential_time_att_locdep</span></code></a>(self, duration, …)</p></td>
+<td><p>QUICKER version of differential_time_att_locdep_round.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.differential_time_att_locdep_round" title="scenewalk.scenewalk_model_object.scenewalk.differential_time_att_locdep_round"><code class="xref py py-obj docutils literal notranslate"><span class="pre">differential_time_att_locdep_round</span></code></a>(self, …)</p></td>
+<td><p>SLOWER version of differential_time_att_locdep evolve the maps over time with the normal attention decay parameter everywhere except around the previous fixation location.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.differential_time_att_org" title="scenewalk.scenewalk_model_object.scenewalk.differential_time_att_org"><code class="xref py py-obj docutils literal notranslate"><span class="pre">differential_time_att_org</span></code></a>(self, duration, …)</p></td>
+<td><p>evolve the maps over time using the <em>attention</em> decay parameter</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.differential_time_basic" title="scenewalk.scenewalk_model_object.scenewalk.differential_time_basic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">differential_time_basic</span></code></a>(self, duration, …)</p></td>
+<td><p>evolve the maps over time, given a decay paramter</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.empirical_fixation_density" title="scenewalk.scenewalk_model_object.scenewalk.empirical_fixation_density"><code class="xref py py-obj docutils literal notranslate"><span class="pre">empirical_fixation_density</span></code></a>(self, x_locs_deg, …)</p></td>
+<td><p>Calculates the empirical fixation density given fixation points and range information using the “scott” bandwidth (as in Schütt et al, 2017)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.evolve_maps_both" title="scenewalk.scenewalk_model_object.scenewalk.evolve_maps_both"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evolve_maps_both</span></code></a>(self, durations, fixs_x, …)</p></td>
+<td><p>Evolve maps with pre- and postsaccadic shift.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.evolve_maps_main" title="scenewalk.scenewalk_model_object.scenewalk.evolve_maps_main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evolve_maps_main</span></code></a>(self, durations, fixs_x, …)</p></td>
+<td><p>Evolve maps with basic model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.evolve_maps_postsac" title="scenewalk.scenewalk_model_object.scenewalk.evolve_maps_postsac"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evolve_maps_postsac</span></code></a>(self, durations, fixs_x, …)</p></td>
+<td><p>Evolve maps with postsaccadic shift.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.evolve_maps_presac" title="scenewalk.scenewalk_model_object.scenewalk.evolve_maps_presac"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evolve_maps_presac</span></code></a>(self, durations, fixs_x, …)</p></td>
+<td><p>Evolve maps with presaccadic shift.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.fixation_picker_max" title="scenewalk.scenewalk_model_object.scenewalk.fixation_picker_max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fixation_picker_max</span></code></a>(self, likelihood_map[, …])</p></td>
+<td><p>Picks the next fixation location according to the maximum activation value (deterministic).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.fixation_picker_stoch" title="scenewalk.scenewalk_model_object.scenewalk.fixation_picker_stoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fixation_picker_stoch</span></code></a>(self, likelihood_map)</p></td>
+<td><p>Picks the next fixation location according to the cumulative probability method (linear selection algorithm)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.get_param_list_order" title="scenewalk.scenewalk_model_object.scenewalk.get_param_list_order"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_param_list_order</span></code></a>(self)</p></td>
+<td><p>Returns the names and order of the parameters required by the current model configuration</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.get_params" title="scenewalk.scenewalk_model_object.scenewalk.get_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code></a>(self)</p></td>
+<td><p>Returns the current parameters as a dictionary</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.get_phase_times_both" title="scenewalk.scenewalk_model_object.scenewalk.get_phase_times_both"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_phase_times_both</span></code></a>(self, nth, durations)</p></td>
+<td><p>Helper function that computes the durations of each phase 1.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.get_scanpath_likelihood" title="scenewalk.scenewalk_model_object.scenewalk.get_scanpath_likelihood"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_scanpath_likelihood</span></code></a>(self, x_path, …)</p></td>
+<td><p>calculate likelihood of one scanpath under scenewalk model with params in scene_walk_params.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.get_unit_vector" title="scenewalk.scenewalk_model_object.scenewalk.get_unit_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_unit_vector</span></code></a>(self, point1, point2)</p></td>
+<td><p>get the unit vector between 2 points.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.initialize_center_bias" title="scenewalk.scenewalk_model_object.scenewalk.initialize_center_bias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initialize_center_bias</span></code></a>(self)</p></td>
+<td><p>Initializes a map with with a central gaussian</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.initialize_map_unif" title="scenewalk.scenewalk_model_object.scenewalk.initialize_map_unif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initialize_map_unif</span></code></a>(self)</p></td>
+<td><p>Initializes a map with near 0 activation everywhere</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.make_attention_gauss" title="scenewalk.scenewalk_model_object.scenewalk.make_attention_gauss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_attention_gauss</span></code></a>(self, fixs_x, fixs_y)</p></td>
+<td><p>make gaussian window at fixation point for attention</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.make_attention_gauss_post_shift" title="scenewalk.scenewalk_model_object.scenewalk.make_attention_gauss_post_shift"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_attention_gauss_post_shift</span></code></a>(self, …[, …])</p></td>
+<td><p>make gaussian window at fixation point for attention during the post-saccadic shift</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.make_inhib_gauss" title="scenewalk.scenewalk_model_object.scenewalk.make_inhib_gauss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_inhib_gauss</span></code></a>(self, fixs_x, fixs_y)</p></td>
+<td><p>make gaussian window at fixation point for inhibition</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.make_om_potential" title="scenewalk.scenewalk_model_object.scenewalk.make_om_potential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_om_potential</span></code></a>(self, fix_x, fix_y)</p></td>
+<td><p>makes an occulomotor potential map where the cardinal directions have higher activation than the oblique.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.make_om_potential_neg" title="scenewalk.scenewalk_model_object.scenewalk.make_om_potential_neg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_om_potential_neg</span></code></a>(self, fix_x, fix_y)</p></td>
+<td><p>makes an occulomotor potential map where the cardinal directions have lower activation than the oblique.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.make_positive" title="scenewalk.scenewalk_model_object.scenewalk.make_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_positive</span></code></a>(self, u)</p></td>
+<td><p>cuts off negative components</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.set_mapsize" title="scenewalk.scenewalk_model_object.scenewalk.set_mapsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_mapsize</span></code></a>(self, map_size)</p></td>
+<td><p>Set up the operating grid size for calculation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.set_precision" title="scenewalk.scenewalk_model_object.scenewalk.set_precision"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_precision</span></code></a>(self, data_type)</p></td>
+<td><p>Set up the operating datatype for the whole model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.simulate_durations" title="scenewalk.scenewalk_model_object.scenewalk.simulate_durations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">simulate_durations</span></code></a>(self, amount)</p></td>
+<td><p>generate durations from gamma distribtion.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.simulate_scanpath" title="scenewalk.scenewalk_model_object.scenewalk.simulate_scanpath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">simulate_scanpath</span></code></a>(self, dur_path, fix_dens, …)</p></td>
+<td><p>Simulates a scanpath given durations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.update_params" title="scenewalk.scenewalk_model_object.scenewalk.update_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_params</span></code></a>(self, scene_walk_parameters)</p></td>
+<td><p>Update model parameters</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.whoami" title="scenewalk.scenewalk_model_object.scenewalk.whoami"><code class="xref py py-obj docutils literal notranslate"><span class="pre">whoami</span></code></a>(self)</p></td>
+<td><p>Returns the model identity as a string</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#scenewalk.scenewalk_model_object.scenewalk.window" title="scenewalk.scenewalk_model_object.scenewalk.window"><code class="xref py py-obj docutils literal notranslate"><span class="pre">window</span></code></a>(self, iterable[, n_before, n_after])</p></td>
+<td><p>Sliding window iterator.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.add_noise">
+<code class="sig-name descname">add_noise</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ustar</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.add_noise" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds zeta noise</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ustar</strong><span class="classifier">array</span></dt><dd><p>map without noise</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>uFinal; map with noise</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.check_params_for_config">
+<code class="sig-name descname">check_params_for_config</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.check_params_for_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether all necessary parameters are present for the current
+configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>bool</dt><dd><p>True if all parameters are okay</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.check_params_in_bounds">
+<code class="sig-name descname">check_params_in_bounds</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.check_params_in_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if all specified parameters fall in the defined range of the
+model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>bool</dt><dd><p>True if all parameters are okay</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.clear_params">
+<code class="sig-name descname">clear_params</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.clear_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears all parameters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.combine_att_fixdens">
+<code class="sig-name descname">combine_att_fixdens</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">gaussAttention</em>, <em class="sig-param">fix_density_map</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.combine_att_fixdens" title="Permalink to this definition">¶</a></dt>
+<dd><p>add empirical density information to gaussian attention mask</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>gaussAttention</strong><span class="classifier">array</span></dt><dd><p>attention mask (usually 128x128)</p>
+</dd>
+<dt><strong>fix_density_map</strong><span class="classifier">array</span></dt><dd><p>fixation desinty map (usually 128x128)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>combined attention map (usually 128x128)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.combine_divisive">
+<code class="sig-name descname">combine_divisive</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">mapAtt</em>, <em class="sig-param">mapInhib</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.combine_divisive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine attention and inhibition in a divisive way</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>mapAtt</strong><span class="classifier">array</span></dt><dd><p>attention map (128x128)</p>
+</dd>
+<dt><strong>mapInhib</strong><span class="classifier">array</span></dt><dd><p>inhibition map (128x128)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>combined map (128x128)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.combine_subtractive">
+<code class="sig-name descname">combine_subtractive</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">mapAtt</em>, <em class="sig-param">mapInhib</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.combine_subtractive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine attention and inhibition in a subtractive way</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>mapAtt</strong><span class="classifier">array</span></dt><dd><p>attention map (128x128)</p>
+</dd>
+<dt><strong>mapInhib</strong><span class="classifier">array</span></dt><dd><p>inhibition map (128x128)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>combined map (128x128)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.convert_deg_to_px">
+<code class="sig-name descname">convert_deg_to_px</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dat</em>, <em class="sig-param">dim</em>, <em class="sig-param">fix=False</em>, <em class="sig-param">cutoff=True</em>, <em class="sig-param">grid_sz=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.convert_deg_to_px" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts degree values to pixels on the grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dat</strong><span class="classifier">int or float</span></dt><dd><p>number to convert in degrees</p>
+</dd>
+<dt><strong>dim</strong><span class="classifier">{‘x’ or ‘y’}</span></dt><dd><p>dimension along which to convert</p>
+</dd>
+<dt><strong>fix</strong><span class="classifier">bool</span></dt><dd><p>if true, returned pixel value is between 0 and 127 (in the grid)</p>
+</dd>
+<dt><strong>cutoff</strong><span class="classifier">bool</span></dt><dd><p>if True points outside the grid are set to the border</p>
+</dd>
+<dt><strong>grid_sz</strong><span class="classifier">int</span></dt><dd><p>enables setting the grid size to another size than the internal             model size</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>pixel value</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.convert_px_to_deg">
+<code class="sig-name descname">convert_px_to_deg</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dat</em>, <em class="sig-param">dim</em>, <em class="sig-param">grid_sz=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.convert_px_to_deg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts pixel values to degrees on the grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dat</strong><span class="classifier">int or float</span></dt><dd><p>number to convert in pixels</p>
+</dd>
+<dt><strong>dim</strong><span class="classifier">{‘x’ or ‘y’}</span></dt><dd><p>dimension along which to convert</p>
+</dd>
+<dt><strong>grid_sz</strong><span class="classifier">int</span></dt><dd><p>enables setting the grid size to another size than the internal             model size</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>degree value</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.differential_time_att_locdep">
+<code class="sig-name descname">differential_time_att_locdep</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">duration</em>, <em class="sig-param">current_map</em>, <em class="sig-param">prev_map</em>, <em class="sig-param">fixs_x=None</em>, <em class="sig-param">fixs_y=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.differential_time_att_locdep" title="Permalink to this definition">¶</a></dt>
+<dd><p>QUICKER version of differential_time_att_locdep_round. Evolve the maps
+over time with the normal attention decay parameter everywhere except
+around the previous fixation location. A Rectangular aperture around the
+previous location defines the are of reduced decay.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>duration</strong><span class="classifier">float</span></dt><dd><p>current fixation duration in seconds</p>
+</dd>
+<dt><strong>current_map</strong><span class="classifier">float</span></dt><dd><p>current attention map</p>
+</dd>
+<dt><strong>prev_map</strong><span class="classifier">float</span></dt><dd><p>previous attention map</p>
+</dd>
+<dt><strong>fixs_x</strong><span class="classifier">tuple</span></dt><dd><p>x fixation locations (prev, current, next)</p>
+</dd>
+<dt><strong>fixs_y: tuple</strong></dt><dd><p>y fixation location (prev, current, next)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>evolved map</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.differential_time_att_locdep_round">
+<code class="sig-name descname">differential_time_att_locdep_round</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">duration</em>, <em class="sig-param">current_map</em>, <em class="sig-param">prev_map</em>, <em class="sig-param">fixs_x=None</em>, <em class="sig-param">fixs_y=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.differential_time_att_locdep_round" title="Permalink to this definition">¶</a></dt>
+<dd><p>SLOWER version of differential_time_att_locdep
+evolve the maps over time with the normal attention decay parameter
+everywhere except around the previous fixation location. A circular
+aperture around the previous location defines the are of reduced decay.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>duration</strong><span class="classifier">float</span></dt><dd><p>current fixation duration in seconds</p>
+</dd>
+<dt><strong>current_map</strong><span class="classifier">float</span></dt><dd><p>current attention map</p>
+</dd>
+<dt><strong>prev_map</strong><span class="classifier">float</span></dt><dd><p>previous attention map</p>
+</dd>
+<dt><strong>fixs_x</strong><span class="classifier">tuple</span></dt><dd><p>x fixation locations (prev, current, next)</p>
+</dd>
+<dt><strong>fixs_y: tuple</strong></dt><dd><p>y fixation location (prev, current, next)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>evolved map</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.differential_time_att_org">
+<code class="sig-name descname">differential_time_att_org</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">duration</em>, <em class="sig-param">current_map</em>, <em class="sig-param">prev_map</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.differential_time_att_org" title="Permalink to this definition">¶</a></dt>
+<dd><p>evolve the maps over time using the <em>attention</em> decay parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>duration</strong><span class="classifier">float</span></dt><dd><p>current fixation duration in seconds</p>
+</dd>
+<dt><strong>current_map</strong><span class="classifier">float</span></dt><dd><p>current attention map</p>
+</dd>
+<dt><strong>prev_map</strong><span class="classifier">float</span></dt><dd><p>previous attention map</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>evolved map</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.differential_time_basic">
+<code class="sig-name descname">differential_time_basic</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">duration</em>, <em class="sig-param">current_map</em>, <em class="sig-param">prev_map</em>, <em class="sig-param">omega</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.differential_time_basic" title="Permalink to this definition">¶</a></dt>
+<dd><p>evolve the maps over time, given a decay paramter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>duration</strong><span class="classifier">float</span></dt><dd><p>current fixation duration in seconds</p>
+</dd>
+<dt><strong>current_map</strong><span class="classifier">float</span></dt><dd><p>current attention or inhibition map</p>
+</dd>
+<dt><strong>prev_map</strong><span class="classifier">float</span></dt><dd><p>previous attention or inhibition map</p>
+</dd>
+<dt><strong>omega</strong><span class="classifier">float</span></dt><dd><p>decay parameter to use</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>evolved map</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.empirical_fixation_density">
+<code class="sig-name descname">empirical_fixation_density</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x_locs_deg</em>, <em class="sig-param">y_locs_deg</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.empirical_fixation_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the empirical fixation density given fixation points and
+range information using the “scott” bandwidth (as in Schütt et al, 2017)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x_locs_deg, y_locs_deg</strong><span class="classifier">float</span></dt><dd><p>coordinates in degrees</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>int</dt><dd><p>x coordinates in px</p>
+</dd>
+<dt>int</dt><dd><p>y coordinates in px</p>
+</dd>
+<dt>array</dt><dd><p>fixation density map</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.evolve_maps_both">
+<code class="sig-name descname">evolve_maps_both</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">durations</em>, <em class="sig-param">fixs_x</em>, <em class="sig-param">fixs_y</em>, <em class="sig-param">map_att_prev</em>, <em class="sig-param">map_inhib_prev</em>, <em class="sig-param">fix_density_map</em>, <em class="sig-param">nth</em>, <em class="sig-param">sim=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.evolve_maps_both" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evolve maps with pre- and postsaccadic shift.
+Parameters
+———-
+fixs_x : tuple</p>
+<blockquote>
+<div><p>of the shape (previous, current, next) fixation location’s x in
+degrees</p>
+</div></blockquote>
+<dl class="simple">
+<dt>fixs_y<span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s y in
+degrees</p>
+</dd>
+<dt>durations<span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) of durations in seconds</p>
+</dd>
+<dt>map_att_prev<span class="classifier">array</span></dt><dd><p>previous attention map</p>
+</dd>
+<dt>map_inhib_prev<span class="classifier">array</span></dt><dd><p>previous inhibition map</p>
+</dd>
+<dt>fix_density_map<span class="classifier">array</span></dt><dd><p>empirical fixation density of the image</p>
+</dd>
+<dt>nth<span class="classifier">int</span></dt><dd><p>number of the fixation in the sequence</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>array</dt><dd><p>attention map</p>
+</dd>
+<dt>array</dt><dd><p>inhibition map</p>
+</dd>
+<dt>array</dt><dd><p>final map</p>
+</dd>
+<dt>tuple</dt><dd><p>coordinates for the next fixation in degrees (x, y)</p>
+</dd>
+<dt>float</dt><dd><p>likelihood of the next fixation</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.evolve_maps_main">
+<code class="sig-name descname">evolve_maps_main</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">durations</em>, <em class="sig-param">fixs_x</em>, <em class="sig-param">fixs_y</em>, <em class="sig-param">map_att_prev</em>, <em class="sig-param">map_inhib_prev</em>, <em class="sig-param">fix_density_map</em>, <em class="sig-param">nth</em>, <em class="sig-param">sim=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.evolve_maps_main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evolve maps with basic model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fixs_x</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s x in
+degrees</p>
+</dd>
+<dt><strong>fixs_y</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s y in
+degrees</p>
+</dd>
+<dt><strong>durations</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) of durations in seconds</p>
+</dd>
+<dt><strong>map_att_prev</strong><span class="classifier">array</span></dt><dd><p>previous attention map</p>
+</dd>
+<dt><strong>map_inhib_prev</strong><span class="classifier">array</span></dt><dd><p>previous inhibition map</p>
+</dd>
+<dt><strong>fix_density_map</strong><span class="classifier">array</span></dt><dd><p>empirical fixation density of the image</p>
+</dd>
+<dt><strong>nth</strong><span class="classifier">int</span></dt><dd><p>number of the fixation in the sequence</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>attention map</p>
+</dd>
+<dt>array</dt><dd><p>inhibition map</p>
+</dd>
+<dt>array</dt><dd><p>final map</p>
+</dd>
+<dt>tuple</dt><dd><p>coordinates for the next fixation in degrees (x, y)</p>
+</dd>
+<dt>float</dt><dd><p>likelihood of the next fixation</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.evolve_maps_postsac">
+<code class="sig-name descname">evolve_maps_postsac</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">durations</em>, <em class="sig-param">fixs_x</em>, <em class="sig-param">fixs_y</em>, <em class="sig-param">map_att_prev</em>, <em class="sig-param">map_inhib_prev</em>, <em class="sig-param">fix_density_map</em>, <em class="sig-param">nth</em>, <em class="sig-param">sim=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.evolve_maps_postsac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evolve maps with postsaccadic shift.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fixs_x</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s x in
+degrees</p>
+</dd>
+<dt><strong>fixs_y</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s y in
+degrees</p>
+</dd>
+<dt><strong>durations</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) of durations in seconds</p>
+</dd>
+<dt><strong>map_att_prev</strong><span class="classifier">array</span></dt><dd><p>previous attention map</p>
+</dd>
+<dt><strong>map_inhib_prev</strong><span class="classifier">array</span></dt><dd><p>previous inhibition map</p>
+</dd>
+<dt><strong>fix_density_map</strong><span class="classifier">array</span></dt><dd><p>empirical fixation density of the image</p>
+</dd>
+<dt><strong>nth</strong><span class="classifier">int</span></dt><dd><p>number of the fixation in the sequence</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>attention map</p>
+</dd>
+<dt>array</dt><dd><p>inhibition map</p>
+</dd>
+<dt>array</dt><dd><p>final map</p>
+</dd>
+<dt>tuple</dt><dd><p>coordinates for the next fixation in degrees (x, y)</p>
+</dd>
+<dt>float</dt><dd><p>likelihood of the next fixation</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.evolve_maps_presac">
+<code class="sig-name descname">evolve_maps_presac</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">durations</em>, <em class="sig-param">fixs_x</em>, <em class="sig-param">fixs_y</em>, <em class="sig-param">map_att_prev</em>, <em class="sig-param">map_inhib_prev</em>, <em class="sig-param">fix_density_map</em>, <em class="sig-param">nth</em>, <em class="sig-param">sim=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.evolve_maps_presac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evolve maps with presaccadic shift.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fixs_x</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s x in
+degrees</p>
+</dd>
+<dt><strong>fixs_y</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s y in
+degrees</p>
+</dd>
+<dt><strong>durations</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) of durations in seconds</p>
+</dd>
+<dt><strong>map_att_prev</strong><span class="classifier">array</span></dt><dd><p>previous attention map</p>
+</dd>
+<dt><strong>map_inhib_prev</strong><span class="classifier">array</span></dt><dd><p>previous inhibition map</p>
+</dd>
+<dt><strong>fix_density_map</strong><span class="classifier">array</span></dt><dd><p>empirical fixation density of the image</p>
+</dd>
+<dt><strong>nth</strong><span class="classifier">int</span></dt><dd><p>number of the fixation in the sequence</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>attention map</p>
+</dd>
+<dt>array</dt><dd><p>inhibition map</p>
+</dd>
+<dt>array</dt><dd><p>final map</p>
+</dd>
+<dt>tuple</dt><dd><p>coordinates for the next fixation in degrees (x, y)</p>
+</dd>
+<dt>float</dt><dd><p>likelihood of the next fixation</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.fixation_picker_max">
+<code class="sig-name descname">fixation_picker_max</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">likelihood_map</em>, <em class="sig-param">get_lik=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.fixation_picker_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Picks the next fixation location according to the maximum activation
+value (deterministic).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>likelihood_map</strong><span class="classifier">array</span></dt><dd><p>(usually 128x128) map from which to pick</p>
+</dd>
+<dt><strong>get_lik</strong><span class="classifier">bool</span></dt><dd><p>if true, return the point’s likelihood value</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>x value in degrees</p>
+</dd>
+<dt>float</dt><dd><p>y value in degrees</p>
+</dd>
+<dt>float (optional)</dt><dd><p>likelihood</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.fixation_picker_stoch">
+<code class="sig-name descname">fixation_picker_stoch</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">likelihood_map</em>, <em class="sig-param">get_lik=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.fixation_picker_stoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Picks the next fixation location according to the cumulative probability
+method (linear selection algorithm)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>likelihood_map</strong><span class="classifier">array</span></dt><dd><p>(usually 128x128) map from which to pick</p>
+</dd>
+<dt><strong>get_lik</strong><span class="classifier">bool</span></dt><dd><p>if true, return the point’s likelihood value</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>x value in degrees</p>
+</dd>
+<dt>float</dt><dd><p>y value in degrees</p>
+</dd>
+<dt>float (optional)</dt><dd><p>likelihood</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.get_param_list_order">
+<code class="sig-name descname">get_param_list_order</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.get_param_list_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the names and order of the parameters required by the
+current model configuration</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.get_params">
+<code class="sig-name descname">get_params</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.get_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current parameters as a dictionary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.get_phase_times_both">
+<code class="sig-name descname">get_phase_times_both</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">nth</em>, <em class="sig-param">durations</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.get_phase_times_both" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function that computes the durations of each phase
+1. You always have the post phase, no matter what
+2. the main phase can be skipped if the post phase is already too long
+3. from the time that is left for the main phase we then subtract the             pre phase. If that leaves the main phase less than 10 ms short,             we skip the pre phase.
+4. The post phase is always skipped for the first fixation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>nth</strong><span class="classifier">int</span></dt><dd><p>the how many’th fixation in the sequence are we dealing with</p>
+</dd>
+<dt><strong>durations</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) of durations</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>duration of post phase (secs)</p>
+</dd>
+<dt>float</dt><dd><p>duration of main phase (secs)</p>
+</dd>
+<dt>float</dt><dd><p>duration of pre phase (secs)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.get_scanpath_likelihood">
+<code class="sig-name descname">get_scanpath_likelihood</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x_path</em>, <em class="sig-param">y_path</em>, <em class="sig-param">dur_path</em>, <em class="sig-param">fix_dens</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.get_scanpath_likelihood" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate likelihood of one scanpath under scenewalk model with params
+in scene_walk_params.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x_path</strong><span class="classifier">array</span></dt><dd><p>array with a datapoint for each fixation’s x coordinate</p>
+</dd>
+<dt><strong>y_path</strong><span class="classifier">array</span></dt><dd><p>array with a datapoint for each fixation’s y coordinate</p>
+</dd>
+<dt><strong>dur_path</strong><span class="classifier">array</span></dt><dd><p>array with a datapoint for each fixation’s duration</p>
+</dd>
+<dt><strong>fix_dens</strong><span class="classifier">array</span></dt><dd><p>empirical fixation density of the viewed image</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>sum log likelihood of the scanpath</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Beware: it HAS to be the sum likelihood. Even if all the scan paths have
+different lengths. Don’t be tempted to use the average, it messes up the
+parameter estimation procedure!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.get_unit_vector">
+<code class="sig-name descname">get_unit_vector</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">point1</em>, <em class="sig-param">point2</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.get_unit_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the unit vector between 2 points. point1 is the origin.
+Vector goes toward point 2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>point1, point2</strong><span class="classifier">iterables of shape (x, y)</span></dt><dd><p>points between which to find the unit vector</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list</dt><dd><p>[unit vector x, unit vector y]</p>
+</dd>
+<dt>float</dt><dd><p>magnitude</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.initialize_center_bias">
+<code class="sig-name descname">initialize_center_bias</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.initialize_center_bias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a map with with a central gaussian</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>array</dt><dd><p>initial starting map</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.initialize_map_unif">
+<code class="sig-name descname">initialize_map_unif</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.initialize_map_unif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a map with near 0 activation everywhere</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>array</dt><dd><p>initial starting map</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.make_attention_gauss">
+<code class="sig-name descname">make_attention_gauss</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">fixs_x</em>, <em class="sig-param">fixs_y</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.make_attention_gauss" title="Permalink to this definition">¶</a></dt>
+<dd><p>make gaussian window at fixation point for attention</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fixs_x</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s x</p>
+</dd>
+<dt><strong>fixs_y</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s y</p>
+</dd>
+<dt><strong>durations</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) of durations</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>gaussian attention map (usually 128x128)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.make_attention_gauss_post_shift">
+<code class="sig-name descname">make_attention_gauss_post_shift</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">fixs_x</em>, <em class="sig-param">fixs_y</em>, <em class="sig-param">get_loc=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.make_attention_gauss_post_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>make gaussian window at fixation point for attention during the
+post-saccadic shift</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fixs_x</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s y</p>
+</dd>
+<dt><strong>fixs_y</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s y</p>
+</dd>
+<dt><strong>durations</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) of durations</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>gaussian attention map (usually 128x128)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.make_inhib_gauss">
+<code class="sig-name descname">make_inhib_gauss</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">fixs_x</em>, <em class="sig-param">fixs_y</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.make_inhib_gauss" title="Permalink to this definition">¶</a></dt>
+<dd><p>make gaussian window at fixation point for inhibition</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fixs_x</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s y</p>
+</dd>
+<dt><strong>fixs_y</strong><span class="classifier">tuple</span></dt><dd><p>of the shape (previous, current, next) fixation location’s y</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>gaussian inhibition map</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.make_om_potential">
+<code class="sig-name descname">make_om_potential</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">fix_x</em>, <em class="sig-param">fix_y</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.make_om_potential" title="Permalink to this definition">¶</a></dt>
+<dd><p>makes an occulomotor potential map where the cardinal directions have
+higher activation than the oblique.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fix_x</strong><span class="classifier">float</span></dt><dd><p>x coordinate on which to center the cross</p>
+</dd>
+<dt><strong>fix_y</strong><span class="classifier">float</span></dt><dd><p>y coordinate on which to center the cross</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>map with oculomotor potential</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.make_om_potential_neg">
+<code class="sig-name descname">make_om_potential_neg</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">fix_x</em>, <em class="sig-param">fix_y</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.make_om_potential_neg" title="Permalink to this definition">¶</a></dt>
+<dd><p>makes an occulomotor potential map where the cardinal directions have
+lower activation than the oblique.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fix_x</strong><span class="classifier">float</span></dt><dd><p>x coordinate on which to center the cross</p>
+</dd>
+<dt><strong>fix_y</strong><span class="classifier">float</span></dt><dd><p>y coordinate on which to center the cross</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>map with oculomotor potential</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.make_positive">
+<code class="sig-name descname">make_positive</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">u</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.make_positive" title="Permalink to this definition">¶</a></dt>
+<dd><p>cuts off negative components</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">array</span></dt><dd><p>map to cut</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array :</dt><dd><p>ustar</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.set_mapsize">
+<code class="sig-name descname">set_mapsize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">map_size</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.set_mapsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up the operating grid size for calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>map_size</strong><span class="classifier">int</span></dt><dd><p>size of the internal grid</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.set_precision">
+<code class="sig-name descname">set_precision</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">data_type</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.set_precision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up the operating datatype for the whole model. np.float128 is best
+if you want to make sure the model doesnt run into numerical problems
+during estimation. Lower precision is faster though.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data_type</strong><span class="classifier">data-type</span></dt><dd><p>datatype to be used for internal calculations</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.simulate_durations">
+<code class="sig-name descname">simulate_durations</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">amount</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.simulate_durations" title="Permalink to this definition">¶</a></dt>
+<dd><p>generate durations from gamma distribtion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>amount</strong><span class="classifier">int</span></dt><dd><p>number of durations to output</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>vector of durations</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.simulate_scanpath">
+<code class="sig-name descname">simulate_scanpath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dur_path</em>, <em class="sig-param">fix_dens</em>, <em class="sig-param">startpos</em>, <em class="sig-param">get_LL=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.simulate_scanpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates a scanpath given durations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dur_path</strong><span class="classifier">array</span></dt><dd><p>array with a datapoint for each fixation’s duration</p>
+</dd>
+<dt><strong>fix_dens</strong><span class="classifier">array</span></dt><dd><p>empirical fixation density of the viewed image</p>
+</dd>
+<dt><strong>startpos</strong><span class="classifier">tuple</span></dt><dd><p>beginning location for the scanpath in degrees (x, y)</p>
+</dd>
+<dt><strong>get_LL</strong><span class="classifier">bool</span></dt><dd><p>whether to return the LL of the path</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>array</dt><dd><p>x of the simulated scanpath</p>
+</dd>
+<dt>array</dt><dd><p>y of the simulated scanpath</p>
+</dd>
+<dt>array (optional)</dt><dd><p>likelihood of the simulated scanpath</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.update_params">
+<code class="sig-name descname">update_params</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">scene_walk_parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.update_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update model parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>scene_walk_parameters</strong><span class="classifier">list or dict</span></dt><dd><p>scene walk params either as list (not numpy array!) or as dict</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>left over parameters when list of the wrong size is passed.</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.whoami">
+<code class="sig-name descname">whoami</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.whoami" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the model identity as a string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scenewalk.scenewalk_model_object.scenewalk.window">
+<code class="sig-name descname">window</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">iterable</em>, <em class="sig-param">n_before=1</em>, <em class="sig-param">n_after=1</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.scenewalk_model_object.scenewalk.window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sliding window iterator. Returns each element and it’s neighbors.
+None elelments returned as neighbors at beginning and end.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>iterable</strong><span class="classifier">list-ish</span></dt><dd><p>list or other kind of iterable</p>
+</dd>
+<dt><strong>n_before</strong><span class="classifier">int</span></dt><dd><p>number of elements to return before each element</p>
+</dd>
+<dt><strong>n_after</strong><span class="classifier">int</span></dt><dd><p>number of elements to return after each element</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>iterator</dt><dd><p>that returns each value in the list and it’s surrounding n</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+        </div>
+      </div>
+
+      <div id="side-menu-container">
+
+        <div id="search" role="search">
+        <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+            <input type="text" name="q" placeholder="Search..." />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+</div>
+
+        <div id="side-menu" role="navigation">
+
+          
+  
+    
+  
+  
+    <p class="caption"><span class="caption-text">Using the SceneWalk Package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_requirements.html">Data Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_requirements.html#scan-path-information">Scan Path Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_requirements.html#furthermore-we-need">Furthermore we need</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="demo/how_to_sw.html">Using the SceneWalk Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="demo/how_to_sw.html#Scenewalk-Model">Scenewalk Model</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">core model code</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="demo/detailed_look_at_sw.html">Detailed Look at the SceneWalk Code in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="demo/detailed_look_at_sw.html#Empirical-Fixation-density-Map">Empirical Fixation density Map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="demo/detailed_look_at_sw.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="demo/detailed_look_at_sw.html#Unpack-scenewalk-code">Unpack scenewalk code</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Model Code Documentation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules to do things with SceneWalk</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_modules.html">Getting Started</a></li>
+</ul>
+
+  
+
+
+        </div>
+
+        
+
+      </div>
+
+    </div>
+
+<footer>
+    <div id="footer-info">
+        <ul id="build-details">
+            
+                <li class="footer-element">
+                    
+                        <a href="_sources/sw_core.rst.txt" rel="nofollow"> source</a>
+                    
+                </li>
+            
+
+            
+
+            
+        </ul>
+        <div id="credit">
+            created with <a href="http://sphinx-doc.org/">Sphinx</a> and <a href="https://github.com/Autophagy/insegel">Insegel</a>
+
+        </div>
+    </div>
+
+    <a id="menu-toggle" class="fa fa-bars" aria-hidden="true"></a>
+
+    <script type="text/javascript">
+      $("#menu-toggle").click(function() {
+        $("#menu-toggle").toggleClass("toggled");
+        $("#side-menu-container").slideToggle(300);
+      });
+    </script>
+
+</footer> 
+
+</div>
+
+</body>
+</html>
