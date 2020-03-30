@@ -2,8 +2,9 @@ abs_datapath: "/Users/lisa/Documents/SFB1294_B05/SceneWalk/Scenewalk_python/DATA
 
 datasets:
   spst_all: "/Users/lisa/Documents/SFB1294_B05/SceneWalk/SceneWalk_research/DATA/SpatStat/npy/"
-  spst_training: "/Users/lisa/Documents/SFB1294_B05/SceneWalk/Scenewalk_python/DATA/SpatStat/split_sets/training/"
-  spst_test: "/Users/lisa/Documents/SFB1294_B05/SceneWalk/Scenewalk_python/DATA/SpatStat/split_sets/test/"
-  corpus_test: "/Users/lisa/Documents/SFB1294_B05/SceneWalk/Scenewalk_python/DATA/corpusData/split_sets/test/"
-  corpus_training: "/Users/lisa/Documents/SFB1294_B05/SceneWalk/Scenewalk_python/DATA/corpusData/split_sets/training/"
+  spst_training: "Users/lisa/Documents/SFB1294_B05/SceneWalk/SceneWalk_research/DATA/SpatStat/split_sets/training/"
+  spst_test: "Users/lisa/Documents/SFB1294_B05/SceneWalk/SceneWalk_research/DATA/SpatStat/split_sets/test/"
+  corpus_all: "/Users/lisa/Documents/SFB1294_B05/SceneWalk/SceneWalk_research/DATA/corpusData/npy/"
+  corpus_test: "Users/lisa/Documents/SFB1294_B05/SceneWalk/SceneWalk_research/DATA/corpusData/split_sets/test/"
+  corpus_training: "Users/lisa/Documents/SFB1294_B05/SceneWalk/SceneWalk_research/DATA/corpusData/split_sets/training/"
 
