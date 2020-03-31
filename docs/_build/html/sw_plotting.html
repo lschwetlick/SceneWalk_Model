@@ -110,6 +110,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#module-scenewalk.plotting.sw_plot">Full Plotting Doc</a></li>
 </ul>
+<p class="caption"><span class="caption-text">Utils</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#loaddata">loadData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#id1">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#resort">resort</a></li>
+</ul>
 
           
         
@@ -152,9 +159,12 @@
   <div class="section" id="plotting">
 <span id="sw-plotting"></span><h1>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">¶</a></h1>
 <p>This module contains functions that help visualize the scenewalk model.</p>
+<p>The sw_plot module is used for making dynamical video files.</p>
+<p>The nb_plot module are visualization functions that are useful for taking a quick look at data or settings before running estimations.</p>
 </div>
 <div class="section" id="example-dynamic-visualization">
 <h1>Example: Dynamic Visualization<a class="headerlink" href="#example-dynamic-visualization" title="Permalink to this headline">¶</a></h1>
+<p>The scenewalk model evolves continuously over time and therefore can be visualized as a video. Since we are visualizing all the in between steps this code is separate from the core model code however and needs to be changed separately in some places when new mechanisms are added.</p>
 <a class="reference internal image-reference" href="_images/extended_sw.mp4"><img alt="_images/extended_sw.mp4" src="_images/extended_sw.mp4" style="width: 500px;" /></a>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Dynamic plotting Notebook</span></p>
@@ -261,6 +271,50 @@ and duration</p>
 <dt><strong>speed</strong><span class="classifier">int</span></dt><dd><p>frames per second (?)</p>
 </dd>
 <dt><strong>Saves Result</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-scenewalk.plotting.nb_plots"></span><p>Some useful visualization functions for Notebooks</p>
+<dl class="function">
+<dt id="scenewalk.plotting.nb_plots.plot_path_on_map">
+<code class="sig-prename descclassname">scenewalk.plotting.nb_plots.</code><code class="sig-name descname">plot_path_on_map</code><span class="sig-paren">(</span><em class="sig-param">dens</em>, <em class="sig-param">x_path</em>, <em class="sig-param">y_path</em>, <em class="sig-param">sw</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.plotting.nb_plots.plot_path_on_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>plots a scanpath on top of the underlying image density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dens</strong><span class="classifier">array</span></dt><dd><p>empirical densities</p>
+</dd>
+<dt><strong>x_path, y_path</strong><span class="classifier">arrays</span></dt><dd><p>fixation locations</p>
+</dd>
+<dt><strong>sw</strong><span class="classifier">scenewalk model object</span></dt><dd><p>scenewalk model object which includes the data range</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>fig, ax</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.plotting.nb_plots.priors_plot">
+<code class="sig-prename descclassname">scenewalk.plotting.nb_plots.</code><code class="sig-name descname">priors_plot</code><span class="sig-paren">(</span><em class="sig-param">priors</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.plotting.nb_plots.priors_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a simple plot of the priors in the dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>Priors</strong><span class="classifier">dict</span></dt><dd><p>dictionary of priors where the key is the name and the value is an
+an instance of scipy.stats.truncated normal or some other distribution</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>fig, ax</dt><dd></dd>
 </dl>
 </dd>
 </dl>

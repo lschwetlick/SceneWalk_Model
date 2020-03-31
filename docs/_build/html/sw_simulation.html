@@ -110,6 +110,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sw_plotting.html#module-scenewalk.plotting.sw_plot">Full Plotting Doc</a></li>
 </ul>
+<p class="caption"><span class="caption-text">Utils</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#loaddata">loadData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#id1">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#resort">resort</a></li>
+</ul>
 
           
         
@@ -168,7 +175,7 @@
 <p>Simulate data</p>
 <dl class="function">
 <dt id="scenewalk.simulation.simulate_dataset.simulate">
-<code class="sig-prename descclassname">scenewalk.simulation.simulate_dataset.</code><code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">sw_model</em>, <em class="sig-param">params=None</em>, <em class="sig-param">start_loc='center'</em>, <em class="sig-param">x_path=None</em>, <em class="sig-param">y_path=None</em>, <em class="sig-param">resample_durs=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.simulation.simulate_dataset.simulate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">scenewalk.simulation.simulate_dataset.</code><code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">sw_model</em>, <em class="sig-param">params=None</em>, <em class="sig-param">start_loc='center'</em>, <em class="sig-param">x_path=None</em>, <em class="sig-param">y_path=None</em>, <em class="sig-param">resample_durs=False</em>, <em class="sig-param">verbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.simulation.simulate_dataset.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>simulate and save dataset given durations and images</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -194,11 +201,11 @@ Otherwise pass a dictionary</p>
 distribution for each subject. If False, it uses empirical fixation
 durations.</p>
 </dd>
-</dl>
+<dt><strong>verbose</strong><span class="classifier">bool</span></dt><dd><p>set to true for basic progress printing</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt>str</dt><dd><p>simulation id number</p>
+<dt><strong>Returns</strong></dt><dd></dd>
+<dt><strong>——-</strong></dt><dd></dd>
+<dt><strong>str</strong></dt><dd><p>simulation id number</p>
 </dd>
 </dl>
 </dd>
@@ -207,7 +214,7 @@ durations.</p>
 
 <dl class="function">
 <dt id="scenewalk.simulation.simulate_dataset.simulate_sample">
-<code class="sig-prename descclassname">scenewalk.simulation.simulate_dataset.</code><code class="sig-name descname">simulate_sample</code><span class="sig-paren">(</span><em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">sw_model</em>, <em class="sig-param">chains_dict</em>, <em class="sig-param">sample_level</em>, <em class="sig-param">start_loc='center'</em>, <em class="sig-param">x_path=None</em>, <em class="sig-param">y_path=None</em>, <em class="sig-param">resample_durs=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.simulation.simulate_dataset.simulate_sample" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">scenewalk.simulation.simulate_dataset.</code><code class="sig-name descname">simulate_sample</code><span class="sig-paren">(</span><em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">sw_model</em>, <em class="sig-param">chains_dict</em>, <em class="sig-param">sample_level</em>, <em class="sig-param">start_loc='center'</em>, <em class="sig-param">x_path=None</em>, <em class="sig-param">y_path=None</em>, <em class="sig-param">resample_durs=False</em>, <em class="sig-param">verbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.simulation.simulate_dataset.simulate_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>simulates dataset given durations and images but sample from the posterior
 parameter distribution.</p>
 <dl class="field-list simple">
@@ -237,6 +244,8 @@ Otherwise pass a dictionary</p>
 <dt><strong>resample_durs</strong><span class="classifier">bool</span></dt><dd><p>set to true if you want durations to be sampled from a fitted gamma
 distribution for each subject. If False, it uses empirical fixation
 durations.</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier">bool</span></dt><dd><p>set to true for basic progress printing</p>
 </dd>
 </dl>
 </dd>
