@@ -65,6 +65,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../data_requirements.html">Data Requirements</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../data_requirements.html#scan-path-information">Scan Path Information</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_requirements.html#furthermore-we-need">Furthermore we need</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_requirements.html#folder-structure">Folder Structure</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="how_to_sw.html">Using the SceneWalk Model</a><ul>
@@ -468,7 +469,7 @@ shortening from 35 to 5
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -486,7 +487,7 @@ shortening from 35 to 5
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -534,12 +535,99 @@ sub 4
 </div>
 <div class="section" id="Load-simulated-data">
 <h2>Load simulated data<a class="headerlink" href="#Load-simulated-data" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">sim_dat_dict</span> <span class="o">=</span> <span class="n">loadData</span><span class="o">.</span><span class="n">load_sim_data</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">sim_id</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-8-180fc77ac953&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>sim_dat_dict <span class="ansi-blue-fg">=</span> loadData<span class="ansi-blue-fg">.</span>load_sim_data<span class="ansi-blue-fg">(</span>os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>abspath<span class="ansi-blue-fg">(</span>sim_id<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;sim_id&#39; is not defined
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="More-settings-for-simulations">
+<h2>More settings for simulations<a class="headerlink" href="#More-settings-for-simulations" title="Permalink to this headline">¶</a></h2>
+<p>Advanced settings include instead of params=None you can give it a dictionary of all parameters the model needs by subject. i.e.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">param_subj_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span> <span class="p">:</span> <span class="n">param_dict</span><span class="p">,</span>
+    <span class="mi">1</span> <span class="p">:</span> <span class="n">param_dict</span><span class="p">,</span>
+    <span class="mi">2</span> <span class="p">:</span> <span class="n">param_dict</span><span class="p">,</span>
+    <span class="mi">3</span> <span class="p">:</span> <span class="n">param_dict</span><span class="p">,</span>
+    <span class="mi">4</span> <span class="p">:</span> <span class="n">param_dict</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sim_id</span> <span class="o">=</span> <span class="n">simulate_dataset</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">dur_dat</span><span class="p">,</span> <span class="n">im_dat</span><span class="p">,</span> <span class="n">densities_dat</span><span class="p">,</span> <span class="n">sw</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">param_subj_dict</span><span class="p">,</span> <span class="n">start_loc</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">x_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">resample_durs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+sub 0
+sub 1
+sub 2
+sub 3
+sub 4
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sw</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+OrderedDict([(&#39;omegaAttention&#39;, 18.5),
+             (&#39;omegaInhib&#39;, 1.85),
+             (&#39;sigmaAttention&#39;, 6),
+             (&#39;sigmaInhib&#39;, 12),
+             (&#39;gamma&#39;, 8),
+             (&#39;lamb&#39;, 0.6),
+             (&#39;inhibStrength&#39;, 0.7),
+             (&#39;zeta&#39;, 0.01)])
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
 </pre></div>
 </div>
 </div>

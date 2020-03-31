@@ -63,6 +63,7 @@
 <li class="toctree-l1"><a class="reference internal" href="data_requirements.html">Data Requirements</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="data_requirements.html#scan-path-information">Scan Path Information</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_requirements.html#furthermore-we-need">Furthermore we need</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_requirements.html#folder-structure">Folder Structure</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="demo/how_to_sw.html">Using the SceneWalk Model</a><ul>
@@ -165,6 +166,12 @@
 <p>In loadData datasets are loaded into dictionaries, can be shortened or split in various ways and then saved to their own variables.</p>
 <span class="target" id="module-scenewalk.utils.loadData"></span><p>Funtions that load, handle and change data</p>
 <dl class="function">
+<dt id="scenewalk.utils.loadData.autopopulate_data_path_dict">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">autopopulate_data_path_dict</code><span class="sig-paren">(</span><em class="sig-param">folder_path</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.autopopulate_data_path_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>finds data paths automatically assuming specific Data structure</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="scenewalk.utils.loadData.change_resolution">
 <code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">change_resolution</code><span class="sig-paren">(</span><em class="sig-param">densities</em>, <em class="sig-param">new_size</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.change_resolution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Changes the resolution of a list of densities</p>
@@ -184,6 +191,12 @@
 </dl>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.check_npy_folder_complete">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">check_npy_folder_complete</code><span class="sig-paren">(</span><em class="sig-param">npy_path</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.check_npy_folder_complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks npy data folder is complete</p>
 </dd></dl>
 
 <dl class="function">
@@ -232,6 +245,16 @@ x_dat, y_dat, dur_dat, im_dat, densities_dat, d_range</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="scenewalk.utils.loadData.find_data">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">find_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.find_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>tries to find where your data is hiding. Order of preference:
+1. You’ve set the DATA_PATH variable
+2. config in code directory
+3. config in working directory
+4. folder called DATA in your working directory</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="scenewalk.utils.loadData.get_ix_from_set">
 <code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">get_ix_from_set</code><span class="sig-paren">(</span><em class="sig-param">data_dict</em>, <em class="sig-param">subj_order=None</em>, <em class="sig-param">trials_order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.get_ix_from_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a list of indeces for trials and for subjects and shortend/reorders
@@ -275,12 +298,12 @@ subjects up to that one.</p>
 
 <dl class="function">
 <dt id="scenewalk.utils.loadData.load_data">
-<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">set_name</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.load_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">data_ref</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.load_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns selected data set as a dictionary</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>set_name</strong><span class="classifier">str</span></dt><dd><p>name of the set you want to load</p>
+<dt><strong>data_ref</strong><span class="classifier">str</span></dt><dd><p>name  or path of the set you want to load</p>
 </dd>
 </dl>
 </dd>
@@ -312,6 +335,12 @@ into a dictionary</p>
 </dl>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.populate_path_dict_from_yml">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">populate_path_dict_from_yml</code><span class="sig-paren">(</span><em class="sig-param">yml_path</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.populate_path_dict_from_yml" title="Permalink to this definition">¶</a></dt>
+<dd><p>loads config yml</p>
 </dd></dl>
 
 <dl class="function">

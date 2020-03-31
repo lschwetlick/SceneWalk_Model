@@ -29,10 +29,10 @@
         "outputHidden": false,
         "inputHidden": false,
         "execution": {
-          "iopub.status.busy": "2020-03-30T15:22:38.711Z",
-          "iopub.execute_input": "2020-03-30T15:22:38.718Z",
-          "iopub.status.idle": "2020-03-30T15:22:39.819Z",
-          "shell.execute_reply": "2020-03-30T15:22:39.827Z"
+          "iopub.status.busy": "2020-03-31T11:41:46.318Z",
+          "iopub.execute_input": "2020-03-31T11:41:46.321Z",
+          "iopub.status.idle": "2020-03-31T11:41:47.683Z",
+          "shell.execute_reply": "2020-03-31T11:41:47.700Z"
         }
       }
     },
@@ -78,10 +78,10 @@
           }
         },
         "execution": {
-          "iopub.status.busy": "2020-03-30T15:22:40.940Z",
-          "iopub.execute_input": "2020-03-30T15:22:40.946Z",
-          "iopub.status.idle": "2020-03-30T15:22:40.983Z",
-          "shell.execute_reply": "2020-03-30T15:22:40.988Z"
+          "iopub.status.busy": "2020-03-31T11:41:47.689Z",
+          "iopub.execute_input": "2020-03-31T11:41:47.692Z",
+          "iopub.status.idle": "2020-03-31T11:41:47.719Z",
+          "shell.execute_reply": "2020-03-31T11:41:47.728Z"
         }
       }
     },
@@ -118,10 +118,10 @@
         "outputHidden": false,
         "inputHidden": false,
         "execution": {
-          "iopub.status.busy": "2020-03-30T15:22:41.998Z",
-          "iopub.execute_input": "2020-03-30T15:22:42.003Z",
-          "iopub.status.idle": "2020-03-30T15:22:42.014Z",
-          "shell.execute_reply": "2020-03-30T15:22:42.020Z"
+          "iopub.status.busy": "2020-03-31T11:41:47.754Z",
+          "iopub.execute_input": "2020-03-31T11:41:47.757Z",
+          "iopub.status.idle": "2020-03-31T11:41:47.765Z",
+          "shell.execute_reply": "2020-03-31T11:41:47.768Z"
         }
       }
     },
@@ -162,10 +162,10 @@
         "outputHidden": false,
         "inputHidden": false,
         "execution": {
-          "iopub.status.busy": "2020-03-30T15:22:42.850Z",
-          "iopub.execute_input": "2020-03-30T15:22:42.855Z",
-          "iopub.status.idle": "2020-03-30T15:22:42.864Z",
-          "shell.execute_reply": "2020-03-30T15:22:42.868Z"
+          "iopub.status.busy": "2020-03-31T11:41:51.841Z",
+          "iopub.execute_input": "2020-03-31T11:41:51.847Z",
+          "iopub.status.idle": "2020-03-31T11:41:51.857Z",
+          "shell.execute_reply": "2020-03-31T11:41:51.862Z"
         }
       }
     },
@@ -184,16 +184,16 @@
         "})"
       ],
       "outputs": [],
-      "execution_count": 5,
+      "execution_count": 6,
       "metadata": {
         "collapsed": false,
         "outputHidden": false,
         "inputHidden": false,
         "execution": {
-          "iopub.status.busy": "2020-03-30T15:22:43.233Z",
-          "iopub.execute_input": "2020-03-30T15:22:43.238Z",
-          "iopub.status.idle": "2020-03-30T15:22:43.244Z",
-          "shell.execute_reply": "2020-03-30T15:22:43.250Z"
+          "iopub.status.busy": "2020-03-31T11:42:03.909Z",
+          "iopub.execute_input": "2020-03-31T11:42:03.916Z",
+          "iopub.status.idle": "2020-03-31T11:42:03.924Z",
+          "shell.execute_reply": "2020-03-31T11:42:03.928Z"
         }
       }
     },
@@ -215,16 +215,16 @@
           ]
         }
       ],
-      "execution_count": 6,
+      "execution_count": 7,
       "metadata": {
         "collapsed": false,
         "outputHidden": false,
         "inputHidden": false,
         "execution": {
-          "iopub.status.busy": "2020-03-30T15:22:43.649Z",
-          "iopub.execute_input": "2020-03-30T15:22:43.654Z",
-          "iopub.status.idle": "2020-03-30T15:22:43.665Z",
-          "shell.execute_reply": "2020-03-30T15:22:43.670Z"
+          "iopub.status.busy": "2020-03-31T11:42:04.452Z",
+          "iopub.execute_input": "2020-03-31T11:42:04.456Z",
+          "iopub.status.idle": "2020-03-31T11:42:04.468Z",
+          "shell.execute_reply": "2020-03-31T11:42:04.472Z"
         }
       }
     },
@@ -297,8 +297,20 @@
       "source": [
         "sim_dat_dict = loadData.load_sim_data(os.path.abspath(sim_id))"
       ],
-      "outputs": [],
-      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "NameError",
+          "evalue": "name 'sim_id' is not defined",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-8-180fc77ac953>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0msim_dat_dict\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mloadData\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload_sim_data\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mos\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpath\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mabspath\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0msim_id\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+            "\u001b[0;31mNameError\u001b[0m: name 'sim_id' is not defined"
+          ]
+        }
+      ],
+      "execution_count": 8,
       "metadata": {
         "collapsed": false,
         "jupyter": {
@@ -311,10 +323,169 @@
           }
         },
         "execution": {
-          "iopub.status.busy": "2020-03-30T15:23:31.232Z",
-          "iopub.execute_input": "2020-03-30T15:23:31.236Z",
-          "iopub.status.idle": "2020-03-30T15:23:31.242Z",
-          "shell.execute_reply": "2020-03-30T15:23:31.245Z"
+          "iopub.status.busy": "2020-03-31T11:42:08.580Z",
+          "iopub.execute_input": "2020-03-31T11:42:08.584Z",
+          "iopub.status.idle": "2020-03-31T11:42:08.593Z",
+          "shell.execute_reply": "2020-03-31T11:42:08.602Z"
+        }
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## More settings for simulations"
+      ],
+      "metadata": {
+        "nteract": {
+          "transient": {
+            "deleting": false
+          }
+        }
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Advanced settings include\n",
+        "instead of params=None you can give it a dictionary of all parameters the model needs by subject. i.e."
+      ],
+      "metadata": {
+        "nteract": {
+          "transient": {
+            "deleting": false
+          }
+        }
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "param_subj_dict = {\n",
+        "    0 : param_dict,\n",
+        "    1 : param_dict,\n",
+        "    2 : param_dict,\n",
+        "    3 : param_dict,\n",
+        "    4 : param_dict\n",
+        "}"
+      ],
+      "outputs": [],
+      "execution_count": 13,
+      "metadata": {
+        "collapsed": false,
+        "jupyter": {
+          "source_hidden": false,
+          "outputs_hidden": false
+        },
+        "nteract": {
+          "transient": {
+            "deleting": false
+          }
+        },
+        "execution": {
+          "iopub.status.busy": "2020-03-31T11:43:39.535Z",
+          "iopub.execute_input": "2020-03-31T11:43:39.539Z",
+          "iopub.status.idle": "2020-03-31T11:43:39.546Z",
+          "shell.execute_reply": "2020-03-31T11:43:39.552Z"
+        }
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "sim_id = simulate_dataset.simulate(dur_dat, im_dat, densities_dat, sw, params=param_subj_dict, start_loc=\"center\", x_path=None, y_path=None, resample_durs=False, verbose=True)"
+      ],
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "sub 0\n",
+            "sub 1\n",
+            "sub 2\n",
+            "sub 3\n",
+            "sub 4\n"
+          ]
+        }
+      ],
+      "execution_count": 14,
+      "metadata": {
+        "collapsed": false,
+        "jupyter": {
+          "source_hidden": false,
+          "outputs_hidden": false
+        },
+        "nteract": {
+          "transient": {
+            "deleting": false
+          }
+        },
+        "execution": {
+          "iopub.status.busy": "2020-03-31T11:43:41.159Z",
+          "iopub.execute_input": "2020-03-31T11:43:41.162Z",
+          "iopub.status.idle": "2020-03-31T11:43:59.453Z",
+          "shell.execute_reply": "2020-03-31T11:43:59.455Z"
+        }
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "sw.get_params()"
+      ],
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "execution_count": 16,
+          "data": {
+            "text/plain": [
+              "OrderedDict([('omegaAttention', 18.5),\n",
+              "             ('omegaInhib', 1.85),\n",
+              "             ('sigmaAttention', 6),\n",
+              "             ('sigmaInhib', 12),\n",
+              "             ('gamma', 8),\n",
+              "             ('lamb', 0.6),\n",
+              "             ('inhibStrength', 0.7),\n",
+              "             ('zeta', 0.01)])"
+            ]
+          },
+          "metadata": {}
+        }
+      ],
+      "execution_count": 16,
+      "metadata": {
+        "collapsed": false,
+        "jupyter": {
+          "source_hidden": false,
+          "outputs_hidden": false
+        },
+        "nteract": {
+          "transient": {
+            "deleting": false
+          }
+        },
+        "execution": {
+          "iopub.status.busy": "2020-03-31T11:44:23.525Z",
+          "iopub.execute_input": "2020-03-31T11:44:23.529Z",
+          "iopub.status.idle": "2020-03-31T11:44:23.536Z",
+          "shell.execute_reply": "2020-03-31T11:44:23.541Z"
+        }
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "outputs": [],
+      "execution_count": null,
+      "metadata": {
+        "collapsed": false,
+        "jupyter": {
+          "source_hidden": false,
+          "outputs_hidden": false
+        },
+        "nteract": {
+          "transient": {
+            "deleting": false
+          }
         }
       }
     }
