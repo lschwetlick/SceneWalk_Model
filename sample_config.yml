@@ -1,0 +1,8 @@
+abs_datapath: "data/folder"
+
+datasets:
+  dataset1: "path/to/your/data1/npy/"
+  dataset2: "path/to/your/data2/npy/"
+  dataset3: "path/to/your/data3/npy/"
+  dataset4: "path/to/your/data4/npy/"
+

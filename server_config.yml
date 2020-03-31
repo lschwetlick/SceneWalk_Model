@@ -1,9 +1,0 @@
-abs_datapath: "/hpc-cloud/users/sfb/1294/schwetli/scenewalk/DATA"
-
-datasets:
-  spst_all: "/hpc-cloud/users/sfb/1294/schwetli/scenewalk/DATA/SpatStat/npy/"
-  spst_training: "/hpc-cloud/users/sfb/1294/schwetli/scenewalk/DATA/SpatStat/split_sets/training/"
-  spst_test: "/hpc-cloud/users/sfb/1294/schwetli/scenewalk/DATA/SpatStat/split_sets/test/"
-  corpus_test: "/hpc-cloud/users/sfb/1294/schwetli/scenewalk/DATA/corpusData/split_sets/test/"
-  corpus_training: "/hpc-cloud/users/sfb/1294/schwetli/scenewalk/DATA/corpusData/split_sets/training/"
-

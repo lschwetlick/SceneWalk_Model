@@ -36,7 +36,10 @@ build/
 
 .python-version
 
-
+# ignore config
+config.yml
+lisa_config.yml
+orson_config.yml
 
 bootstrap_env*/
 
