@@ -27,7 +27,8 @@ def find_data():
         if os.path.exists(Path(__file__).parent / "../../config.yml"):
             from_where = "config in code"
             #print("there is a config")
-            populate_path_dict_from_yml(Path(__file__).parent / "../../config.yml")
+            relpath = "../../config.yml"
+            populate_path_dict_from_yml(Path(__file__).parent / relpath)
         elif os.path.exists(os.path.abspath("config.yml")):
             #print("there is a config in wd")
             from_where = "config in wd"
@@ -39,9 +40,10 @@ def find_data():
                 #print("there is a DATA folder in wd")
                 autopopulate_data_path_dict(os.path.abspath("DATA"))
             else:
-                raise Exception("You have not set up a folder from which to load data."
-                                "at the top of your script please `import scenewalk`"
-                                "and then set `scenewalk.DATA_PATH='my/path/to/data'`")
+                raise Exception("You have not set up a folder from which to "
+                                "load data. At the top of your script please "
+                                "`from scenewalk.utils import loadData` and"
+                                "`loadData.DATA_PATH = 'My/Path/DATA'`")
     else:
         from_where = "set DATA_PATH"
         #print("there is a DATA_PATH specific")
@@ -154,10 +156,10 @@ def load_data(data_ref):
         name = mat.group(1)
         loaded_dict[name] = np.load(p, allow_pickle=True)
     if all([x is None for x in loaded_dict.values()]):
-        warnings.warn("You are looking for data at the following path '"
+        warnings.warn("The string you passed is not a key in the data dict."
+                      "I thought maybe you passed a path: '"
                       + folder
-                      +"'. I can't find the files where you are looking. Is the"
-                       " path set up correctly?")
+                      +"' but I can't find the files there either.")
     return loaded_dict
 
 def load_sim_data(folder_path):
