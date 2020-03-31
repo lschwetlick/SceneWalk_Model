@@ -8,7 +8,8 @@ from scipy import stats
 from scenewalk.utils import utils
 
 def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
-             start_loc="center", x_path=None, y_path=None, resample_durs=False):
+             start_loc="center", x_path=None, y_path=None, resample_durs=False,
+             verbose=False):
     """
     simulate and save dataset given durations and images
 
@@ -35,7 +36,8 @@ def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
         set to true if you want durations to be sampled from a fitted gamma
         distribution for each subject. If False, it uses empirical fixation
         durations.
-
+    verbose : bool
+        set to true for basic progress printing
     Returns
     -------
     str
@@ -63,8 +65,8 @@ def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
             data_list_dur.append(None)
             data_list_im.append(None)
             continue
-
-        print("sub", sub_cnt)
+        if verbose:
+            print("sub", sub_cnt)
 
         # if we have a seperate fit per vp, we update the model
         if params is not None:
@@ -122,7 +124,7 @@ def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
 
 def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
                     sample_level, start_loc="center", x_path=None, y_path=None,
-                    resample_durs=False):
+                    resample_durs=False, verbose=False):
     """
     simulates dataset given durations and images but sample from the posterior
     parameter distribution.
@@ -154,6 +156,8 @@ def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
         set to true if you want durations to be sampled from a fitted gamma
         distribution for each subject. If False, it uses empirical fixation
         durations.
+    verbose : bool
+        set to true for basic progress printing
 
     Returns
     -------
@@ -181,7 +185,8 @@ def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
             data_list_im.append(None)
             continue
         sub_dict = chains_dict[sub_cnt]
-        print("sub", sub_cnt)
+        if verbose:
+            print("sub", sub_cnt)
 
         # if we have a seperate fit per vp, we update the model now
         if sample_level == "vp":
