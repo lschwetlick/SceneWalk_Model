@@ -1,3 +1,4 @@
+"""Funtions that load, handle and change data"""
 import os
 import sys
 import glob
@@ -8,16 +9,89 @@ from random import sample
 import numpy as np
 import yaml
 
+DATA_PATH = None
+data_path_dict = {}
 
-def setup_paths():
-    calling_path = os.path.abspath(os.getcwd())
-    func_path = __file__
-    commn = os.path.commonpath([calling_path, func_path])
-    return commn
+def find_data():
+    """
+    tries to find where your data is hiding. Order of preference:
+    1. You've set the DATA_PATH variable
+    2. config in code directory
+    3. config in working directory
+    4. folder called DATA in your working directory
+    """
+    global data_path_dict
+    # first check if the path has been set already
+    if DATA_PATH is None:
+        # if not, see if you have a config file
+        if os.path.exists(Path(__file__).parent / "../../config.yml"):
+            from_where = "config in code"
+            #print("there is a config")
+            populate_path_dict_from_yml(Path(__file__).parent / "../../config.yml")
+        elif os.path.exists(os.path.abspath("config.yml")):
+            #print("there is a config in wd")
+            from_where = "config in wd"
+            populate_path_dict_from_yml(os.path.abspath("config.yml"))
+        else:
+            # if not, check if there is a "DATA folder right there"
+            if os.path.exists(os.path.abspath("DATA")):
+                from_where = "DATA in wd"
+                #print("there is a DATA folder in wd")
+                autopopulate_data_path_dict(os.path.abspath("DATA"))
+            else:
+                raise Exception("You have not set up a folder from which to load data."
+                                "at the top of your script please `import scenewalk`"
+                                "and then set `scenewalk.DATA_PATH='my/path/to/data'`")
+    else:
+        from_where = "set DATA_PATH"
+        #print("there is a DATA_PATH specific")
+        autopopulate_data_path_dict(os.path.abspath(DATA_PATH))
+    return from_where
 
-config = yaml.safe_load(open(Path(__file__).parent / "../../config.yml"))
-abspath = config["abs_datapath"]
-data_path_dict = config["datasets"]
+def autopopulate_data_path_dict(folder_path):
+    """ finds data paths automatically assuming specific Data structure"""
+    global data_path_dict
+    load_paths = glob.glob(os.path.join(folder_path, "*/npy/"))
+    for npy_path in load_paths:
+        dataset_name = npy_path.split("/")[-3]
+        data_path_dict[dataset_name] = npy_path
+        culprit = check_npy_folder_complete(npy_path)
+        if not culprit is None:
+            warnings.warn("found data at " + npy_path + " but it is incomplete"
+                          "you are missing at least the *" + culprit + "* "
+                          "file.")
+
+def check_npy_folder_complete(npy_path):
+    """ checks npy data folder is complete"""
+    try:
+        culprit = "dur"
+        assert len(glob.glob(os.path.join(npy_path, '*_dur.npy'))) != 0
+        culprit = "x"
+        assert len(glob.glob(os.path.join(npy_path, '*_x.npy'))) != 0
+        culprit = "y"
+        assert len(glob.glob(os.path.join(npy_path, '*_y.npy'))) != 0
+        culprit = "im"
+        assert len(glob.glob(os.path.join(npy_path, '*_im.npy'))) != 0
+        culprit = "densities"
+        assert len(glob.glob(os.path.join(npy_path, '*_densities.npy'))) != 0
+        culprit = "range"
+        assert len(glob.glob(os.path.join(npy_path, '*_range.npy'))) != 0
+    except AssertionError:
+        return culprit
+    return None
+
+def populate_path_dict_from_yml(yml_path):
+    """ loads config yml """
+    global data_path_dict
+    config = yaml.safe_load(open(yml_path))
+    data_path_dict = config["datasets"]
+    for f in data_path_dict:
+        culprit = check_npy_folder_complete(data_path_dict[f])
+        if not culprit is None:
+            warnings.warn("found folder " + data_path_dict[f] + " but it is incomplete."
+                          "You are missing at least the *" + culprit + "* "
+                          "file.")
+
 
 def get_set_names():
     """
@@ -28,6 +102,7 @@ def get_set_names():
     list
         list of dataset names
     """
+    find_data()
     for n in data_path_dict:
         print(n)
 
@@ -65,22 +140,25 @@ def load_data(data_ref):
     dict
         data dictionary
     """
+    find_data()
     loaded_dict = setup_data_dict()
 
-    try:
-        folder = data_path_dict[set_name]
-    except:
-        e = sys.exc_info()[0]
-        raise (e)
+    if data_ref in data_path_dict.keys():
+        folder = data_path_dict[data_ref]
+    else:
+        folder = data_ref
 
-    load_paths = glob.glob(folder + "*.npy")
+    load_paths = glob.glob(os.path.join(folder, "*.npy"))
     for p in load_paths:
         mat = re.search(r'_([a-zA-Z]*).npy', p)
         name = mat.group(1)
         loaded_dict[name] = np.load(p, allow_pickle=True)
     if all([x is None for x in loaded_dict.values()]):
-        warnings.warn("Can't find the files where you are looking. Is the path set up correctly?")
-    return (loaded_dict)
+        warnings.warn("You are looking for data at the following path '"
+                      + folder
+                      +"'. I can't find the files where you are looking. Is the"
+                       " path set up correctly?")
+    return loaded_dict
 
 def load_sim_data(folder_path):
     """
@@ -106,8 +184,9 @@ def load_sim_data(folder_path):
         name = mat.group(1)
         loaded_dict[name] = np.load(p, allow_pickle=True)
     if all([x is None for x in loaded_dict.values()]):
-        warnings.warn("Can't find the files where you are looking. Is the path set up correctly?")
-    return (loaded_dict)
+        warnings.warn("Can't find the files where you are looking. "
+                      "Is the path set up correctly?")
+    return loaded_dict
 
 
 def dataDict2vars(data_dict):
