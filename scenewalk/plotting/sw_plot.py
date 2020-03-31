@@ -204,7 +204,7 @@ def plot_dynamic_shifts(sw, fix_density_map, x_path, y_path, dur_path,
         # MAIN PHASE
         #durations_dummy = (None, duration_main_ph, None)
         for ms in np.arange(0, duration_main_ph, 10 / 1000):
-            map_att, map_inhib, uFinal, next_fix, LL = \
+            map_att, map_inhib, uFinal, _, _ = \
                 sw.evolve_maps_main((None, ms, None), fixs_x, fixs_y,
                                     map_att_prev, map_inhib_prev,
                                     fix_density_map, i_fix, sim=False)
@@ -532,7 +532,7 @@ def plot_dynamic_shifts_image(sw, fix_density_map, x_path, y_path, dur_path,
         # MAIN PHASE
         #durations_dummy = (None, duration_main_ph, None)
         for ms in np.arange(0, duration_main_ph, 10 / 1000):
-            map_att, map_inhib, uFinal, next_fix, LL = \
+            map_att, map_inhib, uFinal, _, _ = \
                 sw.evolve_maps_main((None, ms, None), fixs_x, fixs_y,
                                     map_att_prev, map_inhib_prev,
                                     fix_density_map, i_fix, sim=False)
@@ -763,7 +763,7 @@ def plot_corrsac_dynamic_shifts_image(sw, fix_density_map, x_path, y_path,
         #durations_dummy = (None, duration_main_ph, None)
         for ms in np.arange(0, duration_main_ph, 10 / 1000):
             durations_dummy = (None, duration_main_ph, None)
-            map_att, map_inhib, uFinal, next_fix, LL = \
+            map_att, map_inhib, uFinal, next_fix, _ = \
                 sw.evolve_maps_main(durations_dummy, fixs_x, fixs_y,
                                     map_att_prev, map_inhib_prev,
                                     fix_density_map, i_fix, sim=False)

@@ -7,9 +7,9 @@ import multiprocessing as multiprocess
 from multiprocessing.pool import ThreadPool
 import numpy as np
 
-### ----------------------------------------------------------------
+### ----------------------------------------------------------------------------
 ## These Functions parallelize over one suject's *trials*
-### ----------------------------------------------------------------
+### ----------------------------------------------------------------------------
 def get_total_list_LL_trials(sw_model, x_dat, y_dat, dur_dat, im_dat,
                              densities_dat):
     """

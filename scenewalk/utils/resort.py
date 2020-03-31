@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Little commandline tool to sort estimation files into the expected folders.
+Little commandline tool to sort estimation files into the folders.
 
-Go into the folder where all the estimation files are and run 
+Go into the folder where all the estimation files are and run
 ´´´
 python3 -m scenewalk.utils.resort "2019" 5 -d
 ´´´
@@ -12,8 +12,6 @@ import glob
 import shutil
 import re
 from argparse import ArgumentParser
-
-
 
 def main():
     """
@@ -37,23 +35,26 @@ def main():
     if orson:
         move_files_orson(args.id, args.max_vp, move)
     else:
-        move_files(args.id,args.max_vp, move)
+        move_files(args.id, args.max_vp, move)
 
     print("Done!")
 
 def move_files(estim_id, nvp, move):
+    """
+    moving utility for estimations run on ex_bio_psy server
+    """
     estim_folder_list = glob.glob("estim_"+estim_id+"*[0-9]")
     estim_folder_list_sorted = [None for el in range(nvp)]
-    i=0
+    i = 0
     for p in estim_folder_list:
         #print(p)
-        i+=1
+        i += 1
         mat = re.search(r"vp([0-9]*)", p)
         vpnr = int(mat.group(1))
         #print(vpnr)
         if estim_folder_list_sorted[vpnr] is not None:
             print("You seem to have 2 estims for the same subject")
-        estim_folder_list_sorted[vpnr]=p
+        estim_folder_list_sorted[vpnr] = p
     #print(estim_folder_list)
     logs_counter = 0
     for i, est in enumerate(estim_folder_list_sorted):
@@ -92,13 +93,16 @@ def move_files(estim_id, nvp, move):
                 print("move " + rf + " to " + est)
 
 def move_files_orson(estim_id, nvp, move):
+    """
+    moving utility for estimations run on orson server
+    """
     print("orson")
     estim_folder_list = glob.glob("estim_"+estim_id+"*[0-9]")
     estim_folder_list_sorted = [None for el in range(nvp)]
-    i=0
+    i = 0
     for p in estim_folder_list:
         #print(p)
-        i+=1
+        i += 1
         mat = re.search(r"vp([0-9]*)", p)
         vpnr = int(mat.group(1))
         #print(vpnr)
@@ -123,19 +127,19 @@ def move_files_orson(estim_id, nvp, move):
             errlogpath = l[:-4]+".err"
             est = estim_folder_list_sorted[vpnr-1]
             if move:
-                pass
                 shutil.move(logpath, est)
                 shutil.move(errlogpath, est)
             else:
                 print("move " + logpath + " to " + est)
                 print("move " + errlogpath + " to " + est)
-            
+
             resfiles = glob.glob("estim_*vp"+str(vpnr-1)+"_*")
             for rf in resfiles:
                 if move:
                     shutil.move(rf, est)
                 else:
                     print("move " + rf + " to " + est)
+
 if __name__ == "__main__":
     print("main")
     main()

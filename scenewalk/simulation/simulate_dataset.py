@@ -24,7 +24,7 @@ def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
         simulation, pass object with preset param values)
     params : {None, dict}
         if None, just use whatever is in the scenewalk object.
-        Otherwise pass a dictionary
+        Otherwise pass a dictionary of all the parameters your model needs
     start_loc  : {"center" or "data"}
         start location of each trial
     x_path : {None, Array}
