@@ -9,7 +9,7 @@ from scenewalk.utils import utils
 
 def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
              start_loc="center", x_path=None, y_path=None, resample_durs=False,
-             verbose=False, save_to=None):
+             verbose=False, save_to=None, custom_id=None):
     """
     simulate and save dataset given durations and images
 
@@ -41,6 +41,8 @@ def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
     save_to : str
         folder to save the simulation to. If none, it makes a folder in the
         working directory, named with the simulation id.
+    custom_id : str
+        simulation id. if none it gets a timestamp.
 
     Returns
     -------
@@ -121,14 +123,15 @@ def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
 
     nvp = len(available_vps)
     sim_id = _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im,
-                        sw_model, nvp, save_to=save_to)
+                        sw_model, nvp, save_to=save_to, custom_id=custom_id)
     return "sim_%s" % sim_id
 
 
 
 def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
                     sample_level, start_loc="center", x_path=None, y_path=None,
-                    resample_durs=False, verbose=False, save_to=None):
+                    resample_durs=False, verbose=False, save_to=None,
+                    custom_id=None):
     """
     simulates dataset given durations and images but sample from the posterior
     parameter distribution.
@@ -165,6 +168,8 @@ def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
     save_to : str
         folder to save the simulation to. If none, it makes a folder in the
         working directory, named with the simulation id.
+    custom_id : str
+        simulation id. if none it gets a timestamp.
 
     Returns
     -------
@@ -248,17 +253,22 @@ def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
 
     nvp = len(available_vps)
     sim_id = _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im,
-                        sw_model, nvp, sampled=True, save_to=save_to)
+                        sw_model, nvp, sampled=True, save_to=save_to,
+                        custom_id=custom_id)
     return "sim_%s" % sim_id
 
 
 ### HELPERS
 
 def _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im, sw_model,
-               nvp, sampled=False, save_to=None):
-    sim_id = (time.strftime("%Y%m%d-%H%M%S"))
-    if sampled:
-        sim_id = sim_id + "samp"
+               nvp, sampled=False, save_to=None, custom_id=None):
+    if custom_id is not None:
+        sim_id = (time.strftime("%Y%m%d-%H%M%S"))
+        if sampled:
+            sim_id = sim_id + "samp"
+    else:
+        sim_id = custom_id
+
     if save_to is None:
         cwd = os.getcwd()
         os.mkdir(os.path.join(cwd, "sim_" + sim_id))

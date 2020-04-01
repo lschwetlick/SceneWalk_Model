@@ -176,7 +176,7 @@
 <p>Simulate data</p>
 <dl class="function">
 <dt id="scenewalk.simulation.simulate_dataset.simulate">
-<code class="sig-prename descclassname">scenewalk.simulation.simulate_dataset.</code><code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">sw_model</em>, <em class="sig-param">params=None</em>, <em class="sig-param">start_loc='center'</em>, <em class="sig-param">x_path=None</em>, <em class="sig-param">y_path=None</em>, <em class="sig-param">resample_durs=False</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">save_to=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.simulation.simulate_dataset.simulate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">scenewalk.simulation.simulate_dataset.</code><code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">sw_model</em>, <em class="sig-param">params=None</em>, <em class="sig-param">start_loc='center'</em>, <em class="sig-param">x_path=None</em>, <em class="sig-param">y_path=None</em>, <em class="sig-param">resample_durs=False</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">save_to=None</em>, <em class="sig-param">custom_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.simulation.simulate_dataset.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>simulate and save dataset given durations and images</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -207,6 +207,8 @@ durations.</p>
 <dt><strong>save_to</strong><span class="classifier">str</span></dt><dd><p>folder to save the simulation to. If none, it makes a folder in the
 working directory, named with the simulation id.</p>
 </dd>
+<dt><strong>custom_id</strong><span class="classifier">str</span></dt><dd><p>simulation id. if none it gets a timestamp.</p>
+</dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -220,7 +222,7 @@ working directory, named with the simulation id.</p>
 
 <dl class="function">
 <dt id="scenewalk.simulation.simulate_dataset.simulate_sample">
-<code class="sig-prename descclassname">scenewalk.simulation.simulate_dataset.</code><code class="sig-name descname">simulate_sample</code><span class="sig-paren">(</span><em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">sw_model</em>, <em class="sig-param">chains_dict</em>, <em class="sig-param">sample_level</em>, <em class="sig-param">start_loc='center'</em>, <em class="sig-param">x_path=None</em>, <em class="sig-param">y_path=None</em>, <em class="sig-param">resample_durs=False</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">save_to=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.simulation.simulate_dataset.simulate_sample" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">scenewalk.simulation.simulate_dataset.</code><code class="sig-name descname">simulate_sample</code><span class="sig-paren">(</span><em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">sw_model</em>, <em class="sig-param">chains_dict</em>, <em class="sig-param">sample_level</em>, <em class="sig-param">start_loc='center'</em>, <em class="sig-param">x_path=None</em>, <em class="sig-param">y_path=None</em>, <em class="sig-param">resample_durs=False</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">save_to=None</em>, <em class="sig-param">custom_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.simulation.simulate_dataset.simulate_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>simulates dataset given durations and images but sample from the posterior
 parameter distribution.</p>
 <dl class="field-list simple">
@@ -255,6 +257,8 @@ durations.</p>
 </dd>
 <dt><strong>save_to</strong><span class="classifier">str</span></dt><dd><p>folder to save the simulation to. If none, it makes a folder in the
 working directory, named with the simulation id.</p>
+</dd>
+<dt><strong>custom_id</strong><span class="classifier">str</span></dt><dd><p>simulation id. if none it gets a timestamp.</p>
 </dd>
 </dl>
 </dd>
