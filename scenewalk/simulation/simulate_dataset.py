@@ -9,7 +9,7 @@ from scenewalk.utils import utils
 
 def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
              start_loc="center", x_path=None, y_path=None, resample_durs=False,
-             verbose=False):
+             verbose=False, save_to=None):
     """
     simulate and save dataset given durations and images
 
@@ -38,6 +38,10 @@ def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
         durations.
     verbose : bool
         set to true for basic progress printing
+    save_to : str
+        folder to save the simulation to. If none, it makes a folder in the
+        working directory, named with the simulation id.
+
     Returns
     -------
     str
@@ -117,14 +121,14 @@ def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
 
     nvp = len(available_vps)
     sim_id = _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im,
-                        sw_model, nvp)
+                        sw_model, nvp, save_to=save_to)
     return "sim_%s" % sim_id
 
 
 
 def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
                     sample_level, start_loc="center", x_path=None, y_path=None,
-                    resample_durs=False, verbose=False):
+                    resample_durs=False, verbose=False, save_to=None):
     """
     simulates dataset given durations and images but sample from the posterior
     parameter distribution.
@@ -158,6 +162,9 @@ def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
         durations.
     verbose : bool
         set to true for basic progress printing
+    save_to : str
+        folder to save the simulation to. If none, it makes a folder in the
+        working directory, named with the simulation id.
 
     Returns
     -------
@@ -241,25 +248,33 @@ def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
 
     nvp = len(available_vps)
     sim_id = _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im,
-                        sw_model, nvp, sampled=True)
+                        sw_model, nvp, sampled=True, save_to=save_to)
     return "sim_%s" % sim_id
 
 
 ### HELPERS
 
 def _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im, sw_model,
-               nvp, sampled=False):
+               nvp, sampled=False, save_to=None):
     sim_id = (time.strftime("%Y%m%d-%H%M%S"))
     if sampled:
         sim_id = sim_id + "samp"
-    cwd = os.getcwd()
-    os.mkdir(cwd + "/sim_%s" % sim_id)
-    folderPath = cwd + "/sim_%s" % sim_id
-    np.save(folderPath + "/%s_sim_x.npy" % sim_id, data_list_x)
-    np.save(folderPath + "/%s_sim_y.npy" % sim_id, data_list_y)
-    np.save(folderPath + "/%s_sim_dur.npy" % sim_id, data_list_dur)
-    np.save(folderPath + "/%s_sim_im.npy" % sim_id, data_list_im)
-    np.save(folderPath + "/%s_sim_range.npy" % sim_id, \
+    if save_to is None:
+        cwd = os.getcwd()
+        os.mkdir(os.path.join(cwd, "sim_" + sim_id))
+        folderPath = os.path.join(cwd, "sim_" + sim_id)
+    else:
+        if os.path.exists(os.path.abspath(save_to)):
+            folderPath = save_to
+        else:
+            os.mkdir(os.path.abspath(save_to))
+            folderPath = os.path.abspath(save_to)
+
+    np.save(os.path.join(folderPath, sim_id + "_sim_x.npy"), data_list_x)
+    np.save(os.path.join(folderPath, sim_id + "_sim_y.npy"), data_list_y)
+    np.save(os.path.join(folderPath, sim_id + "_sim_dur.npy"), data_list_dur)
+    np.save(os.path.join(folderPath, sim_id + "_sim_im.npy"), data_list_im)
+    np.save(os.path.join(folderPath, sim_id + "_sim_range.npy"), \
         [sw_model.data_range['x'], sw_model.data_range['y']])
     meta_dict = {
         "model_params": sw_model.get_params(),
@@ -267,7 +282,7 @@ def _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im, sw_model,
         "gitsha": utils.get_git_sha(),
         "sampled": sampled
     }
-    np.save(folderPath + "/%s_sim_meta.npy" % sim_id, [meta_dict])
+    np.save(os.path.join(folderPath, sim_id + "_sim_meta.npy"), [meta_dict])
     return sim_id
 
 def _pick_start_position(start_loc, sw_model, x_path, y_path, sub_cnt, tr_cnt):
