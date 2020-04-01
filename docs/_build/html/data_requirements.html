@@ -180,42 +180,37 @@
 <h2>Folder Structure<a class="headerlink" href="#folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>In the utils.loadData submodule I assume that this information has been saved to a folder, where each bullet point is a separate npy file, with some name, but ending in “_x”, “_y”, “_dur”, “_im”, “_range”, and “_densities”.</p>
 <p>The folder structure for datasets is therefore as follows:</p>
-<p><a href="#id2"><span class="problematic" id="id3">``</span></a>`
-<a href="#id4"><span class="problematic" id="id5">|</span></a>–DATA</p>
-<blockquote>
-<div><dl class="simple">
-<dt><a href="#id6"><span class="problematic" id="id7">|</span></a>– Dataset1</dt><dd><dl class="simple">
-<dt><a href="#id8"><span class="problematic" id="id9">|</span></a>– npy</dt><dd><p><a href="#id10"><span class="problematic" id="id11">|</span></a>– d1_x.npy
-<a href="#id12"><span class="problematic" id="id13">|</span></a>– d1_y.npy
-<a href="#id14"><span class="problematic" id="id15">|</span></a>– d1_im.npy
-<a href="#id16"><span class="problematic" id="id17">|</span></a>– d1_dur.npy
-<a href="#id18"><span class="problematic" id="id19">|</span></a>– d1_densities.npy
-<a href="#id20"><span class="problematic" id="id21">|</span></a>– d1_densities.npy</p>
-</dd>
-</dl>
-</dd>
-<dt><a href="#id22"><span class="problematic" id="id23">|</span></a>– Dataset2</dt><dd><dl class="simple">
-<dt><a href="#id24"><span class="problematic" id="id25">|</span></a>– npy</dt><dd><p><a href="#id26"><span class="problematic" id="id27">|</span></a>– d2_x.npy
-<a href="#id28"><span class="problematic" id="id29">|</span></a>– d2_y.npy
-<a href="#id30"><span class="problematic" id="id31">|</span></a>– d2_im.npy
-<a href="#id32"><span class="problematic" id="id33">|</span></a>– d2_dur.npy
-<a href="#id34"><span class="problematic" id="id35">|</span></a>– d2_densities.npy
-<a href="#id36"><span class="problematic" id="id37">|</span></a>– d2_densities.npy</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</div></blockquote>
-<p><a href="#id38"><span class="problematic" id="id39">``</span></a><a href="#id40"><span class="problematic" id="id41">`</span></a></p>
-<p>You have multiple options to tell the module where to look for data:
-1. you pass the the path to the load_data() function directly. Use an absolute path the to npy folder.
-2. you can set the path in your script like so:
-<code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">from</span> <span class="pre">scenewalk.utils</span> <span class="pre">import</span> <span class="pre">loadData</span>
-<span class="pre">loadData.DATA_PATH</span> <span class="pre">=</span> <span class="pre">&quot;My/Path/DATA&quot;</span>
-<span class="pre">`</span></code>
-3. you can place a config.yml file into your working directory (see config_sample.yml)
-4. you can place a config.yml file into the scenewalk_model top level directory (see config_sample.yml)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|--</span><span class="n">DATA</span>
+<span class="o">|--</span> <span class="n">Dataset1</span>
+    <span class="o">|--</span> <span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d1_x</span><span class="o">.</span><span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d1_y</span><span class="o">.</span><span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d1_im</span><span class="o">.</span><span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d1_dur</span><span class="o">.</span><span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d1_densities</span><span class="o">.</span><span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d1_range</span><span class="o">.</span><span class="n">npy</span>
+<span class="o">|--</span> <span class="n">Dataset2</span>
+    <span class="o">|--</span> <span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d2_x</span><span class="o">.</span><span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d2_y</span><span class="o">.</span><span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d2_im</span><span class="o">.</span><span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d2_dur</span><span class="o">.</span><span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d2_densities</span><span class="o">.</span><span class="n">npy</span>
+    <span class="o">|--</span> <span class="n">d2_range</span><span class="o">.</span><span class="n">npy</span>
+</pre></div>
+</div>
+<p>You have multiple options to tell the module where to look for data:</p>
+<ol class="arabic">
+<li><p>you pass the the path to the load_data() function directly. Use an absolute path the to npy folder.</p></li>
+<li><p>you can set the path in your script like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scenewalk.utils</span> <span class="k">import</span> <span class="n">loadData</span>
+<span class="n">loadData</span><span class="o">.</span><span class="n">DATA_PATH</span> <span class="o">=</span> <span class="s2">&quot;My/Path/DATA&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>you can place a config.yml file into your working directory (see config_sample.yml)</p></li>
+<li><p>you can place a config.yml file into the scenewalk_model top level directory (see config_sample.yml)</p></li>
+</ol>
 </div>
 </div>
 

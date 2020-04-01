@@ -27,35 +27,35 @@ Folder Structure
 
 In the utils.loadData submodule I assume that this information has been saved to a folder, where each bullet point is a separate npy file, with some name, but ending in "_x", "_y", "_dur", "_im", "_range", and "_densities". 
 
-The folder structure for datasets is therefore as follows:
+The folder structure for datasets is therefore as follows::
 
-```
-|--DATA
-  |-- Dataset1
-    |-- npy
-      |-- d1_x.npy
-      |-- d1_y.npy
-      |-- d1_im.npy
-      |-- d1_dur.npy
-      |-- d1_densities.npy
-      |-- d1_densities.npy
-  |-- Dataset2
-    |-- npy
-      |-- d2_x.npy
-      |-- d2_y.npy
-      |-- d2_im.npy
-      |-- d2_dur.npy
-      |-- d2_densities.npy
-      |-- d2_densities.npy 
-```
+    |--DATA
+    |-- Dataset1
+        |-- npy
+        |-- d1_x.npy
+        |-- d1_y.npy
+        |-- d1_im.npy
+        |-- d1_dur.npy
+        |-- d1_densities.npy
+        |-- d1_range.npy
+    |-- Dataset2
+        |-- npy
+        |-- d2_x.npy
+        |-- d2_y.npy
+        |-- d2_im.npy
+        |-- d2_dur.npy
+        |-- d2_densities.npy
+        |-- d2_range.npy
+
 
 You have multiple options to tell the module where to look for data:
+
 1. you pass the the path to the load_data() function directly. Use an absolute path the to npy folder.
-2. you can set the path in your script like so:
-```
-from scenewalk.utils import loadData
-loadData.DATA_PATH = "My/Path/DATA"
-```
+2. you can set the path in your script like so::
+
+    from scenewalk.utils import loadData
+    loadData.DATA_PATH = "My/Path/DATA"
+
 3. you can place a config.yml file into your working directory (see config_sample.yml)
 4. you can place a config.yml file into the scenewalk_model top level directory (see config_sample.yml)
 
