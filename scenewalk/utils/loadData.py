@@ -24,10 +24,10 @@ def find_data():
     # first check if the path has been set already
     if DATA_PATH is None:
         # if not, see if you have a config file
-        if os.path.exists(Path(__file__).parent / "../../config.yml"):
+        if os.path.exists(Path(__file__).parent / "../config.yml"):
             from_where = "config in code"
             #print("there is a config")
-            relpath = "../../config.yml"
+            relpath = "../config.yml"
             populate_path_dict_from_yml(Path(__file__).parent / relpath)
         elif os.path.exists(os.path.abspath("config.yml")):
             #print("there is a config in wd")
@@ -367,3 +367,22 @@ def _chop_list(lower, upper, li):
                 im.append(j)
         allim.append(im)
     return allim
+
+
+def save_dict_to_folder(data_dict, name, folder):
+    """
+    Save a data dict into folder as separate npy files
+
+    Parameters
+    ----------
+    data_dict : dict
+        data
+    name : str
+        name of the dataset
+    folder : str
+        folder to save to (must exist!)
+    """
+    for i in data_dict:
+        dat = data_dict[i]
+        fname = os.path.join(folder, (name+"_"+i+".npy"))
+        np.save(fname, dat)
