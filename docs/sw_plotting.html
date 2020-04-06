@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Plotting &mdash; SceneWalk  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Try the dynamic plotting module" href="demo/dynamic_plot.html" />
+    <link rel="prev" title="Simulate Data from the SceneWalk Model" href="demo/how_to_simulate.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/sw_logo2.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Using the SceneWalk Package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_requirements.html">Data Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo/how_to_sw.html">Using the SceneWalk Model</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Core Model Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="demo/detailed_look_at_sw.html">Detailed Look at the SceneWalk Code in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_core.html">The SceneWalk Model Object</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Evaluation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_evaluation.html#module-scenewalk.evaluation.evaluate_sw_parallel">Full Estimation Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Estimation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html">Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#example-estimation-script">Example Estimation Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#full-estimation-doc">Full Estimation Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html#example-simulation">Example Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html#module-scenewalk.simulation.simulate_dataset">Full Simulation Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Plotting</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#example-dynamic-visualization">Example: Dynamic Visualization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="demo/dynamic_plot.html">Try the dynamic plotting module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#module-scenewalk.plotting.sw_plot">Full Plotting Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Utils</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#loaddata">loadData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#id1">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#resort">resort</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SceneWalk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Plotting</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sw_plotting.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="plotting">
+<span id="sw-plotting"></span><h1>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions that help visualize the scenewalk model.</p>
+<p>The sw_plot module is used for making dynamical video files.</p>
+<p>The nb_plot module are visualization functions that are useful for taking a quick look at data or settings before running estimations.</p>
+</div>
+<div class="section" id="example-dynamic-visualization">
+<h1>Example: Dynamic Visualization<a class="headerlink" href="#example-dynamic-visualization" title="Permalink to this headline">¶</a></h1>
+<p>The scenewalk model evolves continuously over time and therefore can be visualized as a video. Since we are visualizing all the in between steps this code is separate from the core model code however and needs to be changed separately in some places when new mechanisms are added.</p>
+<a class="reference internal image-reference" href="_images/extended_sw.mp4"><img alt="_images/extended_sw.mp4" src="_images/extended_sw.mp4" style="width: 500px;" /></a>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Dynamic plotting Notebook</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="demo/dynamic_plot.html">Try the dynamic plotting module</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-scenewalk.plotting.sw_plot">
+<span id="full-plotting-doc"></span><h1>Full Plotting Doc<a class="headerlink" href="#module-scenewalk.plotting.sw_plot" title="Permalink to this headline">¶</a></h1>
+<p>Visualizing Scenewalk</p>
+<p>Lisa Schwetlick 2019</p>
+<p>University of Potsdam</p>
+<dl class="function">
+<dt id="scenewalk.plotting.sw_plot.plot_3_maps">
+<code class="sig-prename descclassname">scenewalk.plotting.sw_plot.</code><code class="sig-name descname">plot_3_maps</code><span class="sig-paren">(</span><em class="sig-param">ufinal_map=None</em>, <em class="sig-param">inhib_map=None</em>, <em class="sig-param">att_map=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.plotting.sw_plot.plot_3_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a nice plot of the three output maps (attention, inhibition, and
+final)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ufinal_map</strong><span class="classifier">array</span></dt><dd><p>final SceneWalk map</p>
+</dd>
+<dt><strong>inhib_map</strong><span class="classifier">array</span></dt><dd><p>SceneWalk inhibition map</p>
+</dd>
+<dt><strong>att_map</strong><span class="classifier">array</span></dt><dd><p>SceneWalk attention map</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For example see demo/detailed_look_at_sw.ipynb</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.plotting.sw_plot.plot_corrsac_dynamic_shifts_image">
+<code class="sig-prename descclassname">scenewalk.plotting.sw_plot.</code><code class="sig-name descname">plot_corrsac_dynamic_shifts_image</code><span class="sig-paren">(</span><em class="sig-param">sw</em>, <em class="sig-param">fix_density_map</em>, <em class="sig-param">x_path</em>, <em class="sig-param">y_path</em>, <em class="sig-param">dur_path</em>, <em class="sig-param">filename</em>, <em class="sig-param">image</em>, <em class="sig-param">speed=100</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.plotting.sw_plot.plot_corrsac_dynamic_shifts_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make dynamic video plot of model evolution given a scanpath when the
+corrective saccade modification</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sw</strong><span class="classifier">scenewalk model object</span></dt><dd><p>scenewalk model object</p>
+</dd>
+<dt><strong>fix_density_map</strong><span class="classifier">array</span></dt><dd><p>empirical density</p>
+</dd>
+<dt><strong>x_path, y_path, dur_path</strong><span class="classifier">arrays</span></dt><dd><p>list of datapoints, one for each fixation for x and y coordinates
+and duration</p>
+</dd>
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>where to save. must end in “.mp4”</p>
+</dd>
+<dt><strong>image</strong><span class="classifier">array</span></dt><dd><p>base picture</p>
+</dd>
+<dt><strong>speed</strong><span class="classifier">int</span></dt><dd><p>frames per second (?)</p>
+</dd>
+<dt><strong>Saves Result</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.plotting.sw_plot.plot_dynamic_shifts">
+<code class="sig-prename descclassname">scenewalk.plotting.sw_plot.</code><code class="sig-name descname">plot_dynamic_shifts</code><span class="sig-paren">(</span><em class="sig-param">sw</em>, <em class="sig-param">fix_density_map</em>, <em class="sig-param">x_path</em>, <em class="sig-param">y_path</em>, <em class="sig-param">dur_path</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.plotting.sw_plot.plot_dynamic_shifts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make dynamic video plot of model evolution given a scanpath when the
+presaccadic attention shift is switched on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sw</strong><span class="classifier">scenewalk model object</span></dt><dd><p>scenewalk model object</p>
+</dd>
+<dt><strong>fix_density_map</strong><span class="classifier">array</span></dt><dd><p>empirical density</p>
+</dd>
+<dt><strong>x_path, y_path, dur_path</strong><span class="classifier">arrays</span></dt><dd><p>list of datapoints, one for each fixation for x and y coordinates
+and duration</p>
+</dd>
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>where to save. must end in “.mp4”</p>
+</dd>
+<dt><strong>Saves Result</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.plotting.sw_plot.plot_dynamic_shifts_image">
+<code class="sig-prename descclassname">scenewalk.plotting.sw_plot.</code><code class="sig-name descname">plot_dynamic_shifts_image</code><span class="sig-paren">(</span><em class="sig-param">sw</em>, <em class="sig-param">fix_density_map</em>, <em class="sig-param">x_path</em>, <em class="sig-param">y_path</em>, <em class="sig-param">dur_path</em>, <em class="sig-param">filename</em>, <em class="sig-param">image</em>, <em class="sig-param">speed=100</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.plotting.sw_plot.plot_dynamic_shifts_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make dinamic video plot of model evolution given a scanpath when the
+presaccadic attention shift is switched on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sw</strong><span class="classifier">scenewalk model object</span></dt><dd><p>scenewalk model object</p>
+</dd>
+<dt><strong>fix_density_map</strong><span class="classifier">array</span></dt><dd><p>empirical density</p>
+</dd>
+<dt><strong>x_path, y_path, dur_path</strong><span class="classifier">arrays</span></dt><dd><p>list of datapoints, one for each fixation for x and y coordinates
+and duration</p>
+</dd>
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>where to save. must end in “.mp4”</p>
+</dd>
+<dt><strong>image</strong><span class="classifier">array</span></dt><dd><p>base picture</p>
+</dd>
+<dt><strong>speed</strong><span class="classifier">int</span></dt><dd><p>frames per second (?)</p>
+</dd>
+<dt><strong>Saves Result</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-scenewalk.plotting.nb_plots"></span><p>Some useful visualization functions for Notebooks</p>
+<dl class="function">
+<dt id="scenewalk.plotting.nb_plots.plot_path_on_map">
+<code class="sig-prename descclassname">scenewalk.plotting.nb_plots.</code><code class="sig-name descname">plot_path_on_map</code><span class="sig-paren">(</span><em class="sig-param">dens</em>, <em class="sig-param">x_path</em>, <em class="sig-param">y_path</em>, <em class="sig-param">sw</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.plotting.nb_plots.plot_path_on_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>plots a scanpath on top of the underlying image density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dens</strong><span class="classifier">array</span></dt><dd><p>empirical densities</p>
+</dd>
+<dt><strong>x_path, y_path</strong><span class="classifier">arrays</span></dt><dd><p>fixation locations</p>
+</dd>
+<dt><strong>sw</strong><span class="classifier">scenewalk model object</span></dt><dd><p>scenewalk model object which includes the data range</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>fig, ax</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.plotting.nb_plots.priors_plot">
+<code class="sig-prename descclassname">scenewalk.plotting.nb_plots.</code><code class="sig-name descname">priors_plot</code><span class="sig-paren">(</span><em class="sig-param">priors</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.plotting.nb_plots.priors_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a simple plot of the priors in the dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>Priors</strong><span class="classifier">dict</span></dt><dd><p>dictionary of priors where the key is the name and the value is an
+an instance of scipy.stats.truncated normal or some other distribution</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>fig, ax</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="demo/dynamic_plot.html" class="btn btn-neutral float-right" title="Try the dynamic plotting module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="demo/how_to_simulate.html" class="btn btn-neutral float-left" title="Simulate Data from the SceneWalk Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Lisa Schwetlick
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

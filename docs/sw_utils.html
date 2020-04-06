@@ -1,0 +1,757 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Utils &mdash; SceneWalk  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Try the dynamic plotting module" href="demo/dynamic_plot.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/sw_logo2.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Using the SceneWalk Package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_requirements.html">Data Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo/how_to_sw.html">Using the SceneWalk Model</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Core Model Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="demo/detailed_look_at_sw.html">Detailed Look at the SceneWalk Code in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_core.html">The SceneWalk Model Object</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Evaluation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_evaluation.html#module-scenewalk.evaluation.evaluate_sw_parallel">Full Estimation Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Estimation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html">Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#example-estimation-script">Example Estimation Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#full-estimation-doc">Full Estimation Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html#example-simulation">Example Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html#module-scenewalk.simulation.simulate_dataset">Full Simulation Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Plotting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sw_plotting.html">Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_plotting.html#example-dynamic-visualization">Example: Dynamic Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_plotting.html#module-scenewalk.plotting.sw_plot">Full Plotting Doc</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Utils</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#loaddata">loadData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id1">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#resort">resort</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SceneWalk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sw_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="utils">
+<span id="sw-utils"></span><h1>Utils<a class="headerlink" href="#utils" title="Permalink to this headline">¶</a></h1>
+<p>This module is a collection of various useful tools for the use of the scenewalk model.</p>
+</div>
+<div class="section" id="loaddata">
+<h1>loadData<a class="headerlink" href="#loaddata" title="Permalink to this headline">¶</a></h1>
+<p>As decribed in the section “data requirements” the package expects data to be organized as a list of lists of arrays referring to the levels of subject, trial and fixation respectively. The relevant data are x and y coordinates, image number and  fixation duration. Additionally the model needs the fixation densities/saliency maps and the data range.</p>
+<p>In loadData datasets are loaded into dictionaries, can be shortened or split in various ways and then saved to their own variables.</p>
+<span class="target" id="module-scenewalk.utils.loadData"></span><p>Funtions that load, handle and change data</p>
+<dl class="function">
+<dt id="scenewalk.utils.loadData.autopopulate_data_path_dict">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">autopopulate_data_path_dict</code><span class="sig-paren">(</span><em class="sig-param">folder_path</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.autopopulate_data_path_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>finds data paths automatically assuming specific Data structure</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.change_resolution">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">change_resolution</code><span class="sig-paren">(</span><em class="sig-param">densities</em>, <em class="sig-param">new_size</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.change_resolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the resolution of a list of densities</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>densities</strong><span class="classifier">list of arrays</span></dt><dd><p>list of empirical fixation densities</p>
+</dd>
+<dt><strong>new_size</strong><span class="classifier">int</span></dt><dd><p>number of pixels in one direction after resizing</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list</dt><dd><p>of densities</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.check_npy_folder_complete">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">check_npy_folder_complete</code><span class="sig-paren">(</span><em class="sig-param">npy_path</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.check_npy_folder_complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks npy data folder is complete</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.chop_scanpaths">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">chop_scanpaths</code><span class="sig-paren">(</span><em class="sig-param">lower</em>, <em class="sig-param">upper</em>, <em class="sig-param">datadict</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.chop_scanpaths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cuts off scanpaths in a data set. To make them equal lengths or to get a
+subset of fixations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>densities</strong><span class="classifier">list of arrays</span></dt><dd><p>list of empirical fixation densities</p>
+</dd>
+<dt><strong>new_size</strong><span class="classifier">int</span></dt><dd><p>number of pixels in one direction after resizing</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list</dt><dd><p>of densities</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.dataDict2vars">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">dataDict2vars</code><span class="sig-paren">(</span><em class="sig-param">data_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.dataDict2vars" title="Permalink to this definition">¶</a></dt>
+<dd><p>takes data dictionary and returns vectors
+x, y, dur, im, densities, range
+x_dat, y_dat, dur_dat, im_dat, densities_dat, d_range</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data_dict</strong><span class="classifier">dict</span></dt><dd><p>data dictionary</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>arrays</dt><dd><p>x, y, dur, im, densities, range</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.find_data">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">find_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.find_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>tries to find where your data is hiding. Order of preference:
+1. You’ve set the DATA_PATH variable
+2. config in code directory
+3. config in working directory
+4. folder called DATA in your working directory</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.get_ix_from_set">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">get_ix_from_set</code><span class="sig-paren">(</span><em class="sig-param">data_dict</em>, <em class="sig-param">subj_order=None</em>, <em class="sig-param">trials_order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.get_ix_from_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a list of indeces for trials and for subjects and shortend/reorders
+the dataset. The order of the list IS relevant. No Nones are added, so the
+absolute indexes will change!
+If an integer is given in place of a list, it will expand into a list of all
+subjects up to that one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data_dict</strong><span class="classifier">dict</span></dt><dd><p>data dictionary</p>
+</dd>
+<dt><strong>subj_order</strong><span class="classifier">{int, list}</span></dt><dd><p>list of subject indexes to return</p>
+</dd>
+<dt><strong>trials_order</strong><span class="classifier">{int, list}</span></dt><dd><p>list of trial indexes to return</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>data dictionary</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.get_set_names">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">get_set_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.get_set_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>get available data sets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>list</dt><dd><p>list of dataset names</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.load_data">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">data_ref</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns selected data set as a dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data_ref</strong><span class="classifier">str</span></dt><dd><p>name  or path of the set you want to load</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>data dictionary</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.load_sim_data">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">load_sim_data</code><span class="sig-paren">(</span><em class="sig-param">folder_path</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.load_sim_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the absolute path of a folder of simulated data and loads the contents
+into a dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>folder_path</strong><span class="classifier">str</span></dt><dd><p>absolute path of the simulated data folder</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>data dictionary</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.populate_path_dict_from_yml">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">populate_path_dict_from_yml</code><span class="sig-paren">(</span><em class="sig-param">yml_path</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.populate_path_dict_from_yml" title="Permalink to this definition">¶</a></dt>
+<dd><p>loads config yml</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.save_dict_to_folder">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">save_dict_to_folder</code><span class="sig-paren">(</span><em class="sig-param">data_dict</em>, <em class="sig-param">name</em>, <em class="sig-param">folder</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.save_dict_to_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a data dict into folder as separate npy files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data_dict</strong><span class="classifier">dict</span></dt><dd><p>data</p>
+</dd>
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>name of the dataset</p>
+</dd>
+<dt><strong>folder</strong><span class="classifier">str</span></dt><dd><p>folder to save to (must exist!)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.setup_data_dict">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">setup_data_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.setup_data_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function that sets up data dict structure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>dict</dt><dd><p>dict of all relevant keys for data, but populated with Nones</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.loadData.shorten_set">
+<code class="sig-prename descclassname">scenewalk.utils.loadData.</code><code class="sig-name descname">shorten_set</code><span class="sig-paren">(</span><em class="sig-param">data_dict</em>, <em class="sig-param">nvp</em>, <em class="sig-param">vps=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.loadData.shorten_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets x subjects from the selected set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data_dict</strong><span class="classifier">dict</span></dt><dd><p>data dictionary</p>
+</dd>
+<dt><strong>nvp</strong><span class="classifier">int</span></dt><dd><p>number of subjects to return</p>
+</dd>
+<dt><strong>vps</strong><span class="classifier">list</span></dt><dd><p>list of vp numbers</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>data dictionary</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h1>utils<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>These funtions mainly refer to saving estimation chains returned by pydream  into more readable formats</p>
+<span class="target" id="module-scenewalk.utils.utils"></span><p>Utility Functions for SceneWalk Related stuff</p>
+<dl class="function">
+<dt id="scenewalk.utils.utils.check_param_dict_order">
+<code class="sig-prename descclassname">scenewalk.utils.utils.</code><code class="sig-name descname">check_param_dict_order</code><span class="sig-paren">(</span><em class="sig-param">p_dict</em>, <em class="sig-param">sw_model</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.utils.check_param_dict_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks that the parameter dictionary is in the correct order for the model
+if you turn it into a list (Pydream will be returning lists as parameters)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>p_dict</strong><span class="classifier">ordered dict</span></dt><dd><p>parameter dictionary to check</p>
+</dd>
+<dt><strong>sw_model</strong><span class="classifier">scenewalk model object</span></dt><dd><p>scenewalk model object with some configuration</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list of bools</dt><dd><p>indicating the parameters line up</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.utils.get_all_colors">
+<code class="sig-prename descclassname">scenewalk.utils.utils.</code><code class="sig-name descname">get_all_colors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.utils.get_all_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all available color names in pyplot</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.utils.get_git_sha">
+<code class="sig-prename descclassname">scenewalk.utils.utils.</code><code class="sig-name descname">get_git_sha</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.utils.get_git_sha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns git sha of current repo, for meta data</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.utils.save2dict_by_subj">
+<code class="sig-prename descclassname">scenewalk.utils.utils.</code><code class="sig-name descname">save2dict_by_subj</code><span class="sig-paren">(</span><em class="sig-param">chains_list</em>, <em class="sig-param">all_vp_list</em>, <em class="sig-param">def_args</em>, <em class="sig-param">fname</em>, <em class="sig-param">perc_last_samples=100</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.utils.save2dict_by_subj" title="Permalink to this definition">¶</a></dt>
+<dd><p>saves full estimation results as a dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chains_list</strong><span class="classifier">list</span></dt><dd><p>list of pydream estimations (each element is one subject’s estimation)</p>
+</dd>
+<dt><strong>all_vp_list</strong><span class="classifier">list</span></dt><dd><p>list of all subject indexes</p>
+</dd>
+<dt><strong>def_args</strong><span class="classifier">dict</span></dt><dd><p>dictionary of default arguments (non estimated parameters)</p>
+</dd>
+<dt><strong>fname</strong><span class="classifier">str</span></dt><dd><p>file name</p>
+</dd>
+<dt><strong>perc_last_samples</strong><span class="classifier">int</span></dt><dd><p>percentage of samples that are not considered burn in</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>with subjects as keys and chains as values</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.utils.save2dict_overall_point_estimates">
+<code class="sig-prename descclassname">scenewalk.utils.utils.</code><code class="sig-name descname">save2dict_overall_point_estimates</code><span class="sig-paren">(</span><em class="sig-param">chains_list</em>, <em class="sig-param">all_vp_list</em>, <em class="sig-param">def_args</em>, <em class="sig-param">priors</em>, <em class="sig-param">sw</em>, <em class="sig-param">credible_interval</em>, <em class="sig-param">fname</em>, <em class="sig-param">perc_last_samples=75</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.utils.save2dict_overall_point_estimates" title="Permalink to this definition">¶</a></dt>
+<dd><p>saves point estimates as a dictionary averaged over subjects. A point
+estimate is the center of the credible interval. The final dictionary has
+a key for each parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chains_list</strong><span class="classifier">list</span></dt><dd><p>list of pydream estimations (each element is one subject’s estimation)</p>
+</dd>
+<dt><strong>all_vp_list</strong><span class="classifier">list</span></dt><dd><p>list of all subject indexes</p>
+</dd>
+<dt><strong>def_args</strong><span class="classifier">dict</span></dt><dd><p>dictionary of default arguments (non estimated parameters)</p>
+</dd>
+<dt><strong>credible_interval</strong><span class="classifier">float</span></dt><dd><p>credible interval (example 0.5 if 50% of datapoints should be in the
+interval)</p>
+</dd>
+<dt><strong>fname</strong><span class="classifier">str</span></dt><dd><p>file name</p>
+</dd>
+<dt><strong>CI</strong><span class="classifier">bool</span></dt><dd><p>is the credible interval returned in the dictionary?</p>
+</dd>
+<dt><strong>perc_last_samples</strong><span class="classifier">int</span></dt><dd><p>percentage of samples that are not considered burn in</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>with subjects as keys and chains as values</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.utils.save2npy_point_estimate_by_subj">
+<code class="sig-prename descclassname">scenewalk.utils.utils.</code><code class="sig-name descname">save2npy_point_estimate_by_subj</code><span class="sig-paren">(</span><em class="sig-param">chains_list</em>, <em class="sig-param">all_vp_list</em>, <em class="sig-param">def_args</em>, <em class="sig-param">credible_interval</em>, <em class="sig-param">fname</em>, <em class="sig-param">CI=False</em>, <em class="sig-param">perc_last_samples=75</em>, <em class="sig-param">logzeta=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.utils.save2npy_point_estimate_by_subj" title="Permalink to this definition">¶</a></dt>
+<dd><p>saves point estimates as a dictionary by subject. A point estimate is the
+center of the credible interval. Th final dictionary will have a key for
+each subject.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chains_list</strong><span class="classifier">list</span></dt><dd><p>list of pydream estimations (each element is one subject’s estimation)</p>
+</dd>
+<dt><strong>all_vp_list</strong><span class="classifier">list</span></dt><dd><p>list of all subject indexes</p>
+</dd>
+<dt><strong>def_args</strong><span class="classifier">dict</span></dt><dd><p>dictionary of default arguments (non estimated parameters)</p>
+</dd>
+<dt><strong>credible_interval</strong><span class="classifier">float</span></dt><dd><p>credible interval (example 0.5 if 50% of datapoints should be in the
+interval)</p>
+</dd>
+<dt><strong>fname</strong><span class="classifier">str</span></dt><dd><p>file name</p>
+</dd>
+<dt><strong>CI</strong><span class="classifier">bool</span></dt><dd><p>is the credible interval returned in the dictionary?</p>
+</dd>
+<dt><strong>perc_last_samples</strong><span class="classifier">int</span></dt><dd><p>percentage of samples that are not considered burn in</p>
+</dd>
+<dt><strong>logzeta</strong><span class="classifier">bool</span></dt><dd><p>separately convert log zeta in the ouput</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>with subjects as keys and chains as values</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.utils.save2pd_overall_point_estimates">
+<code class="sig-prename descclassname">scenewalk.utils.utils.</code><code class="sig-name descname">save2pd_overall_point_estimates</code><span class="sig-paren">(</span><em class="sig-param">chains_list</em>, <em class="sig-param">all_vp_list</em>, <em class="sig-param">def_args</em>, <em class="sig-param">priors</em>, <em class="sig-param">sw</em>, <em class="sig-param">credible_interval</em>, <em class="sig-param">fname</em>, <em class="sig-param">perc_last_samples=75</em>, <em class="sig-param">logzeta=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.utils.save2pd_overall_point_estimates" title="Permalink to this definition">¶</a></dt>
+<dd><p>saves point estimates apandas table averaged over subjects. A point
+estimate is the center of the credible interval.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chains_list</strong><span class="classifier">list</span></dt><dd><p>list of pydream estimations (each element is one subject’s estimation)</p>
+</dd>
+<dt><strong>all_vp_list</strong><span class="classifier">list</span></dt><dd><p>list of all subject indexes</p>
+</dd>
+<dt><strong>def_args</strong><span class="classifier">dict</span></dt><dd><p>dictionary of default arguments (non estimated parameters)</p>
+</dd>
+<dt><strong>credible_interval</strong><span class="classifier">float</span></dt><dd><p>credible interval (example 0.5 if 50% of datapoints should be in the
+interval)</p>
+</dd>
+<dt><strong>fname</strong><span class="classifier">str</span></dt><dd><p>file name</p>
+</dd>
+<dt><strong>CI</strong><span class="classifier">bool</span></dt><dd><p>is the credible interval returned in the dictionary?</p>
+</dd>
+<dt><strong>perc_last_samples</strong><span class="classifier">int</span></dt><dd><p>percentage of samples that are not considered burn in</p>
+</dd>
+<dt><strong>logzeta</strong><span class="classifier">bool</span></dt><dd><p>separately convert log zeta in the ouput</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pandas table</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.utils.save2pd_subj_point_estimates">
+<code class="sig-prename descclassname">scenewalk.utils.utils.</code><code class="sig-name descname">save2pd_subj_point_estimates</code><span class="sig-paren">(</span><em class="sig-param">chains_list</em>, <em class="sig-param">all_vp_list</em>, <em class="sig-param">priors</em>, <em class="sig-param">credible_interval</em>, <em class="sig-param">fname</em>, <em class="sig-param">perc_last_samples=75</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.utils.save2pd_subj_point_estimates" title="Permalink to this definition">¶</a></dt>
+<dd><p>saves point estimates apandas table with separate fits for each subject. A
+point estimate is the center of the credible interval.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chains_list</strong><span class="classifier">list</span></dt><dd><p>list of pydream estimations (each element is one subject’s estimation)</p>
+</dd>
+<dt><strong>all_vp_list</strong><span class="classifier">list</span></dt><dd><p>list of all subject indexes</p>
+</dd>
+<dt><strong>def_args</strong><span class="classifier">dict</span></dt><dd><p>dictionary of default arguments (non estimated parameters)</p>
+</dd>
+<dt><strong>credible_interval</strong><span class="classifier">float</span></dt><dd><p>credible interval (example 0.5 if 50% of datapoints should be in the
+interval)</p>
+</dd>
+<dt><strong>fname</strong><span class="classifier">str</span></dt><dd><p>file name</p>
+</dd>
+<dt><strong>CI</strong><span class="classifier">bool</span></dt><dd><p>is the credible interval returned in the dictionary?</p>
+</dd>
+<dt><strong>perc_last_samples</strong><span class="classifier">int</span></dt><dd><p>percentage of samples that are not considered burn in</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pandas table</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.utils.show_all_colors">
+<code class="sig-prename descclassname">scenewalk.utils.utils.</code><code class="sig-name descname">show_all_colors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.utils.show_all_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a plot with all available colors in pyplot</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scenewalk.utils.utils.trpd">
+<code class="sig-prename descclassname">scenewalk.utils.utils.</code><code class="sig-name descname">trpd</code><span class="sig-paren">(</span><em class="sig-param">my_mean</em>, <em class="sig-param">my_std</em>, <em class="sig-param">lb</em>, <em class="sig-param">ub</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.utils.utils.trpd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Truncated Normal Distribution: wrapper to allow calling with intuitive
+arguments: mean, standard deviation and lower and upper bounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>my_mean</strong><span class="classifier">float</span></dt><dd><p>mean of distribution</p>
+</dd>
+<dt><strong>my_std</strong><span class="classifier">float</span></dt><dd><p>standard deviation of function</p>
+</dd>
+<dt><strong>lb</strong><span class="classifier">float</span></dt><dd><p>lower bound of truncation</p>
+</dd>
+<dt><strong>ub</strong><span class="classifier">float</span></dt><dd><p>upper bound of truncation</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>truncated normal distribution object</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="resort">
+<h1>resort<a class="headerlink" href="#resort" title="Permalink to this headline">¶</a></h1>
+<p>Use this thing with utmost caution. It is written to suit one particular folder structure and file naming conventions and will likely need adapting to  other setups!
+This is a little commandline script that sorts the estimation files into folders. Since this depends on the precise setup, and folder structure use it with caution! The idea is to combine error and output files with chains files into separate folders for each subject.</p>
+<p>´´´
+python3 -m scenewalk.utils.resort “2019” 5 -d -o
+´´´
+where the first argument is the beginning of the id number, the second argument is how many estimations there are, the “-d” is the dry run option (without it files will be moved for real) and -o is a different file name structure.</p>
+<p>This will probably not word without modification on other setups!</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="demo/dynamic_plot.html" class="btn btn-neutral float-left" title="Try the dynamic plotting module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Lisa Schwetlick
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
