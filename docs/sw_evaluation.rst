@@ -2,13 +2,12 @@
 
 Evaluation
 ==========
-This module is for paralellizing likelihood estimation using the model.
+This module is for paralellizing likelihood estimation using the model. When getting the model likelihood for large data sets or when computing it many times it may be beneficial to paralellize the get_scanpath_likelihood function.
+This paralellized evaluateion of the model can happen at the level of subjects (run each on different cores) and/or at the level of trials (split trials into groups and run these groups in parallel).
 
-When estimating parameters we differentiate between two layers of paralallization.
+´num_processes_subj´ is the number of processes between which the subjects are split.
+´num_processes_trials´ is the number of processes within each subject, i.e. the number of cores the trials are spread onto.
 
-We can make seperate estimations for each subject or we can pool multiple subjects into one estimation. If the former is the case, the num_processes_subjs argument  in this module must be 1 (because the data set that is passed to it only includes the one subject). If, on the other hand we are pooling subjects the argument can be as large as the number of subjects in the pool.
-
-num_processes_trials is the number of processes within each subject, i.e. the number of cores the trials are spread onto.
 
 The main relevant function to call from the outside is
 

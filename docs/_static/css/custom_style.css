@@ -1,0 +1,18 @@
+
+.wy-nav-side {
+	background : #000
+}
+
+.wy-side-nav-search {
+         color : #1c7543;
+         background-color : #1c7543;
+	 border-color : #000;
+ }
+
+.wy-side-nav-search input[type="text"] {
+	border-color : #000;
+}
+
+.wy-menu-vertical header, .wy-menu-vertical p.caption {
+	color : #1c7543
+}
