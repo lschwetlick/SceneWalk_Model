@@ -45,7 +45,7 @@ python3 -m ipykernel install --name sw_env
 The `scenewalk_model_object` file defines a python object which can be instantiated using different settings. The currently available settings are
 - inhib_method: divisive or subtractive inhibition
 - att_map_init_type: is there a center bias on the initial attention map
-- postsaccadic_shift: enables postsaccadic shift. WARNING: This implementation is broken and needs fixing!!!!!!
+- postsaccadic_shift: enables postsaccadic shift.
 - presaccadic_shift_switch: enables presaccadic shift
 - exponents: sets whether lambda and gamma, the two shaping parameters for attention and inhibition are the same
 - locdep_decay: sets whether there is location dependent decay (facilitation of return mechanic that makes the fish appear)
