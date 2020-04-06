@@ -65,7 +65,7 @@ def simulate(dur_dat, im_dat, densities_dat, sw_model, params=None,
     for sub_dur_dat, sub_im_dat in zip(dur_dat, im_dat): # iterate subjects
         sub_cnt += 1
         if sub_cnt not in available_vps:
-            print("not available")
+            print("sub "+str(sub_cnt)+" not available")
             data_list_x.append(None)
             data_list_y.append(None)
             data_list_dur.append(None)
@@ -190,7 +190,7 @@ def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
     for sub_dur_dat, sub_im_dat in zip(dur_dat, im_dat): # iterate subjects
         sub_cnt += 1
         if sub_cnt not in available_vps:
-            print("not available")
+            print("sub "+str(sub_cnt)+" not available")
             data_list_x.append(None)
             data_list_y.append(None)
             data_list_dur.append(None)
@@ -262,7 +262,7 @@ def simulate_sample(dur_dat, im_dat, densities_dat, sw_model, chains_dict,
 
 def _save_sims(data_list_x, data_list_y, data_list_dur, data_list_im, sw_model,
                nvp, sampled=False, save_to=None, custom_id=None):
-    if custom_id is not None:
+    if custom_id is None:
         sim_id = (time.strftime("%Y%m%d-%H%M%S"))
         if sampled:
             sim_id = sim_id + "samp"
