@@ -48,6 +48,15 @@ The folder structure for datasets is therefore as follows::
         |-- d2_range.npy
 
 
+Example
+-------
+.. toctree::
+        :caption: Core Model Code
+        :maxdepth: 1        
+
+        demo/get_corpus_data
+
+
 In the Utils.loadData Module
 ============================
 If you have set up a DATA folder as shown above you can use the inbuilt loading functions to import the data. However you must inform the library where to look for this folder. There are 4 options to tell the module where to look for data:
