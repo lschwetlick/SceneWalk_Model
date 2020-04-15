@@ -6,7 +6,7 @@ import numpy as np
 
 class missed_target_sw(sw_obj):
     def __init__(self, data_range):
-        super().__init__("subtractive", "zero", "both", 1, "on", data_range, {"coupled_oms":True, "coupled_facil":True})
+        super().__init__("subtractive", "zero", "both", "on", "off", data_range, {"exponents" : 1, "coupled_oms":True, "coupled_facil":True})
         self.evolve_maps = self.evolve_maps_presac_missed
 
     def whoami(self):
