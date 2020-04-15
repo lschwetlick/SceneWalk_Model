@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Testing" href="testing.html" />
     <link rel="prev" title="Try the dynamic plotting module" href="demo/dynamic_plot.html" /> 
 </head>
 
@@ -104,7 +105,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sw_estimation.html">Estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#example-estimation-script">Example Estimation Script</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#full-estimation-doc">Full Estimation Doc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#module-scenewalk.estimation.DREAM_param_estimation">Full Estimation Doc</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Simulation</span></p>
 <ul>
@@ -124,6 +125,11 @@
 <li class="toctree-l1"><a class="reference internal" href="#loaddata">loadData</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#id1">utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#resort">resort</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Testing &amp; Benchmarking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
 </ul>
 
             
@@ -699,11 +705,11 @@ arguments: mean, standard deviation and lower and upper bounds.</p>
 <div class="section" id="resort">
 <h1>resort<a class="headerlink" href="#resort" title="Permalink to this headline">¶</a></h1>
 <p>Use this thing with utmost caution. It is written to suit one particular folder structure and file naming conventions and will likely need adapting to  other setups!
-This is a little commandline script that sorts the estimation files into folders. Since this depends on the precise setup, and folder structure use it with caution! The idea is to combine error and output files with chains files into separate folders for each subject.</p>
-<p>´´´
-python3 -m scenewalk.utils.resort “2019” 5 -d -o
-´´´
-where the first argument is the beginning of the id number, the second argument is how many estimations there are, the “-d” is the dry run option (without it files will be moved for real) and -o is a different file name structure.</p>
+This is a little commandline script that sorts the estimation files into folders. Since this depends on the precise setup, and folder structure use it with caution! The idea is to combine error and output files with chains files into separate folders for each subject. Use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">scenewalk</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">resort</span> <span class="s2">&quot;2019&quot;</span> <span class="mi">5</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">o</span>
+</pre></div>
+</div>
+<p>where the first argument is the beginning of the id number, the second argument is how many estimations there are, the <code class="docutils literal notranslate"><span class="pre">-d</span></code> is the dry run option (without it files will be moved for real) and <code class="docutils literal notranslate"><span class="pre">-o</span></code> is a different file name structure.</p>
 <p>This will probably not word without modification on other setups!</p>
 </div>
 
@@ -714,6 +720,8 @@ where the first argument is the beginning of the id number, the second argument 
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="testing.html" class="btn btn-neutral float-right" title="Testing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="demo/dynamic_plot.html" class="btn btn-neutral float-left" title="Try the dynamic plotting module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

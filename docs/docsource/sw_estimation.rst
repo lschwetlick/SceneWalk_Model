@@ -9,7 +9,7 @@ The main interface function of interest is dream_estim_and_save.
 
 Example Estimation Script
 =========================
-An example estimation project can be found under demo/estimation_pydream. 
+An example estimation project can be found under ``demo/estimation_pydream``.
 The dream_estim.ipynb shows how to populate the arguments, priors and defaults.
 The run_dream.py file shows how to call the estimation module.
 

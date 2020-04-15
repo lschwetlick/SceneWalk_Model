@@ -67,6 +67,14 @@ The package also contains modules that use the SceneWalk code to do things, such
 
         sw_utils
 
+
+.. toctree::
+        :caption: Testing & Benchmarking
+        :maxdepth: 1
+
+        testing
+	benchmarking
+
 Indices and tables
 ==================
 * :ref:`genindex`

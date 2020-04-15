@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>SceneWalk Model &mdash; SceneWalk  documentation</title>
+  <title>Benchmarking &mdash; SceneWalk  documentation</title>
   
 
   
@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Getting Started" href="getting_started.html" /> 
+    <link rel="prev" title="Testing" href="testing.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -51,7 +51,7 @@
           
 
           
-            <a href="#">
+            <a href="index.html">
           
 
           
@@ -126,9 +126,9 @@
 <li class="toctree-l1"><a class="reference internal" href="sw_utils.html#resort">resort</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Testing &amp; Benchmarking</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Benchmarking</a></li>
 </ul>
 
             
@@ -143,7 +143,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">SceneWalk</a>
+          <a href="index.html">SceneWalk</a>
         
       </nav>
 
@@ -172,15 +172,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>SceneWalk Model</li>
+      <li>Benchmarking</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/benchmarking.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -217,87 +217,16 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="scenewalk-model">
-<h1>SceneWalk Model<a class="headerlink" href="#scenewalk-model" title="Permalink to this headline">¶</a></h1>
-<p>This is the documentation for the SceneWalk Model Package.</p>
-<p>Here is a link to the preprint: <a class="reference external" href="https://psyarxiv.com/zcbny">https://psyarxiv.com/zcbny</a></p>
-<p>Here is a link to the code needed to exactly reproduce the findings from the paper: <a class="reference external" href="https://osf.io/qsx4w/">https://osf.io/qsx4w/</a></p>
-<p>This documentation is for anyone wanting to use the SceneWalk Model on their own data and for their own research. Some words about the implementation: the idea for the infrastructure is that the model is a python object. It is instantiated with some main settings which define the mechanisms that are switched on and off. In the model extensions we added a variety of mechanisms, each one of which can be used or not in a modular way. Furthermore the model object sets various specifics on how different parameters are represented (i.e. coupled with others or on a log scale.) Lastly, The model must be given parameters. Given all these inputs the model object can be called to output likelihood values given data or to work generatively to simulate scanpaths, For details please consult the following documentation.</p>
-<p>The package also contains modules that use the SceneWalk code to do things, such as estimate parameters or plot scan paths.</p>
-<a class="reference internal image-reference" href="_images/extended_sw.gif"><img alt="_images/extended_sw.gif" src="_images/extended_sw.gif" style="width: 600px;" /></a>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Using the SceneWalk Package</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_requirements.html">Data Requirements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/how_to_sw.html">Using the SceneWalk Model</a></li>
-</ul>
+<div class="section" id="benchmarking">
+<span id="id1"></span><h1>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this headline">¶</a></h1>
+<p>The model is defined for limited range of parameter values. This is the case because computers will flush numbers to zero if they become too small to save in the selected floating point representation. The SceneWalk model by default has an internal floating point representation of 128 bits (as opposed to the 64 bit standard float). This can be changed.</p>
+<p>It is impossible to give a catch-all bounds specification, because the exact bounds depend on the exact specification of the model. The bounds of the parameters are very interdependent.</p>
+<p>The file <code class="docutils literal notranslate"><span class="pre">benchmarking/benchmark_sw.py</span></code> provides a means of testing model bounds. It requires a model specification and a dictionary of parameters and associated bounds to be passed to it and will check all permutations of high and low bounds.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">benchmarking</span><span class="o">/</span><span class="n">benchmark_sw</span><span class="o">.</span><span class="n">py</span> <span class="s2">&quot;benchmarking/sw_args.npy&quot;</span> <span class="s2">&quot;benchmarking/bounds_dict.npy&quot;</span> <span class="s2">&quot;benchmarking/faulty.npy&quot;</span>
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Core Model Code</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="demo/detailed_look_at_sw.html">Detailed Look at the SceneWalk Code in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_core.html">The SceneWalk Model Object</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Evaluation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="sw_evaluation.html">Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_evaluation.html#module-scenewalk.evaluation.evaluate_sw_parallel">Full Estimation Doc</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Estimation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html">Estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#example-estimation-script">Example Estimation Script</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#module-scenewalk.estimation.DREAM_param_estimation">Full Estimation Doc</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Simulation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html">Simulation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html#example-simulation">Example Simulation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="demo/how_to_simulate.html">Simulate Data from the SceneWalk Model</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sw_simulation.html#module-scenewalk.simulation.simulate_dataset">Full Simulation Doc</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Plotting</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="sw_plotting.html">Plotting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_plotting.html#example-dynamic-visualization">Example: Dynamic Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_plotting.html#module-scenewalk.plotting.sw_plot">Full Plotting Doc</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Utils</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="sw_utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#loaddata">loadData</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#id1">utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_utils.html#resort">resort</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Testing &amp; Benchmarking</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
-</ul>
-</div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
+<p>It will save all parameter combinations that made the model instable to a file (here: <code class="docutils literal notranslate"><span class="pre">faulty.npy</span></code>) for further inspection.</p>
 </div>
 
 
@@ -308,8 +237,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+        <a href="testing.html" class="btn btn-neutral float-left" title="Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

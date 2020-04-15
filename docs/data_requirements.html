@@ -115,7 +115,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sw_estimation.html">Estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#example-estimation-script">Example Estimation Script</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#full-estimation-doc">Full Estimation Doc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#module-scenewalk.estimation.DREAM_param_estimation">Full Estimation Doc</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Simulation</span></p>
 <ul>
@@ -135,6 +135,11 @@
 <li class="toctree-l1"><a class="reference internal" href="sw_utils.html#loaddata">loadData</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sw_utils.html#id1">utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sw_utils.html#resort">resort</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Testing &amp; Benchmarking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
 </ul>
 
             
@@ -233,18 +238,18 @@
 <li><p>fixation durations in seconds</p></li>
 <li><p>the image number (should start at 1)</p></li>
 </ul>
-<p>These data (x, y, duration, image) should be organized as a list of list of numpy arrays like so: <cite>Subjects[Trial[Scanpath[]]]</cite>. So each scanpath is a numpy array and then all the scanpaths go into a list of trials for one subject. Lastly all trial lists are added to a list of all subjects.</p>
+<p>These data (x, y, duration, image) should be organized as a list of list of numpy arrays like so: <code class="docutils literal notranslate"><span class="pre">Subjects[Trial[Scanpath[]]]</span></code>. So each scanpath is a numpy array and then all the scanpaths go into a list of trials for one subject. Lastly all trial lists are added to a list of all subjects.</p>
 </div>
 <div class="section" id="densities-and-range">
 <h2>Densities and Range<a class="headerlink" href="#densities-and-range" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>the data range in degrees of visual angle as <cite>[[xmin, xmax],[ymin, ymax]]</cite></p></li>
+<li><p>the data range in degrees of visual angle as <code class="docutils literal notranslate"><span class="pre">[[xmin,</span> <span class="pre">xmax],[ymin,</span> <span class="pre">ymax]]</span></code></p></li>
 <li><p>a list of ‘priority maps’. We use empirical fixation density maps but it is possible to use model generated saliency maps. By default the model expects 128x128 densities, but it can be configured to accept different resolutions. The densities should sum to 1 and be 128x128 pixel numpy arrays</p></li>
 </ul>
 </div>
 <div class="section" id="folder-structure">
 <h2>Folder Structure<a class="headerlink" href="#folder-structure" title="Permalink to this headline">¶</a></h2>
-<p>In the utils.loadData submodule we  assume that the above information has been saved to a folder called <cite>npy</cite>, where each bullet point is a separate <cite>.npy</cite> file, with some name, but ending in “_x.npy”, “_y.npy”, “_dur.npy”, “_im.npy”, “_range.npy”, and “_densities.npy”.</p>
+<p>In the utils.loadData submodule we  assume that the above information has been saved to a folder called <code class="docutils literal notranslate"><span class="pre">npy</span></code>, where each bullet point is a separate <code class="docutils literal notranslate"><span class="pre">.npy</span></code> file, with some name, but ending in “_x.npy”, “_y.npy”, “_dur.npy”, “_im.npy”, “_range.npy”, and “_densities.npy”.</p>
 <p>The folder structure for datasets is therefore as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|--</span><span class="n">DATA</span>
 <span class="o">|--</span> <span class="n">Dataset1</span>
@@ -278,15 +283,15 @@
 <h3>In the Utils.loadData Module<a class="headerlink" href="#in-the-utils-loaddata-module" title="Permalink to this headline">¶</a></h3>
 <p>If you have set up a DATA folder as shown above you can use the inbuilt loading functions to import the data. However you must inform the library where to look for this folder. There are 4 options to tell the module where to look for data:</p>
 <ol class="arabic">
-<li><p>you pass the the path to the utils.loadData.load_data() function directly. Use an absolute path the to npy folder.</p></li>
+<li><p>you pass the the path to the <code class="docutils literal notranslate"><span class="pre">utils.loadData.load_data()</span></code> function directly. Use an absolute path the to npy folder.</p></li>
 <li><p>you can set the path at the top of  your script like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scenewalk.utils</span> <span class="k">import</span> <span class="n">loadData</span>
 <span class="n">loadData</span><span class="o">.</span><span class="n">DATA_PATH</span> <span class="o">=</span> <span class="s2">&quot;My/Path/DATA&quot;</span>
 </pre></div>
 </div>
 </li>
-<li><p>you can place a config.yml file into your working directory (see config_sample.yml)</p></li>
-<li><p>you can place a config.yml file into the scenewalk_model/scenewalk directory (see config_sample.yml)</p></li>
+<li><p>you can place a <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> file into your working directory (see <code class="docutils literal notranslate"><span class="pre">config_sample.yml</span></code>)</p></li>
+<li><p>you can place a <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> file into the <code class="docutils literal notranslate"><span class="pre">scenewalk_model/scenewalk</span></code> directory (see <code class="docutils literal notranslate"><span class="pre">config_sample.yml</span></code>)</p></li>
 </ol>
 <p>Once this is set up, the data loading should work as shown in the examples of this documentation.</p>
 </div>

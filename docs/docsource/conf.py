@@ -18,7 +18,7 @@ import sphinx_rtd_theme
 #sys.path.insert(0, os.path.join(os.path.abspath('.'), '..', 'scenewalk'))
 sys.path.insert(0, "/Users/lisa/Documents/SFB1294_B05/SceneWalk/SceneWalk_model")
 sys.path.insert(0, os.path.abspath('../demo'))
-sys.path.insert(0, os.path.abspath('../../../PyDREAM'))
+sys.path.insert(0, os.path.abspath('/Users/lisa/Documents/SFB1294_B05/PyDREAM'))
 # -- Project information -----------------------------------------------------
 
 project = 'SceneWalk'

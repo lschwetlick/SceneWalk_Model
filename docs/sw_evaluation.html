@@ -105,7 +105,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sw_estimation.html">Estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#example-estimation-script">Example Estimation Script</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#full-estimation-doc">Full Estimation Doc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw_estimation.html#module-scenewalk.estimation.DREAM_param_estimation">Full Estimation Doc</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Simulation</span></p>
 <ul>
@@ -125,6 +125,11 @@
 <li class="toctree-l1"><a class="reference internal" href="sw_utils.html#loaddata">loadData</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sw_utils.html#id1">utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sw_utils.html#resort">resort</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Testing &amp; Benchmarking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
 </ul>
 
             
@@ -217,8 +222,8 @@
 <span id="sw-evaluation"></span><h1>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h1>
 <p>This module is for paralellizing likelihood estimation using the model. When getting the model likelihood for large data sets or when computing it many times it may be beneficial to paralellize the get_scanpath_likelihood function.
 This paralellized evaluateion of the model can happen at the level of subjects (run each on different cores) and/or at the level of trials (split trials into groups and run these groups in parallel).</p>
-<p>´num_processes_subj´ is the number of processes between which the subjects are split.
-´num_processes_trials´ is the number of processes within each subject, i.e. the number of cores the trials are spread onto.</p>
+<p><code class="docutils literal notranslate"><span class="pre">num_processes_subj</span></code> is the number of processes between which the subjects are split.
+<code class="docutils literal notranslate"><span class="pre">num_processes_trials</span></code> is the number of processes within each subject, i.e. the number of cores the trials are spread onto.</p>
 <p>The main relevant function to call from the outside is</p>
 <dl class="function">
 <dt id="scenewalk.evaluation.evaluate_sw_parallel.get_neg_tot_like_parallel">

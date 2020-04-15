@@ -24,21 +24,7 @@ python3 -m ipykernel install --name sw_env
 4. add the location of your Data to the config file. Simply go to the `config.yml` file and change the paths and/or dataset names!
 5. use it like any other package!
 
-## 0. Repo Structure and Modules
-### Repo
-- `scenewalk`: package containing the scenewalk code. More documentation on this below.
-- `tests`: contains the test suite for the model and the model interfaces
-- `demo`: some visualizations and examples
-### Core
-- `scenewalk_model_object.py`: Model Code
-- `scenewalk_limited`: [experimental] variation of the SceneWalk model that uses only limited number of past fixations
-- `scenewalk_missed_target`: [experimental] variation of the SceneWalk model with slightly different assumptions
-### Interfaces (submodules of `scenewalk`)
-- `estimation`: contains code for passing the model and priors into PyDream
-- `evaluation`: contains code for parallelizing the model evaluation over subjects and trials
-- `simulation`: contains code for simulating data sets
-- `utils`: useful functions when working with the model
-- `plotting`: frequently used visualization functions
+
 
 ## 1. Model Code
 ### The Scenewalk Object
@@ -153,9 +139,6 @@ Works in the following scope
 - **cb_sd_x**: 0.1 : 100000
 - **cb_sd_y**: 0.1 : 100000
 
-## 3. Data
-The expected format of the data is...
-
 ## 4. Tests
 The Test suite checks the following properties of the main (original) model:
 - Datatype of likelihood maps is float128
@@ -165,14 +148,3 @@ The Test suite checks the following properties of the main (original) model:
     - negative
     - zero
     - not a density
-
-## 5. Modules
-### 5.1 Evaluation
-This module is for paralellizing the call to get scanpath likelihoods over subjects when looking at likelihoods of whole datasets
-### 5.2 Evaluation
-This module runs a bayesian parameter inference using the DREAM package.
-There is code to do this in parallel and seperately for multiple people or to get an average over all people
-### 5.3  plotting
-This module can make nice videos and some basic stationary plots of maps in the scenewalk model
-### 5.4 simulation
-This module simulates data sets, normally given the fixation durations and images of a reference data set.

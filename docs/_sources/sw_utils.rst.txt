@@ -26,12 +26,11 @@ These funtions mainly refer to saving estimation chains returned by pydream  int
 resort
 ======
 Use this thing with utmost caution. It is written to suit one particular folder structure and file naming conventions and will likely need adapting to  other setups!
-This is a little commandline script that sorts the estimation files into folders. Since this depends on the precise setup, and folder structure use it with caution! The idea is to combine error and output files with chains files into separate folders for each subject.
+This is a little commandline script that sorts the estimation files into folders. Since this depends on the precise setup, and folder structure use it with caution! The idea is to combine error and output files with chains files into separate folders for each subject. Use::
 
-´´´
-python3 -m scenewalk.utils.resort "2019" 5 -d -o
-´´´
-where the first argument is the beginning of the id number, the second argument is how many estimations there are, the "-d" is the dry run option (without it files will be moved for real) and -o is a different file name structure.
+	python3 -m scenewalk.utils.resort "2019" 5 -d -o
+
+where the first argument is the beginning of the id number, the second argument is how many estimations there are, the ``-d`` is the dry run option (without it files will be moved for real) and ``-o`` is a different file name structure.
 
 This will probably not word without modification on other setups!
 
