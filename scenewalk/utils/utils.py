@@ -2,9 +2,12 @@
 
 def get_git_sha():
     """Returns git sha of current repo, for meta data"""
-    import git
-    repo = git.Repo(search_parent_directories=True)
-    sha = repo.head.object.hexsha
+    try:
+        import git
+        repo = git.Repo(search_parent_directories=True)
+        sha = repo.head.object.hexsha
+    except:
+        sha = None
     return sha
 
 def trpd(my_mean, my_std, lb, ub):
