@@ -58,7 +58,7 @@ def test_update_params():
         "chi": 0.5,
         "ompfactor": 0.5,
     })
-    sw = sw_model("subtractive", "cb", "both", 2, "on", {'x': (23, 100), 'y': (0, 90)}, {"estimate_times":True, "omp":True})
+    sw = sw_model("subtractive", "cb", "both", "on", "add", {'x': (23, 100), 'y': (0, 90)}, {"estimate_times":True, "exponents":2})
     sw.update_params(sw_params1)
     res1 = sw.get_params()
     sw.clear_params()
@@ -69,7 +69,7 @@ def test_update_params():
 @pytest.mark.basictest
 def test_convert_deg_to_px():
     """checks conversion and conversion edge case where fix is outside range"""
-    sw = sw_model("subtractive", "cb", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     deg_val = (23+100)/2
     correct_x_px = 64
     calc_px = sw.convert_deg_to_px(deg_val, 'x', fix=True)
@@ -79,7 +79,7 @@ def test_convert_deg_to_px():
 @pytest.mark.basictest
 def test_convert_px_to_deg():
     """checks conversion """
-    sw = sw_model("subtractive", "cb", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     deg_val = (23+100)/2
     calc_px = sw.convert_deg_to_px(deg_val, 'x', fix=True)
     calc_deg = sw.convert_px_to_deg(calc_px, 'x')
@@ -88,7 +88,7 @@ def test_convert_px_to_deg():
 @pytest.mark.basictest
 def test_get_unit_vector():
     """checks unit vector length and magnitude"""
-    sw = sw_model("subtractive", "cb", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     correct_mag = np.sqrt(8)
     correct_u = (np.sqrt(1/2), np.sqrt(1/2))
     u, mag = sw.get_unit_vector((2, 3), (4, 5))
@@ -98,7 +98,7 @@ def test_get_unit_vector():
 @pytest.mark.basictest
 def test_simulate_durations():
     """checks durations have right type and amount"""
-    sw = sw_model("subtractive", "cb", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     n_points = 10
     durs = sw.simulate_durations(n_points)
     assert len(durs) == n_points
@@ -110,7 +110,7 @@ def test_simulate_durations():
 @pytest.mark.xfail # strange case of i think a previous numpy version, where kde doesnt maintain datatype
 def test_empirical_fixation_density():
     """checks fixation density has correct size and type"""
-    sw = sw_model("subtractive", "cb", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     x_locs = [43, 90, 30, 80]
     y_locs = [35, 12, 41, 75]
     x_locs_px, y_locs_px, fix_dens = sw.empirical_fixation_density(x_locs, y_locs)
@@ -122,7 +122,7 @@ def test_empirical_fixation_density():
 @pytest.mark.basictest
 def test_fixation_picker_max():
     """check the right el is picked out of matrix"""
-    sw = sw_model("subtractive", "cb", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     mat = np.zeros((128, 128))
     correct_ij = (80, 20)
     mat[correct_ij] = 1
@@ -137,7 +137,7 @@ def test_fixation_picker_stoch():
     """check the right el is picked out of matrix"""
     import random
     random.seed(1234)
-    sw = sw_model("subtractive", "cb", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     mat = np.zeros((128, 128))
     correct_ij = (80, 20)
     mat[correct_ij] = 1
@@ -151,7 +151,7 @@ def test_fixation_picker_stoch():
 @pytest.mark.basictest
 def test_initialize_map_unif():
     """checks fixation density has correct size and type and value"""
-    sw = sw_model("subtractive", "cb", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     init_map = sw.initialize_map_unif()
     assert init_map.shape == (128, 128)
     assert (init_map.flatten() == sw.EPS).all()
@@ -161,7 +161,7 @@ def test_initialize_map_unif():
 @pytest.mark.basictest
 def test_initialize_center_bias():
     """checks fixation density has correct size and type and has legal values"""
-    sw = sw_model("subtractive", "cb", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     sw.cb_sd = (8, 5)
     cb_map = sw.initialize_center_bias()
     assert cb_map.shape == (128, 128)
@@ -173,7 +173,7 @@ def test_initialize_center_bias():
 @pytest.mark.basictest
 def test_make_attention():
     """checks fixation density has correct size and type and has legal values"""
-    sw = sw_model("subtractive", "zero", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     sw.update_params(sw_params)
     x_deg = (67, 50, 24)
     y_deg = (37, 50, 29)
@@ -188,7 +188,7 @@ def test_make_attention():
 @pytest.mark.basictest
 def test_make_attention_post():
     """checks fixation density has correct size and type and has legal values"""
-    sw = sw_model("subtractive", "zero", "post", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "zero", "post", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     sw.update_params(sw_params)
     x_deg = (67, 50, 24)
     y_deg = (37, 50, 29)
@@ -203,7 +203,7 @@ def test_make_attention_post():
 @pytest.mark.basictest
 def test_make_attention_post_outside():
     """checks what happens when post attention is outside the grid"""
-    sw = sw_model("subtractive", "zero", "post", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "zero", "post", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     sw_params2 = OrderedDict({
         "omegaAttention" : 1,
         "omegaInhib": 0.1,
@@ -238,7 +238,7 @@ def test_make_attention_post_outside():
 @pytest.mark.basictest
 def test_combine_att_fixdens():
     """checks fixation density has correct size and type and has legal values"""
-    sw = sw_model("subtractive", "zero", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     sw.update_params(sw_params)
     x_deg = (None, 50, None)
     y_deg = (None, 50, None)
@@ -256,7 +256,7 @@ def test_combine_att_fixdens():
 @pytest.mark.basictest
 def test_make_inhib_gauss():
     """checks fixation density has correct size and type and has legal values"""
-    sw = sw_model("subtractive", "zero", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     sw.update_params(sw_params)
     x_deg = (67, 50, 24)
     y_deg = (37, 50, 29)
@@ -270,7 +270,7 @@ def test_make_inhib_gauss():
 @pytest.mark.basictest
 def test_differential_time_basic():
     """checks fixation density has correct size and type and has legal values"""
-    sw = sw_model("subtractive", "zero", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     sw.update_params(sw_params)
     x_deg = (67, 50, 24)
     y_deg = (37, 50, 29)
@@ -288,7 +288,7 @@ def test_differential_time_basic():
 @pytest.mark.parametrize("locdep_decay_switch", ("on", "off"))
 def test_differential_time_att(locdep_decay_switch):
     """checks fixation density has correct size and type and has legal values"""
-    sw = sw_model("subtractive", "zero", "off", 1, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "zero", "off", locdep_decay_switch, "off", {'x': (23, 100), 'y': (0, 90)}, {"exponents":1})
     sw.update_params(sw_params)
     x_deg = (67, 50, 24)
     y_deg = (37, 50, 29)
@@ -308,7 +308,7 @@ def test_differential_time_att(locdep_decay_switch):
 @pytest.mark.parametrize('inhib', ("subtractive", "divisive"))
 def test_combine(exponents, inhib):
     """checks fixation density has correct size and type and has legal values"""
-    sw = sw_model(inhib, "zero", "off", exponents, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib, "zero", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)}, {"exponents":exponents})
     sw.update_params(sw_params)
     x_deg = (67, 50, 24)
     y_deg = (37, 50, 29)
@@ -327,7 +327,7 @@ def test_combine(exponents, inhib):
 @pytest.mark.basictest
 def test_make_positive():
     """checks fixation density has correct size and type and has legal values"""
-    sw = sw_model("subtractive", "zero", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     sw.update_params(sw_params)
     x_deg = (67, 50, 24)
     y_deg = (37, 50, 29)
@@ -348,7 +348,7 @@ def test_make_positive():
 @pytest.mark.basictest
 def test_add_noise():
     """checks fixation density has correct size and type and has legal values and is density"""
-    sw = sw_model("subtractive", "zero", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     sw.update_params(sw_params)
     x_deg = (67, 50, 24)
     y_deg = (37, 50, 29)
@@ -383,12 +383,18 @@ def test_evolve_maps(inhib_method, att_map_init_type, shifts, exponents, locdep_
     - next_pos is in legal range and right type
     - LL is not nan
     """
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib_method,
+                  att_map_init_type,
+                  shifts,
+                  locdep_decay_switch,
+                  "off",
+                  {'x': (23, 100), 'y': (0, 90)},
+                  {"exponents": exponents})
     sw.update_params(sw_params)
 
     init_map_att = sw.att_map_init()
     init_map_inhib = sw.initialize_map_unif()
-    fix_dens = np.load('tests/emp_dens.npy')
+    fix_dens = np.load('tests/emp_dens.npy', allow_pickle=True)
     durations1 = (0.2, 0.3, 0.4)
     x_deg1 = (67, 50, 24)
     y_deg1 = (37, 50, 29)
@@ -456,7 +462,13 @@ def test_evolve_maps(inhib_method, att_map_init_type, shifts, exponents, locdep_
 @pytest.mark.parametrize("locdep_decay_switch", ("on", "off"))
 def test_get_scanpath_likelihood(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch):
     """Tests that returned scanpath likelihhods are not nan and have the right type"""
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib_method,
+                att_map_init_type,
+                shifts,
+                locdep_decay_switch,
+                "off",
+                {'x': (23, 100), 'y': (0, 90)},
+                {"exponents": exponents})
     sw.update_params(sw_params)
 
     dataDict = loadData.load_sim_data('tests/test_simdata/')
@@ -476,7 +488,13 @@ def test_get_scanpath_likelihood(inhib_method, att_map_init_type, shifts, expone
 @pytest.mark.parametrize("locdep_decay_switch", ("on", "off"))
 def test_simulate_scanpath(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch):
     """Tests that simulated scanpaths the right type, range and length"""
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib_method,
+                att_map_init_type,
+                shifts,
+                locdep_decay_switch,
+                "off",
+                {'x': (23, 100), 'y': (0, 90)},
+                {"exponents": exponents})
     sw.update_params(sw_params)
 
     dataDict = loadData.load_sim_data('tests/test_simdata/')
@@ -504,7 +522,13 @@ def test_simulate_scanpath(inhib_method, att_map_init_type, shifts, exponents, l
 @pytest.mark.parametrize("oms_couple", ("on", "off"))
 def test_pass_input_params(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, oms_couple):
     """Tests that the values passed in are correctly assigned to the paramters"""
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib_method,
+                  att_map_init_type,
+                  shifts,
+                  locdep_decay_switch,
+                  "off",
+                  {'x': (23, 100), 'y': (0, 90)},
+                  {"exponents": exponents})
     if oms_couple == "on":
         sw.coupled_oms = True
 
@@ -527,7 +551,13 @@ def test_pass_input_params(inhib_method, att_map_init_type, shifts, exponents, l
 @pytest.mark.parametrize("oms_couple", ("on", "off"))
 def test_check_params_in_bounds(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, oms_couple):
     """Tests that the bounds checker reacts appropriately:h"""
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib_method,
+                  att_map_init_type,
+                  shifts,
+                  locdep_decay_switch,
+                  "off",
+                  {'x': (23, 100), 'y': (0, 90)},
+                  {"exponents": exponents})
     if oms_couple == "on":
         sw.coupled_oms = True
 
@@ -549,7 +579,7 @@ testcases_test_get_phase_times_both = [(1, (None, 0.5, 0.5), (0, 0.45, 0.05)), #
 @pytest.mark.parametrize('nth,durs,expected', testcases_test_get_phase_times_both)
 def test_get_phase_times_both(nth, durs, expected):
     """Checks that helper function returns the correct phase times in all cases"""
-    sw = sw_model("subtractive", "zero", "off", 1, "off", {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model("subtractive", "cb", "off", "off", "off", {'x': (23, 100), 'y': (0, 90)})
     sw.update_params(sw_params)
     sw.tau_post = 0.05
     sw.tau_pre = 0.05
@@ -578,7 +608,13 @@ def test_evolve_maps_durs(inhib_method, att_map_init_type, shifts, exponents, lo
     - next_pos is in legal range and right type
     - LL is not nan
     """
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib_method,
+                att_map_init_type,
+                shifts,
+                locdep_decay_switch,
+                "off",
+                {'x': (23, 100), 'y': (0, 90)},
+                {"exponents": exponents})
     sw.update_params(sw_params)
 
     init_map_att = sw.att_map_init()
@@ -629,7 +665,13 @@ def test_evolve_maps_float64(inhib_method, att_map_init_type, shifts, exponents,
     - next_pos is in legal range and right type
     - LL is not nan
     """
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib_method,
+                  att_map_init_type,
+                  shifts,
+                  locdep_decay_switch,
+                  "off",
+                  {'x': (23, 100), 'y': (0, 90)},
+                  {"exponents": exponents})
     sw.set_precision(np.float64)
     sw.update_params(sw_params)
 
@@ -713,7 +755,13 @@ def test_evolve_maps_other_mapsize(inhib_method, att_map_init_type, shifts, expo
     - next_pos is in legal range and right type
     - LL is not nan
     """
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib_method,
+                att_map_init_type,
+                shifts,
+                locdep_decay_switch,
+                "off",
+                {'x': (23, 100), 'y': (0, 90)},
+                {"exponents": exponents})
     sw.set_mapsize(sz)
     sw.update_params(sw_params)
 
@@ -796,7 +844,13 @@ def test_evolve_maps_other_mapsize_error(inhib_method, att_map_init_type, shifts
     - next_pos is in legal range and right type
     - LL is not nan
     """
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': (23, 100), 'y': (0, 90)})
+    sw = sw_model(inhib_method,
+                att_map_init_type,
+                shifts,
+                locdep_decay_switch,
+                "off",
+                {'x': (23, 100), 'y': (0, 90)},
+                {"exponents": exponents})
     #sw.set_mapsize(sz)
     sw.update_params(sw_params)
 

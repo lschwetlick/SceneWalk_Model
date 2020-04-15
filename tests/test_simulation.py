@@ -5,11 +5,12 @@ from collections import OrderedDict
 import os
 import shutil
 import numpy as np
+import pytest
 from scenewalk.simulation import simulate_dataset as sim
 from scenewalk.scenewalk_model_object import scenewalk as scenewalk_obj
 from scenewalk.utils import loadData
 
-
+@pytest.mark.basictest
 def test_sample_from_chains_dict():
     vp_params = np.load("tests/test_estimation/sample_dict.npy", allow_pickle=True).item()
     testsub = np.random.randint(0, len(vp_params.keys()))
@@ -22,12 +23,13 @@ def test_sample_from_chains_dict():
         else:
             assert param_dict[p] in vp_params[testsub][p]
 
+@pytest.mark.basictest
 def test_simulate_by_subj():
     dataDict = loadData.load_sim_data('tests/test_simdata/')
     x, y, dur_dat, im_dat, densities_dat, d_range = loadData.dataDict2vars(dataDict)
 
-    kwargs_d = {"coupled_oms": True, "coupled_facil":True}
-    sw_args = ['subtractive', 'cb', 'both', 1, 'on', {'x': d_range[0], 'y': d_range[1]}, kwargs_d]
+    kwargs_d = {"coupled_oms": True, "exponents":1}
+    sw_args = ['subtractive', 'zero', 'off', "off", 'off', {'x': d_range[0], 'y': d_range[1]}, kwargs_d]
     sw_model = scenewalk_obj(*sw_args)
     params_by_sub = np.load("tests/test_estimation/point_est_subj.npy", allow_pickle=True).item()
 
@@ -52,12 +54,13 @@ def test_simulate_by_subj():
     shutil.rmtree(folderPath)
 
 
+@pytest.mark.basictest
 def test_simulate_sample():
     dataDict = loadData.load_sim_data('tests/test_simdata/')
     x, y, dur_dat, im_dat, densities_dat, d_range = loadData.dataDict2vars(dataDict)
 
-    kwargs_d = {"coupled_oms": True, "coupled_facil":True}
-    sw_args = ['subtractive', 'cb','both', 1, 'on', {'x': d_range[0], 'y': d_range[1]}, kwargs_d]
+    kwargs_d = {"coupled_oms": True, "exponents":1}
+    sw_args = ['subtractive', 'zero', 'off', "off", 'off', {'x': d_range[0], 'y': d_range[1]}, kwargs_d]
     sw_model = scenewalk_obj(*sw_args)
     chains_dict = np.load("tests/test_estimation/sample_dict.npy", allow_pickle=True).item()
 

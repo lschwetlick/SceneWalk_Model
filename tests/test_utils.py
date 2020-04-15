@@ -2,7 +2,9 @@ from collections import OrderedDict
 import numpy as np
 from scenewalk.utils import utils
 from scenewalk.utils import loadData
+import pytest
 
+@pytest.mark.basictest
 def test_save2dict_by_subj():
     # setup a pretend data set
     dataDict = loadData.load_sim_data('tests/test_simdata/')
@@ -37,7 +39,7 @@ def test_save2dict_by_subj():
     assert any([isinstance(v, (list, np.ndarray)) for v in vp_params[testsub].values()])
     assert any([isinstance(v, (int, float)) for v in vp_params[testsub].values()])
 
-
+@pytest.mark.basictest
 def test_save2npy_point_estimate_by_subj():
     # setup a pretend data set
     dataDict = loadData.load_sim_data('tests/test_simdata/')

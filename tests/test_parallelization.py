@@ -44,16 +44,13 @@ def test_para_vs_seq_trials(inhib_method, att_map_init_type, shifts, exponents, 
     dataDict = loadData.load_sim_data(os.path.join(THIS_DIR, 'test_simdata/'))
     x_dat, y_dat, dur_dat, im_dat, densities_dat, dat_range = loadData.dataDict2vars(dataDict)
 
-
-    # x_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_x.npy'))
-    # y_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_y.npy'))
-    # dur_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_dur.npy'))
-    # im_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_im.npy'))
-    # densities_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/densities.npy'))
-    # dat_range = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_range.npy'))
-
-    #sw_params = list(meta[0].values())
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': dat_range[0], 'y': dat_range[1]})
+    sw = sw_model(inhib_method,
+            att_map_init_type,
+            shifts,
+            locdep_decay_switch,
+            "off",
+            dat_range,
+            {"exponents": exponents})
     sw.update_params(sw_params)
 
     # get one subject dataset
@@ -81,15 +78,14 @@ def test_para_vs_seq_both(inhib_method, att_map_init_type, shifts, exponents, lo
     # Load Data
     dataDict = loadData.load_sim_data(os.path.join(THIS_DIR, 'test_simdata/'))
     x_dat, y_dat, dur_dat, im_dat, densities_dat, dat_range = loadData.dataDict2vars(dataDict)
-    # x_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_x.npy'))
-    # y_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_y.npy'))
-    # dur_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_dur.npy'))
-    # im_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_im.npy'))
-    # densities_dat = np.load(os.path.join(THIS_DIR, 'test_simdata/densities.npy'))
-    # dat_range = np.load(os.path.join(THIS_DIR, 'test_simdata/sim_range.npy'))
 
-    #sw_params = list(meta[0].values())
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, {'x': dat_range[0], 'y': dat_range[1]})
+    sw = sw_model(inhib_method,
+            att_map_init_type,
+            shifts,
+            locdep_decay_switch,
+            "off",
+            dat_range,
+            {"exponents": exponents})
     sw.update_params(sw_params)
     nLL_sequential = evaluate_sw_parallel.get_total_neg_LL_subjs(sw, x_dat, y_dat, dur_dat, im_dat, densities_dat, 1)
     nLL_parallel = evaluate_sw_parallel.get_neg_tot_like_parallel(sw, x_dat, y_dat, dur_dat, im_dat, densities_dat, 5, 3)

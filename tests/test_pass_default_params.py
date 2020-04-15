@@ -40,14 +40,15 @@ priors = OrderedDict({
     "ompfactor" : None,
 })
 
+@pytest.mark.basictest
 def test_param_passing():
     """checks that the routine for passing parameters through dream keeps the correct order!"""
     parvals = [123] * 8
     print(parvals)
     sw_params = dream_estim.param_list_from_estim_and_default(priors, default_params, parvals)
     print(sw_params)
-    kwargs_d = {"saclen_shift":True, "omp":"add"}
-    sw_args = ['subtractive', 'cb','both', 1, 'on', {'x': (0, 128), 'y': (0, 128)}, kwargs_d]
+    kwargs_d = {"saclen_shift":True, "exponents":1}
+    sw_args = ['subtractive', 'cb','both', 'on', 'add', {'x': (0, 128), 'y': (0, 128)}, kwargs_d]
     sw = sw_model(*sw_args)
     sw.update_params(sw_params)
     recieved_params = sw.get_params()

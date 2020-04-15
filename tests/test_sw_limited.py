@@ -29,7 +29,7 @@ sw_params = OrderedDict({
     "omega_prevloc" : 1
 })
 
-@pytest.mark.basictest
+#@pytest.mark.basictest
 @pytest.mark.parametrize('inhib_method', ("subtractive", "divisive"))
 @pytest.mark.parametrize('att_map_init_type', ("zero", "cb"))
 @pytest.mark.parametrize('shifts', ("off", "pre", "post", "both"))
@@ -43,16 +43,16 @@ def test_something(inhib_method, att_map_init_type, shifts, exponents, locdep_de
             'y': rng[1]}
     fix_dens = densities[0]
 
-    sw = sw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, rng2)
+    sw = sw_model(inhib_method, att_map_init_type, shifts, locdep_decay_switch, "off", rng2, {"exponents" : exponents})
     sw.update_params(sw_params)
-    lsw = lsw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, rng2, {"n_history":10})
+    lsw = lsw_model(inhib_method, att_map_init_type, shifts, locdep_decay_switch, "off", rng2,{"n_history":10, "exponents" : exponents})
     lsw.update_params(sw_params)
 
     sw_LL = sw.get_scanpath_likelihood(x_sim[0][0], y_sim[0][0], dur_sim[0][0], fix_dens)
     lsw_LL = lsw.get_scanpath_likelihood(x_sim[0][0], y_sim[0][0], dur_sim[0][0], fix_dens)
     assert sw_LL == lsw_LL
 
-
+#@pytest.mark.basictest
 @pytest.mark.parametrize('inhib_method', ("subtractive", "divisive"))
 @pytest.mark.parametrize('att_map_init_type', ("zero", "cb"))
 @pytest.mark.parametrize('shifts', ("off", "pre", "post", "both"))
@@ -67,7 +67,7 @@ def test_contributing_fixs(inhib_method, att_map_init_type, shifts, exponents, l
             'y': rng[1]}
     fix_dens = densities[0]
 
-    lsw = lsw_model(inhib_method, att_map_init_type, shifts, exponents, locdep_decay_switch, rng2, {"n_history":n_hist})
+    lsw = lsw_model(inhib_method, att_map_init_type, shifts, locdep_decay_switch, "off", rng2, {"n_history":n_hist, "exponents" : exponents})
     lsw.update_params(sw_params)
 
     _, hist_list = lsw.get_scanpath_likelihood(x_sim[0][0], y_sim[0][0], dur_sim[0][0], fix_dens, debug=True)
