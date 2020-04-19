@@ -2,7 +2,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
-def priors_plot(priors):
+def priors_plot(priors, xlimsd=1, show_bounds=False):
     """
     Makes a simple plot of the priors in the dictionary
 
@@ -11,6 +11,12 @@ def priors_plot(priors):
     Priors : dict
         dictionary of priors where the key is the name and the value is an
         an instance of scipy.stats.truncated normal or some other distribution
+
+    xlimsd : float
+        determines how large the xlims are. mean +_ sd*xlimsd
+
+    show_bounds : bool
+        if true, makes xlims contingent on bounds, not on mean
 
     Returns
     -------
@@ -31,10 +37,15 @@ def priors_plot(priors):
         x = np.arange(m-sd*2, 1000, 0.001)
         ax[idx].set_title(list(priors.keys())[idx])
         ax[idx].plot(x, prior.pdf(x))
-        ax[idx].set_xlim(m-sd*1, m+sd*1)
+        if not show_bounds:
+            ax[idx].set_xlim(m - sd * xlimsd, m + sd * xlimsd)
+        else:
+            ax[idx].set_xlim(lb - sd * xlimsd, ub + sd * xlimsd)
         ax[idx].axvline(x=ub, c="r", linestyle=":")
         ax[idx].axvline(x=lb, c="r", linestyle=":")
         idx += 1
+    if idx < nrow * ncol:
+        ax[idx].set_axis_off()
     return (fig, ax)
 
 def plot_path_on_map(dens, x_path, y_path, sw):
