@@ -172,7 +172,7 @@ class generate_custom_likelihood_function:
 def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat,
                          dur_dat, im_dat, densities_dat, num_processes_subjs,
                          num_processes_trials, nchains, niter, vp_nr=None,
-                         destin_dir=None):
+                         destin_dir=None, model_name = None):
     """
     Run and Save dream chains Saves PyDream result into
 
@@ -202,11 +202,15 @@ def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat,
         id number of vp, for filename when running multiple estims
     destin_dir : str
         directory where to save the chains
+    model_name : str
+        additional name to add to the estimation id
     """
-    if vp_nr is not None:
-        estim_id = (time.strftime("%Y%m%d-%H%M%S")) +"vp" + str(vp_nr)
+    if model_name is not None:
+        estim_id = (time.strftime("%Y%m%d-%H%M%S")) + "_" + model_name
     else:
         estim_id = (time.strftime("%Y%m%d-%H%M%S"))
+    if vp_nr is not None:
+        estim_id += "vp" + str(vp_nr)
 
     lik_func_class = \
         generate_custom_likelihood_function(sw_model, priors, default_params,
@@ -218,17 +222,18 @@ def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat,
         cwd = os.getcwd()
     else:
         cwd = destin_dir
-    os.mkdir(cwd + "/estim_%s" % estim_id)
-    folderPath = cwd + "/estim_%s" % estim_id
+    folderPath = os.path.join(cwd, "estim_%s" % estim_id)
+    os.mkdir(folderPath)
+    model_name=os.path.join(folderPath, "fit_%s" % estim_id)
 
     sampled_params, log_ps = pd_run(list(priors.values()),
                                     lik_func_class.custom_loglik,
                                     nchains=nchains, niterations=niter,
                                     restart=False, verbose=False,
-                                    model_name=folderPath+"fit_"+estim_id)
+                                    model_name=model_name)
     # save chains
-    np.save(folderPath + '/%s_estim_chains' % estim_id, sampled_params)
-    np.save(folderPath + '/%s_estim_log_ps' % estim_id, log_ps)
+    np.save(os.path.join(folderPath, '%s_estim_chains' % estim_id), sampled_params)
+    np.save(os.path.join(folderPath, '%s_estim_log_ps' % estim_id), log_ps)
 
     meta_dict = {
         "model_type": sw_model.whoami(),
@@ -239,19 +244,7 @@ def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat,
         "niter": niter,
         "gitsha": utils.get_git_sha()
     }
-    np.save(folderPath + '/%s_estim_meta' % estim_id, [meta_dict])
-
-    # move dream files
-    if vp_nr is None:
-        os.rename("fit_" + estim_id + "_DREAM_chain_adapted_crossoverprob.npy",
-                  (folderPath + "/fit_" + estim_id
-                   + "_DREAM_chain_adapted_crossoverprob.npy"))
-        os.rename("fit_" + estim_id + "_DREAM_chain_adapted_gammalevelprob.npy",
-                  (folderPath + "/fit_" + estim_id
-                   + "_DREAM_chain_adapted_gammalevelprob.npy"))
-        os.rename("fit_" + estim_id + "_DREAM_chain_history.npy",
-                  (folderPath + "/fit_" + estim_id
-                   + "_DREAM_chain_history.npy"))
+    np.save(os.path.join(folderPath, '%s_estim_meta' % estim_id), [meta_dict])
 
 
 
