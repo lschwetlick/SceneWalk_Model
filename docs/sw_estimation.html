@@ -220,12 +220,13 @@
 </style>
 <div class="section" id="estimation">
 <span id="sw-estimation"></span><h1>Estimation<a class="headerlink" href="#estimation" title="Permalink to this headline">¶</a></h1>
-<p>This module provides paralellization running multiple PyDream instances next to each other. Typically we use this for running one estimation for each subject to estimate separate parameters.
-The main interface function of interest is dream_estim_and_save.</p>
+<p>This module wraps the call to PyDream. It unpacks parameter lists and generates the likelihood function.</p>
+<p><code class="docutils literal notranslate"><span class="pre">DREAM_vp_parallel</span></code> provides paralellization running multiple PyDream instances next to each other using one Python call. The parallelization over subjects can be done either via this function or separated into different Python calls.</p>
+<p>The main interface function of interest is dream_estim_and_save.</p>
 <dl class="function">
 <dt id="scenewalk.estimation.DREAM_param_estimation.dream_estim_and_save">
-<code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">dream_estim_and_save</code><span class="sig-paren">(</span><em class="sig-param">sw_model</em>, <em class="sig-param">priors</em>, <em class="sig-param">default_params</em>, <em class="sig-param">x_dat</em>, <em class="sig-param">y_dat</em>, <em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">num_processes_subjs</em>, <em class="sig-param">num_processes_trials</em>, <em class="sig-param">nchains</em>, <em class="sig-param">niter</em>, <em class="sig-param">vp_nr=None</em>, <em class="sig-param">destin_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_param_estimation.dream_estim_and_save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run and Save dream chains Saves PyDream result into</p>
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">dream_estim_and_save</code><span class="sig-paren">(</span><em class="sig-param">sw_model</em>, <em class="sig-param">priors</em>, <em class="sig-param">default_params</em>, <em class="sig-param">x_dat</em>, <em class="sig-param">y_dat</em>, <em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">num_processes_subjs</em>, <em class="sig-param">num_processes_trials</em>, <em class="sig-param">nchains</em>, <em class="sig-param">niter</em>, <em class="sig-param">vp_nr=None</em>, <em class="sig-param">destin_dir=None</em>, <em class="sig-param">model_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.estimation.DREAM_param_estimation.dream_estim_and_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run and Save dream chains Saves PyDream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -252,6 +253,8 @@ number of subjects in one “dream”</p>
 <dt><strong>vp_nr</strong><span class="classifier">int</span></dt><dd><p>id number of vp, for filename when running multiple estims</p>
 </dd>
 <dt><strong>destin_dir</strong><span class="classifier">str</span></dt><dd><p>directory where to save the chains</p>
+</dd>
+<dt><strong>model_name</strong><span class="classifier">str</span></dt><dd><p>additional name to add to the estimation id</p>
 </dd>
 </dl>
 </dd>
@@ -272,8 +275,8 @@ The run_dream.py file shows how to call the estimation module.</p>
 <p>University of Potsdam</p>
 <dl class="function">
 <dt>
-<code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">dream_estim_and_save</code><span class="sig-paren">(</span><em class="sig-param">sw_model</em>, <em class="sig-param">priors</em>, <em class="sig-param">default_params</em>, <em class="sig-param">x_dat</em>, <em class="sig-param">y_dat</em>, <em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">num_processes_subjs</em>, <em class="sig-param">num_processes_trials</em>, <em class="sig-param">nchains</em>, <em class="sig-param">niter</em>, <em class="sig-param">vp_nr=None</em>, <em class="sig-param">destin_dir=None</em><span class="sig-paren">)</span></dt>
-<dd><p>Run and Save dream chains Saves PyDream result into</p>
+<code class="sig-prename descclassname">scenewalk.estimation.DREAM_param_estimation.</code><code class="sig-name descname">dream_estim_and_save</code><span class="sig-paren">(</span><em class="sig-param">sw_model</em>, <em class="sig-param">priors</em>, <em class="sig-param">default_params</em>, <em class="sig-param">x_dat</em>, <em class="sig-param">y_dat</em>, <em class="sig-param">dur_dat</em>, <em class="sig-param">im_dat</em>, <em class="sig-param">densities_dat</em>, <em class="sig-param">num_processes_subjs</em>, <em class="sig-param">num_processes_trials</em>, <em class="sig-param">nchains</em>, <em class="sig-param">niter</em>, <em class="sig-param">vp_nr=None</em>, <em class="sig-param">destin_dir=None</em>, <em class="sig-param">model_name=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Run and Save dream chains Saves PyDream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -300,6 +303,8 @@ number of subjects in one “dream”</p>
 <dt><strong>vp_nr</strong><span class="classifier">int</span></dt><dd><p>id number of vp, for filename when running multiple estims</p>
 </dd>
 <dt><strong>destin_dir</strong><span class="classifier">str</span></dt><dd><p>directory where to save the chains</p>
+</dd>
+<dt><strong>model_name</strong><span class="classifier">str</span></dt><dd><p>additional name to add to the estimation id</p>
 </dd>
 </dl>
 </dd>

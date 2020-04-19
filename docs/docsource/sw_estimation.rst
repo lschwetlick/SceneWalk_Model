@@ -2,7 +2,10 @@
 
 Estimation
 ==========
-This module provides paralellization running multiple PyDream instances next to each other. Typically we use this for running one estimation for each subject to estimate separate parameters.
+This module wraps the call to PyDream. It unpacks parameter lists and generates the likelihood function.
+
+``DREAM_vp_parallel`` provides paralellization running multiple PyDream instances next to each other using one Python call. The parallelization over subjects can be done either via this function or separated into different Python calls.
+
 The main interface function of interest is dream_estim_and_save.
 
 .. autofunction:: scenewalk.estimation.DREAM_param_estimation.dream_estim_and_save

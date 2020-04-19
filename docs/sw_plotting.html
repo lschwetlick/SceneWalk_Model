@@ -367,13 +367,17 @@ and duration</p>
 
 <dl class="function">
 <dt id="scenewalk.plotting.nb_plots.priors_plot">
-<code class="sig-prename descclassname">scenewalk.plotting.nb_plots.</code><code class="sig-name descname">priors_plot</code><span class="sig-paren">(</span><em class="sig-param">priors</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.plotting.nb_plots.priors_plot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">scenewalk.plotting.nb_plots.</code><code class="sig-name descname">priors_plot</code><span class="sig-paren">(</span><em class="sig-param">priors</em>, <em class="sig-param">xlimsd=1</em>, <em class="sig-param">show_bounds=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scenewalk.plotting.nb_plots.priors_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Makes a simple plot of the priors in the dictionary</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>Priors</strong><span class="classifier">dict</span></dt><dd><p>dictionary of priors where the key is the name and the value is an
 an instance of scipy.stats.truncated normal or some other distribution</p>
+</dd>
+<dt><strong>xlimsd</strong><span class="classifier">float</span></dt><dd><p>determines how large the xlims are. mean +_ sd*xlimsd</p>
+</dd>
+<dt><strong>show_bounds</strong><span class="classifier">bool</span></dt><dd><p>if true, makes xlims contingent on bounds, not on mean</p>
 </dd>
 </dl>
 </dd>
