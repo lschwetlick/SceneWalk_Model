@@ -364,8 +364,8 @@ def _chop_list(lower, upper, li):
             if len(j) > upper:
                 j = j[:upper]
             if len(j) > lower:
-                im.append(j)
-        allim.append(im)
+                im.append(np.asarray(j))
+        allim.append(np.asarray(im))
     return allim
 
 
