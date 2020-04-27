@@ -72,8 +72,8 @@ def do_multiprocess_trials(function_args, num_processes):
     else:
         results_list = [get_total_list_LL_trials(*some_args) for \
             some_args in function_args]
-
-    total_LL = np.sum(results_list)
+    # needs hstack because lists can be different lengths and then they wont sum
+    total_LL = np.sum(np.hstack(results_list))
     total_neg_LL = np.negative(total_LL)
     return total_neg_LL
 
@@ -178,14 +178,14 @@ def get_total_neg_LL_subjs(sw_model, x_dat, y_dat, dur_dat, im_dat,
     sub_LL_list = []
     if num_processes_trials > 1:
         for sub in range(len(x_dat)):
-            sub_LL_list.append(\
-                get_neg_tot_like_trials_parallel(sw_model,
+            L = get_neg_tot_like_trials_parallel(sw_model,
                                                  x_dat[sub],
                                                  y_dat[sub],
                                                  dur_dat[sub],
                                                  im_dat[sub],
                                                  densities_dat,
-                                                 num_processes_trials))
+                                                 num_processes_trials)
+            sub_LL_list.append(L)
     else:
         for sub in range(len(x_dat)):
             sub_LL_list.append(get_total_neg_LL_per_subj(sw_model, x_dat[sub],

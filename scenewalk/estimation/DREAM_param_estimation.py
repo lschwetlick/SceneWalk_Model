@@ -174,7 +174,7 @@ def dream_estim_and_save(sw_model, priors, default_params, x_dat, y_dat,
                          num_processes_trials, nchains, niter, vp_nr=None,
                          destin_dir=None, model_name = None):
     """
-    Run and Save dream chains Saves PyDream result into
+    Run and Save dream chains Saves PyDream.
 
     Parameters
     ----------
