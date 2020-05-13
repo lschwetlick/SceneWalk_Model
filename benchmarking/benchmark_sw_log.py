@@ -12,22 +12,23 @@ from scenewalk.scenewalk_model_object import scenewalk as sw_model
 EPS = np.finfo(np.float64).eps
 
 bounds_dict = OrderedDict({
-    "omegaAttention" : (EPS, 100000),
-    "omegaInhib": (EPS, 100000),
-    "omfrac": (EPS, 100000),
-    "sigmaAttention" : (EPS, 100000),
-    "sigmaInhib" : (EPS, 100000),
-    "gamma" : (EPS, 15),
-    "lamb" : (EPS, 15),
-    "inhibStrength" : (EPS, 100000),
-    "zeta" : (EPS, 1),
-    "sigmaShift" : (EPS, 100000),
-    "shift_size" : (EPS, 100000),
-    "phi" : (1, 100000),
-    "first_fix_OmegaAttention" : (EPS, 100000),
-    "cb_sd_x" : (0.1, 100000),
-    "cb_sd_y" : (0.1, 100000),
-    "omega_prevloc" : (EPS, 100000)
+    "omegaAttention" : (EPS, 105),
+    #"omegaInhib": (EPS, 100000),
+    "omfrac": (10, 10),
+    "sigmaAttention" : (EPS, 40),
+    "sigmaInhib" : (EPS, 40),
+    "gamma" : (1, 1),
+    "lamb" : (1, 1),
+    "inhibStrength" : (0.3, 0.3),
+    "zeta" : (-5, 0),
+    "sigmaShift" : (2, 2),
+    "shift_size" : (EPS, 4),
+    "first_fix_OmegaAttention" : (1.5, 1.5),
+    "cb_sd_x" : (4, 4),
+    "cb_sd_y" : (3, 3),
+    "omega_prevloc_frac": (10, 10),
+    'chi': (0.06, 0.06),
+    'ompfactor': (-0.6, -0.6)
 })
 durations = ((0.001, 0.001, 0.001), (1, 1, 1), (10, 10, 10))
 
@@ -150,6 +151,7 @@ def reduce_bouds_dict(sw, bounds_dict):
     Takes a bounds dict and shortens it to include only those parameters the
     model will accept
     """
+    print(sw.get_param_list_order())
     red_bounds_dict = {}
     for p in sw.get_param_list_order():
         red_bounds_dict[p] = bounds_dict[p]
