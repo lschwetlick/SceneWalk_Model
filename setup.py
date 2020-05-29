@@ -16,9 +16,9 @@ setup(
                     'opencv_python',
                     #'arviz',
                     'pytest',
-                    'multiprocess',
+                    #'multiprocess',
                     'gitpython',
-                    'pyyaml',
-                    'pydream']
+                    'pyyaml']
+                    #'pydream']
                     #'PyDREAM @ git+ssh://git@github.com/lschwetlick/PyDREAM.git@lisa#egg=PyDREAM-0'],  #external packages as dependencies
 )
