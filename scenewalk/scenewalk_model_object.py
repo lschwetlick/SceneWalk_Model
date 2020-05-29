@@ -1349,7 +1349,7 @@ class scenewalk:
         ustar = self.make_positive(u)
         uFinal = self.add_noise(ustar)
         # get likelihood for next fixations
-        if (fixs_x[2] is None) & (sim):
+        if ((fixs_x[2] is None) or np.isnan(fixs_x[2])) & (sim):
             x, y, LL = self.fixation_picker_stoch(uFinal, get_lik=True)
             next_fix = (x, y)
         else:
