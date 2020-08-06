@@ -155,7 +155,6 @@ def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, 
 
             hpd_all = hpd(allvps, credible_interval)
             mpde = (hpd_all[1]+hpd_all[0])/2
-            #print(hpd_all)
             #break
             dict1 = {"param_name":param_name, "mpde":mpde, "interv":mpde-hpd_all[0], "left": hpd_all[0], "right": hpd_all[1]}
             param_ix+=1
@@ -165,7 +164,7 @@ def save2pd_overall_point_estimates(chains_list, all_vp_list, def_args, priors, 
     rows_list.append({"param_name": "tau_pre", "mpde": sw.tau_pre, "interv": np.nan, "left": np.nan, "right": np.nan})
     rows_list.append({"param_name": "tau_post", "mpde": sw.tau_post, "interv": np.nan, "left": np.nan, "right": np.nan})
     rows_list.append({"param_name": "foR_size", "mpde": sw.foR_size, "interv": np.nan, "left": np.nan, "right": np.nan})
-    rows_list.append({"param_name": "chi", "mpde": sw.chii, "interv": np.nan, "left": np.nan, "right": np.nan})
+    #rows_list.append({"param_name": "chi", "mpde": sw.chii, "interv": np.nan, "left": np.nan, "right": np.nan})
     rows_list.append({"param_name": "psi", "mpde": sw.ompfactor, "interv": np.nan, "left": np.nan, "right": np.nan})
     
     hpde_df = pd.DataFrame(rows_list)
