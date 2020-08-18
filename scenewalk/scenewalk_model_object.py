@@ -1643,7 +1643,8 @@ class scenewalk:
     # --------------------------------------------------------------------------
     # Main Interface Functions
     # --------------------------------------------------------------------------
-    def get_scanpath_likelihood(self, x_path, y_path, dur_path, fix_dens):
+    def get_scanpath_likelihood(self, x_path, y_path, dur_path, fix_dens,
+                                get_sum=True):
         """
         calculate likelihood of one scanpath under scenewalk model with params
         in scene_walk_params.
@@ -1692,6 +1693,8 @@ class scenewalk:
             raise Exception("LLs are Nan :( " + self.whoami() + " params "
                             + str(self.get_params()))
         sum_log_ll = np.sum(log_ll)
+        if not get_sum:
+            return log_ll
         return sum_log_ll
 
     def simulate_scanpath(self, dur_path, fix_dens, startpos, get_LL=False):
