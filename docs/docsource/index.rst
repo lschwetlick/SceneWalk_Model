@@ -7,7 +7,9 @@ SceneWalk Model
 ===============
 This is the documentation for the SceneWalk Model Package.
 
-Here is a link to the preprint: https://psyarxiv.com/zcbny
+Here is a link to the paper: https://www.nature.com/articles/s42003-020-01429-8.epdf
+
+and the preprint: https://psyarxiv.com/zcbny
 
 Here is a link to the code needed to exactly reproduce the findings from the paper: https://osf.io/qsx4w/
 
